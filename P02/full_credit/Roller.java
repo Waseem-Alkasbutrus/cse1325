@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class Roller {
     public static void main(String[] args) {
         if (args.length != 2) {
@@ -15,10 +17,14 @@ public class Roller {
         for (int i = 0; i < numOfDice; i++) {
             diceRolls[i] = (int) (Math.random() * numOfSides) + 1;
             sumOfRolls += diceRolls[i];
-
-            System.out.printf("%d ", diceRolls[i]);
         }
 
+        Arrays.sort(diceRolls);
+
+
+        for (int i = 0; i < numOfDice; i++) {
+            System.out.printf("%d ", diceRolls[i]);
+        }
         System.out.printf("|| %d %.2f\n", sumOfRolls,  ((float) sumOfRolls/ (float) numOfDice));
     }
 }
