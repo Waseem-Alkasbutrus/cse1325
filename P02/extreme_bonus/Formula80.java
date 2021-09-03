@@ -19,20 +19,31 @@ public class Formula80 {
 
         while(winner == 0) {
             //Roll 2 dice
-            
+            int rollTotal = die.roll();
+            rollTotal += die.roll();
+
             //if double 0 playerX can pick an option
+            if (rollTotal == 0) {
+
             //if double 6 playerX can pick an option
+            } else if (rollTotal == 12) {
+
             //else increment playerX normally
-            
-            if (turnOfPlayer1) {
-                
             } else {
-                
+                if (turnOfPlayer1) {
+                    player1.incrementScore(rollTotal);
+
+                    turnOfPlayer1 = false;
+                } else {
+                    player2.incrementScore(rollTotal);
+
+                    turnOfPlayer1 = true;
+                }
             }
 
-            if (player1.getScore() == 80) {
+            if (player1.getScore() >= 80) {
                 winner = 1;
-            } else if (player1.getScore() == 80) {
+            } else if (player1.getScore() >= 80) {
                 winner = 2;
             }
         
@@ -44,7 +55,7 @@ public class Formula80 {
     private static void printBoard(String playerName, int progress) {
         System.out.printf("\n\n%s: %d/80\n", playerName, progress);
         for(int i = 0; i < 80; i++) {
-            if (i <= progress && i != 0) {
+            if (i <= progress && progress != 0) {
                 System.out.printf("🟩");
             } else {
                 System.out.printf("🟥");
