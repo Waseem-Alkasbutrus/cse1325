@@ -4,6 +4,7 @@ public class Player {
     private String name;
     private int score = 0;
     private int bonus = 0;
+    private int[] diceRolls = new int[2];
 
     //Constructor(s)
     public Player (String playerName) {
@@ -33,5 +34,18 @@ public class Player {
 
     public void incrementBonus() {
         bonus++;
+    }
+
+    public boolean rollDice() {
+        Die die = new Die(6);
+        
+        diceRolls[0] = die.roll();
+        diceRolls[1] = die.roll();
+
+        return diceRolls[0] == diceRolls[1];
+    }
+
+    public int getDie(int index) {
+        return diceRolls[index];
     }
 }
