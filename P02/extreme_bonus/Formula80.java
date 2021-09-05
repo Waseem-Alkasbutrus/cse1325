@@ -9,7 +9,7 @@ public class Formula80 {
         } else {
             clearTerminal();
 
-            System.out.println("Welcome " + args[0] + " , " + args[1] + "! Let's see which one of you is the better driver 😄");
+            System.out.println("Welcome " + args[0] + ", " + args[1] + "! Let's see which one of you is the better driver 😄");
             System.out.println("This race will challenge your skills across 80 miles of roads 😃");
             System.out.println("Make sure you are familiar with the rules before starting 😊");
             System.out.println("Ready...Steady...");
@@ -18,25 +18,22 @@ public class Formula80 {
         waitForEnter("GO! 🏁");
         clearTerminal();
 
-        Player player1 = new Player(args[0]);
-        Player player2 = new Player(args[1]);
+        Player[] players = {new Player(args[0]), new Player(args[1])};
 
         boolean isPlayer1Turn = true;//true if it's player1's turn, false if it's player2's turn
-        int winner = 0;//1 for player1, 2 for player2, and 0 if no winner is found yet
+        int winner = -1;//0 for player1, 1 for player2, and -1 if no winner is found yet
 
-        while(winner == 0) {
+        while(winner == -1) {
             if (isPlayer1Turn) {
-                playTurn(player1, player2);
+                playTurn(players, 0);    
             } else {
-                playTurn(player2, player1);
+                playTurn(players, 1);
             }
 
-            if (player1.getScore() >= 80) {
+            if (players[0].getScore() >= 80) {
+                winner = 0;
+            } else if (players[1].getScore() >= 80) {
                 winner = 1;
-                System.out.println(player1.getName() + " crossed the finish line first and defeated " + player2.getName() + "!!");
-            } else if (player2.getScore() >= 80) {
-                winner = 2;
-                System.out.println(player2.getName() + " crossed the finish line first and defeated " + player1.getName() + "!!");
             } else {
                 isPlayer1Turn = !isPlayer1Turn;
 
@@ -45,34 +42,34 @@ public class Formula80 {
             }
         }
         
-        System.out.println("Congratulations!! you proved yourself as the top driver here today!");
+        System.out.println("\n" + players[winner].getName() + " crossed the finish line first and defeated the other racer!!");
+        System.out.println("Congratulations "+ players[winner].getName() +"!! you proved yourself as the top driver here today!");
         System.out.println("I can tell you have a bright future ahead of you");
         System.out.println("Good luck!");
 
         waitForEnter("end game");
-        clearTerminal();
     }
 
-    private static void playTurn(Player currentPlayer, Player otherPlayer) {      
-        System.out.println(currentPlayer.getName() + "'s turn:\n");
+    private static void playTurn(Player[] players, int currentPlayer) {      
+        System.out.println(players[currentPlayer].getName() + "'s turn:\n");
 
-        printScore(currentPlayer);
-        printScore(otherPlayer);
+        printScore(players[0]);
+        printScore(players[1]);
 
         waitForEnter("roll");
         clearTerminal();
 
-        boolean rolledDoubles = currentPlayer.rollDice();
-        currentPlayer.incrementScore(currentPlayer.getDie(0) + currentPlayer.getDie(1));
-        System.out.println(currentPlayer.getName() + "'s turn:\n");
+        boolean rolledDoubles = players[currentPlayer].rollDice();
+        players[currentPlayer].incrementScore(players[currentPlayer].getDie(0) + players[currentPlayer].getDie(1));
+        System.out.println(players[currentPlayer].getName() + "'s turn:\n");
 
-        printScore(currentPlayer);
-        printScore(otherPlayer);
+        printScore(players[0]);
+        printScore(players[1]);
 
         if (rolledDoubles) {
-            System.out.println("\n" + currentPlayer.getName() + " rolled a double " + currentPlayer.getDie(0) + "!");
+            System.out.println("\n" + players[currentPlayer].getName() + " rolled a double " + players[currentPlayer].getDie(0) + "!");
         } else {
-            System.out.println("\n" + currentPlayer.getName() + " rolled a " + currentPlayer.getDie(0) + " and a " + currentPlayer.getDie(1));
+            System.out.println("\n" + players[currentPlayer].getName() + " rolled a " + players[currentPlayer].getDie(0) + " and a " + players[currentPlayer].getDie(1));
         }
     }
 
