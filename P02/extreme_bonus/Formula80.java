@@ -59,17 +59,74 @@ public class Formula80 {
         waitForEnter("roll");
         clearTerminal();
 
-        boolean rolledDoubles = players[currentPlayer].rollDice();
+        boolean rolledDoubles = players[currentPlayer].rollDice(6);
         players[currentPlayer].incrementScore(players[currentPlayer].getDie(0) + players[currentPlayer].getDie(1));
+        
         System.out.println(players[currentPlayer].getName() + "'s turn:\n");
-
         printScore(players[0]);
         printScore(players[1]);
 
         if (rolledDoubles) {
             System.out.println("\n" + players[currentPlayer].getName() + " rolled a double " + players[currentPlayer].getDie(0) + "!");
+
+            if (players[currentPlayer].getDie(0) == 6) {
+                rolledADouble(players, currentPlayer);
+            } else {
+                if (players[currentPlayer].getBonus() > 0) {
+                    System.out.println(players[currentPlayer].getName() + " also has a bonus of +" +  players[currentPlayer].getBonus());
+                    players[currentPlayer].incrementScore(players[currentPlayer].getBonus());
+                }
+            }
         } else {
             System.out.println("\n" + players[currentPlayer].getName() + " rolled a " + players[currentPlayer].getDie(0) + " and a " + players[currentPlayer].getDie(1));
+        }
+    }
+
+    private static void rolledADouble(Player[] players, int currentPlayer) {
+        Scanner scan = new Scanner(System.in);
+        char selection;
+
+        while(true) {
+            System.out.println("\nChoose what you want to do next:");
+            System.out.println("1. Roll one 3-sided die for additional points");
+            System.out.println("2. Try for another double to earn a perminant +1 score bonus (applied on all future none 6 doubles)");
+            System.out.printf(">> ");
+
+            selection = scan.next().charAt(0);
+            if (selection == '2' || selection == '1') {
+                break;
+            } else {
+                System.out.println("Selection is invalid, please pick either 1 or 2");
+            }
+        }
+
+        if (selection == '1') {
+            Die die = new Die(3);
+            int bonusRoll = die.roll();
+    
+
+            players[currentPlayer].incrementScore(bonusRoll);
+
+            clearTerminal();
+
+            System.out.println(players[currentPlayer].getName() + "'s turn:\n");
+            printScore(players[0]);
+            printScore(players[1]);
+
+            System.out.println("\n" + players[currentPlayer].getName() + " rolled a " + bonusRoll);
+        } else {
+            clearTerminal();
+
+            System.out.println(players[currentPlayer].getName() + "'s turn:\n");
+            printScore(players[0]);
+            printScore(players[1]);
+
+            if (players[currentPlayer].rollDice(6)) {//doubles were rolled
+                players[currentPlayer].incrementBonus();
+                System.out.println("\n" + players[currentPlayer].getName() + " rolled a double and earned an additional bonus point!");
+            } else {
+                System.out.println("\n" + players[currentPlayer].getName() + " did not roll a double and has not earned any additional bonus points");
+            }
         }
     }
 

@@ -24,10 +24,6 @@ public class Player {
         score += increment;
     }
 
-    public void decrementScore(int decrement) {
-        score -= decrement;
-    }
-
     public int getBonus() {
         return bonus;
     }
@@ -36,8 +32,8 @@ public class Player {
         bonus++;
     }
 
-    public boolean rollDice() {
-        Die die = new Die(6);
+    public boolean rollDice(int dieFaces) {
+        Die die = new Die(dieFaces);
         
         diceRolls[0] = die.roll();
         diceRolls[1] = die.roll();
