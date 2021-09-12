@@ -3,9 +3,11 @@ import java.util.Scanner;
 
 public class Menu {
 
+    //Atributes
     private String prompt;
     ArrayList<String> options;
 
+    //Constructors
     public Menu(String prompt, int optionCount) {
         this.prompt = prompt;
         this.options = new ArrayList<String>(optionCount);
@@ -16,6 +18,7 @@ public class Menu {
         this.options = new ArrayList<String>(0);
     }
 
+    //Methods
     public String getPrompt() {
         return prompt;
     }

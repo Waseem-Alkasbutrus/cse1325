@@ -27,6 +27,8 @@ public class MenuTest{
             System.out.println("\tRETURNED: \"" + menuOptions + "\"");
         }
 
+        
+
         if (numOfFailedTests > 0) {
             System.out.println("\n" + numOfFailedTests + " TESTS FAILED");
 
