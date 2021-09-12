@@ -25,4 +25,9 @@ public class Student {
             return examSum / examNumGrades;
         }
     }
+
+    @Override 
+    public String toString() {
+        return String.format("%15s%10.2f", studentName, this.average());
+    }
 }
