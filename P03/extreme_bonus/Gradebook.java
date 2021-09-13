@@ -68,11 +68,12 @@ public class Gradebook {
 
         for (int i = 0; i < studentList.size(); i++) {
             System.out.printf("Enter %s's grade\n>> ", studentList.get(i).getName());
+            String studentGradeInputLine = scan.nextLine();
             double studentGradeInput = 0;
             try {
-                studentGradeInput = scan.nextDouble();
+                studentGradeInput = Double.parseDouble(studentGradeInputLine);
             } catch (Exception e) {
-                System.err.println("Invalid double. Please try again.");
+                System.err.println("\nInvalid input. Please try again.\n");
                 i--;
                 continue;
             }
