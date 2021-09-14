@@ -1,23 +1,28 @@
 public class Fuse {
-    private int fuseLength;
+    private int time;
 
-    public Fuse(int fuseLength) {
-        this.fuseLength = fuseLength;
+    public Fuse(int time) {
+        this.time = time;
     }
 
-    public int getFuseLength() {
-        return this.fuseLength;
+    public int gettime() {
+        return this.time;
     }
 
     public boolean burn() {
-        if (this.fuseLength > 0) {
-            this.fuseLength--;
+        if (this.time > 0) {
+            this.time--;
         }
 
-        if (this.fuseLength == 0) {
+        if (this.time == 0) {
             return false;
         } else {
             return true;
         }
+    }
+
+    @Override
+    public String toString() {
+        
     }
 }
