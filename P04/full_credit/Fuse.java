@@ -5,7 +5,7 @@ public class Fuse {
         this.time = time;
     }
 
-    public int gettime() {
+    public int getTime() {
         return this.time;
     }
 
@@ -23,6 +23,17 @@ public class Fuse {
 
     @Override
     public String toString() {
-        
+        String fuse;
+        if (this.time > 0) {
+            fuse = this.time + "  🟥🟥";
+            for (int i = 0; i < this.time ; i++) {
+                fuse = fuse + "〰️";
+            }
+            fuse = fuse + "💥";
+        } else {
+            fuse = "0  💥💥💥";
+        }
+
+        return fuse;
     }
 }
