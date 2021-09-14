@@ -5,10 +5,6 @@ public class Fuse {
         this.time = time;
     }
 
-    public int getTime() {
-        return this.time;
-    }
-
     public boolean burn() {
         if (this.time > 0) {
             this.time--;
