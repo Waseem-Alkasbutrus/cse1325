@@ -21,13 +21,13 @@ public class Fuse {
     public String toString() {
         String fuse;
         if (this.time > 0) {
-            fuse = this.time + "  🟥🟥";
+            fuse = this.time + " 🟥🟥";
             for (int i = 0; i < this.time ; i++) {
                 fuse = fuse + "〰️";
             }
             fuse = fuse + "💥";
         } else {
-            fuse = "0  💥💥💥";
+            fuse = "💥💥💥 BOOM 💥💥💥";
         }
 
         return fuse;
