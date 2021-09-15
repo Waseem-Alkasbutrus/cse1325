@@ -6,9 +6,18 @@ public class Puzzle {
         this.solution = solution.toLowerCase();
     }
 
-
     public boolean guess(char c) {
-        return this.solution.contains(Character.toString(c).toLowerCase());
+        if (this.solution.contains(Character.toString(c).toLowerCase())) {
+            for (int i = 0; i < this.solution.length(); i++) {
+                if (c == this.solution.charAt(i)) {
+                    this.guesses[i] = true;
+                }
+            }
+            
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public boolean solve(String proposedSolution) {
@@ -19,8 +28,19 @@ public class Puzzle {
         return this.solution;
     }
 
-    //@Override
-    //public void toString() {
-        //TODO: Override this function
-    //}
+    @Override
+    public String toString() {
+        String hiddenSolution = "'";
+
+        for (int i = 0; i < this.solution.length(); i++) {
+            if (this.guesses[i]) {
+                hiddenSolution = hiddenSolution + this.solution.charAt(i);
+            } else {
+                hiddenSolution = hiddenSolution + '_';
+            }
+        }
+        hiddenSolution = hiddenSolution + '\'';
+
+        return hiddenSolution;
+    }
 }
