@@ -17,6 +17,10 @@ public class Fuse {
         }
     }
 
+    public int getTime() {
+        return time;
+    }
+
     @Override
     public String toString() {
         String fuse;

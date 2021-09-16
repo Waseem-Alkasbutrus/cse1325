@@ -6,6 +6,11 @@ public class Boom {
     private static Puzzle puzzle;
     private static Fuse fuse;
 
+    public Boom (String solution, int lives) {
+        this.puzzle = new Puzzle(solution);
+        this.fuse = new Fuse(lives);
+    }
+
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
 
@@ -16,8 +21,7 @@ public class Boom {
         int lives = scan.nextInt();
         System.out.println();
 
-        puzzle = new Puzzle(solution);
-        fuse = new Fuse(lives);
+        Boom boom = new Boom(solution, lives);
 
         cli();
     }
@@ -28,23 +32,37 @@ public class Boom {
         Menu menu = new Menu("Select your next move:");
         menu.appendOption("Guess a character");
         menu.appendOption("Guess the solution");
+        menu.appendOption("Exit");
 
-        System.out.println(puzzle + "\n" + fuse);
-        int selection = menu.input();
+        while (true) {
+            if (fuse.getTime() > 0) {
+                System.out.println(fuse + "\n\nSolution: " + puzzle + "\n");
+                int selection = menu.input();
 
-        switch(selection) {
-            case 1:
-                System.out.printf("Enter your guess:\n>> ");
-                boolean isGuessCorrect = puzzle.guess(scan.nextLine().charAt(0));
+                switch(selection) {
+                    case 1:
+                        System.out.printf("Enter your guess:\n>> ");
+                        boolean isGuessCorrect = puzzle.guess(scan.nextLine().charAt(0));
 
-                System.out.println("Your guess is: " + isGuessCorrect);
+                        if (!isGuessCorrect) {
+                            fuse.burn();
+                        }
+
+                        System.out.println("Your guess is: " + isGuessCorrect);
+                        break;
+                    case 2:
+                        System.out.printf("Enter your solution:\n>> ");
+                        puzzle.solve(scan.nextLine());
+                        break;
+                    case 3:
+                        System.exit(0);
+                }
+                System.out.println("\n============================\n");
+            } else {
+                System.out.println(fuse + "\nThe solution was \'" + puzzle.getSolution() + "\'\nGood luck next time!\n");
                 break;
-            case 2:
-                System.out.printf("Enter your solution:\n>> ");
-                puzzle.solve(scan.nextLine());
-                break;
+            }
+
         }
-
-        System.out.println(puzzle);
     }
 }

@@ -12,11 +12,8 @@ public class Puzzle {
             for (int i = 0; i < this.solution.length(); i++) {
                 if (c == this.solution.charAt(i)) {
                     this.guesses[i] = true;
-                } else {
-                    this.guesses[i] = false;
                 }
             }
-            
             return true;
         } else {
             return false;
