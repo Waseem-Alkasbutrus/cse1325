@@ -4,6 +4,7 @@ public class Puzzle {
 
     public Puzzle (String solution) {
         this.solution = solution.toLowerCase();
+        this.guesses = new boolean[this.solution.length()];
     }
 
     public boolean guess(char c) {
@@ -11,6 +12,8 @@ public class Puzzle {
             for (int i = 0; i < this.solution.length(); i++) {
                 if (c == this.solution.charAt(i)) {
                     this.guesses[i] = true;
+                } else {
+                    this.guesses[i] = false;
                 }
             }
             
@@ -30,16 +33,15 @@ public class Puzzle {
 
     @Override
     public String toString() {
-        String hiddenSolution = "'";
+        String hiddenSolution = "";
 
         for (int i = 0; i < this.solution.length(); i++) {
-            if (this.guesses[i]) {
-                hiddenSolution = hiddenSolution + this.solution.charAt(i);
+            if (this.guesses[i] || !Character.isLetterOrDigit(this.solution.charAt(i))) {
+                hiddenSolution = hiddenSolution + Character.toString(this.solution.charAt(i));
             } else {
-                hiddenSolution = hiddenSolution + '_';
+                hiddenSolution = hiddenSolution + "_";
             }
         }
-        hiddenSolution = hiddenSolution + '\'';
 
         return hiddenSolution;
     }

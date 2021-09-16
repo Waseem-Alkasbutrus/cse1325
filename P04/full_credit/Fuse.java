@@ -21,7 +21,7 @@ public class Fuse {
     public String toString() {
         String fuse;
         if (this.time > 0) {
-            fuse = this.time + " 🟥🟥";
+            fuse = "🟥🟥";
             for (int i = 0; i < this.time ; i++) {
                 fuse = fuse + "〰️";
             }
