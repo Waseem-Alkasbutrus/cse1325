@@ -35,6 +35,7 @@ public class Boom {
         menu.appendOption("Exit");
 
         while (true) {
+            //TODO: make an int hasWon that is checked at the end of each itteration, if 1 player has won, -1 player has lost, 0 game is still going
             if (fuse.getTime() > 0) {
                 System.out.println(fuse + "\n\nSolution: " + puzzle + "\n");
                 int selection = menu.input();
@@ -52,7 +53,11 @@ public class Boom {
                         break;
                     case 2:
                         System.out.printf("Enter your solution:\n>> ");
-                        puzzle.solve(scan.nextLine());
+                        boolean isSolutionCorrect = puzzle.solve(scan.nextLine());
+
+                        if (isSolutionCorrect) {
+                            System.out.println("You Solved the puzzle!\nGreat job!\n");
+                        }
                         break;
                     case 3:
                         System.exit(0);
