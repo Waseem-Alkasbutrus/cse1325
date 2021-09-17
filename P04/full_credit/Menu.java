@@ -66,7 +66,7 @@ public class Menu {
 
     @Override
     public String toString() {
-        String menu = this.prompt;
+        String menu = this.prompt + "\n";
 
         for (int i = 0; i < this.options.size(); i++) {
             menu += ((i + 1) + ". " + this.options.get(i) + "\n");
