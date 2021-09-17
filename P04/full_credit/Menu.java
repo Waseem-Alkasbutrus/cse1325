@@ -43,23 +43,11 @@ public class Menu {
         return options.set(index, newOption);
     }
 
-    //TODO: Find a way to properly return the options as strings to override toString instead of this function
-    public void printMenu() {
-        System.out.println(prompt);
-
-        for (int i = 0; i < options.size(); i++) {
-            System.out.println((i + 1) + ". " + options.get(i));
-        }
-
-        System.out.printf(">> ");
-    }
-
     public int input() {
         Scanner scan = new Scanner(System.in);
     
         while (true) {
-            this.printMenu();
-
+            System.out.printf("%s", this);
             String selectionInput = scan.nextLine();
 
             try {
@@ -74,5 +62,18 @@ public class Menu {
                 System.out.println("\nInvalid input. Please try again.\n");
             }
         }
+    }
+
+    @Override
+    public String toString() {
+        String menu = this.prompt;
+
+        for (int i = 0; i < this.options.size(); i++) {
+            menu += ((i + 1) + ". " + this.options.get(i) + "\n");
+        }
+
+        menu += ">> ";
+
+        return menu;
     }
 }
