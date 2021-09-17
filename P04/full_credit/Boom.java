@@ -52,6 +52,12 @@ public class Boom {
                             System.out.println("\n" + fuse + "\nLooks like you ran of time...\nBetter luck next time\nThe solution was \'" + puzzle.getSolution() + "\'\n");
                             gameStatus = -1;//set game status to loss
                         }
+                    } else {
+                        boolean hasGuessedTheSolution = puzzle.solve(puzzle.toString());
+                        if (hasGuessedTheSolution) {
+                            System.out.println("\nYou Solved the puzzle!\nGreat job!\nThe solution was \'" + puzzle.getSolution() + "\'\n");    
+                            gameStatus = 1;
+                        }
                     }
 
                     break;
