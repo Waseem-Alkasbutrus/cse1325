@@ -7,13 +7,18 @@ public class Puzzle {
     }
 
     public boolean guess(char c) {
-        this.guesses[c - 32] = this.solution.contains(Character.toString(c).toLowerCase());
+        if (this.guesses[c - 32] == true || this.guesses[c - 32] == false) {
+            //TODO: throw exception
+            System.out.println("\'" + c + "\' has already been guessed");
+        } else {
+            this.guesses[c - 32] = this.solution.contains(Character.toString(c).toLowerCase());
+        }
         return this.guesses[c - 32];
     }
 
     public boolean solve(String proposedSolution) {
         return this.solution.contains(proposedSolution.toLowerCase());
-    }   
+    }
 
     public String getSolution() {
         return this.solution;
