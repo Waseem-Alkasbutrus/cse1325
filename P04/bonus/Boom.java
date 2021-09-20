@@ -79,7 +79,6 @@ public class Boom {
                         }
                     } catch (IllegalArgumentException e) {
                         System.out.println("\n\'" + guess + "\' has already been guessed\n");
-                        
                     }
 
                     break;
