@@ -1,23 +1,14 @@
 public class Puzzle {
     private final String solution;
-    private boolean[] guesses;
+    private boolean[] guesses = new boolean[93];
 
     public Puzzle (String solution) {
         this.solution = solution.toLowerCase();
-        this.guesses = new boolean[this.solution.length()];
     }
 
     public boolean guess(char c) {
-        if (this.solution.contains(Character.toString(c).toLowerCase())) {
-            for (int i = 0; i < this.solution.length(); i++) {
-                if (c == this.solution.charAt(i)) {
-                    this.guesses[i] = true;
-                }
-            }
-            return true;
-        } else {
-            return false;
-        }
+        this.guesses[c - 32] = this.solution.contains(Character.toString(c).toLowerCase());
+        return this.guesses[c - 32];
     }
 
     public boolean solve(String proposedSolution) {
@@ -33,7 +24,7 @@ public class Puzzle {
         String hiddenSolution = "";
 
         for (int i = 0; i < this.solution.length(); i++) {
-            if (this.guesses[i] || this.solution.charAt(i) == ' ') {
+            if (this.guesses[this.solution.charAt(i) - 32] || this.solution.charAt(i) == ' ') {
                 hiddenSolution = hiddenSolution + Character.toString(this.solution.charAt(i));
             } else {
                 hiddenSolution = hiddenSolution + "_";
