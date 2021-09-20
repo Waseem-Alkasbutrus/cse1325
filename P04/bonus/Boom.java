@@ -17,9 +17,20 @@ public class Boom {
         System.out.printf("Please enter the solution:\n>> ");
         String solution = scan.nextLine();
 
-        System.out.printf("Please enter the number of lives:\n>>");
-        int lives = scan.nextInt();
-        System.out.println();
+        int lives;
+        
+        while (true) {
+            try {
+                System.out.printf("Please enter the number of lives:\n>>");
+                lives = scan.nextInt();
+                System.out.println();
+
+                break;
+            } catch (Exception e) {
+                System.out.println("\nInvalid Input. Please try again.\n");
+                scan.nextLine();
+            } 
+        }
 
         Boom boom = new Boom(solution, lives);
 
@@ -43,23 +54,32 @@ public class Boom {
             switch(selection) {
                 case 1:
                     System.out.printf("Enter your guess:\n>> ");
-                    boolean isGuessCorrect = puzzle.guess(scan.nextLine().charAt(0));
+                    char guess = scan.nextLine().charAt(0);
+                    boolean isGuessCorrect;
+                    
+                    try {
+                        isGuessCorrect = puzzle.guess(guess);
 
-                    if (!isGuessCorrect) {
-                        if (!fuse.burn()) {
-                            System.out.println("\n" + fuse + "\nLooks like you ran of time...\nBetter luck next time\nThe solution was \'" + puzzle.getSolution() + "\'\n");
-                            gameStatus = -1;//set game status to loss
+                        if (!isGuessCorrect) {
+                            if (!fuse.burn()) {
+                                System.out.println("\n" + fuse + "\nLooks like you ran of time...\nBetter luck next time\nThe solution was \'" + puzzle.getSolution() + "\'\n");
+                                gameStatus = -1;//set game status to loss
+                            } else {
+                                System.out.println("\n\'" + guess + "\' is not correct!\n");
+                            }
                         } else {
-                            System.out.println("\nIncorrect guess!\n");
+                            boolean hasGuessedTheSolution = puzzle.solve(puzzle.toString());
+                            
+                            if (hasGuessedTheSolution) {
+                                System.out.println("\nYou Solved the puzzle!\nGreat job!\nThe solution was \'" + puzzle.getSolution() + "\'\n");    
+                                gameStatus = 1;
+                            } else {
+                                System.out.println("\n\'" + guess + "\' is correct!\n");
+                            }
                         }
-                    } else {
-                        boolean hasGuessedTheSolution = puzzle.solve(puzzle.toString());
-                        if (hasGuessedTheSolution) {
-                            System.out.println("\nYou Solved the puzzle!\nGreat job!\nThe solution was \'" + puzzle.getSolution() + "\'\n");    
-                            gameStatus = 1;
-                        } else {
-                            System.out.println("\nCorrect guess!\n");
-                        }
+                    } catch (Exception e) {
+                        System.out.println("\n\'" + guess + "\' has already been guessed\n");
+                        
                     }
 
                     break;

@@ -6,14 +6,13 @@ public class Puzzle {
         this.solution = solution.toLowerCase();
     }
 
-    public boolean guess(char c) {
-        if (this.guesses[c - 32] == true || this.guesses[c - 32] == false) {
-            //TODO: throw exception
-            System.out.println("\'" + c + "\' has already been guessed");
+    public boolean guess(char c) throws Exception {
+        if (this.guesses[c - 32] == true) {
+            throw new Exception("\'" + c + "\' has already been guessed.");
         } else {
-            this.guesses[c - 32] = this.solution.contains(Character.toString(c).toLowerCase());
+            this.guesses[c - 32] = true;
         }
-        return this.guesses[c - 32];
+        return this.solution.contains(Character.toString(c).toLowerCase());
     }
 
     public boolean solve(String proposedSolution) {
