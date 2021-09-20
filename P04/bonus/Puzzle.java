@@ -6,9 +6,9 @@ public class Puzzle {
         this.solution = solution.toLowerCase();
     }
 
-    public boolean guess(char c) throws Exception {
+    public boolean guess(char c) throws IllegalArgumentException {
         if (this.guesses[c - 32] == true) {
-            throw new Exception("\'" + c + "\' has already been guessed.");
+            throw new IllegalArgumentException("\'" + c + "\' has already been guessed.");
         } else {
             this.guesses[c - 32] = true;
         }
