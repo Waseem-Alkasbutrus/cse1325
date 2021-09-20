@@ -33,7 +33,7 @@ public class Puzzle {
         String hiddenSolution = "";
 
         for (int i = 0; i < this.solution.length(); i++) {
-            if (this.guesses[i]) {
+            if (this.guesses[i] || this.solution.charAt(i) == ' ') {
                 hiddenSolution = hiddenSolution + Character.toString(this.solution.charAt(i));
             } else {
                 hiddenSolution = hiddenSolution + "_";
