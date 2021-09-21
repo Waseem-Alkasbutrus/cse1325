@@ -11,6 +11,6 @@ public class Taxed extends Product {
 
     @Override
     public double price() {
-        return (price + (price * salesTaxRate)) * (double) quantity;
+        return quantity * unitCost * (1 + salesTaxRate);
     }
 }

@@ -5,6 +5,6 @@ public class Taxfree extends Product {
 
     @Override
     public double price() {
-        return price * quantity;
+        return unitCost * quantity;
     }
 }
