@@ -12,7 +12,7 @@ public abstract class Product {
         this.quantity = quantity;
     }
 
-    public abstract price();
+    public abstract double price();
 
     @Override 
     public String toString() {
