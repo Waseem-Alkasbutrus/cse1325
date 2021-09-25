@@ -8,7 +8,7 @@ public class Store {
     }
 
     public void cli() {
-        ArrayList<Product> products = new ArrayList () {{
+        ArrayList<Product> availableProducts = new ArrayList () {{
             add new Taxfree("Milk", 3.33);
             add new Taxfree("Eggs", 2.33);
             add new Taxfree("Bread", 2.48);
@@ -16,7 +16,8 @@ public class Store {
             add new Taxed("DumDums", 3.64);
             add new Taxed("Skittles", 2.28)
         }};
-
+        ArrayList<Product> shoppingCart = new ArrayList();
+        
         
     }
 }

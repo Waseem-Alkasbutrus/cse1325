@@ -1,15 +1,16 @@
 public abstract class Product {
-    //Attributes
     protected final String name;
     protected final double unitCost;
     protected int quantity;
     
-    //Abstract methods
-    public abstract Product placeOrder(int quantity);
+    public abstract Product placeOrder(int quantity) throws IllegalArgumentException;
     public abstract double price();
 
-    //TODO: throw exception if unitCost is negative
-    public Product (String name, double unitCost) throws BadArgumentException{
+    public Product (String name, double unitCost) throws IllegalArgumentException {
+        if (unitCost < 0) {
+            throw new IllegalArgumentException("Unit cost cannot be less than zero");
+        }
+
         this.name = name;
         this.unitCost = unitCost;
         this.quantity = 0;
