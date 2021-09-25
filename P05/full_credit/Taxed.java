@@ -18,6 +18,6 @@ public class Taxed extends Product {
     }
 
     public double price() {
-        return quantity * unitCost * (1 + salesTaxRate);
+        return quantity * unitCost * (1 + tax);
     }
 }

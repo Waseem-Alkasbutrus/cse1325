@@ -1,22 +1,19 @@
 public abstract class Product {
+    //Attributes
     protected final String name;
     protected final double unitCost;
     protected int quantity;
+    
+    //Abstract methods
+    public abstract Product placeOrder(int quantity);
+    public abstract double price();
 
     //TODO: throw exception if unitCost is negative
-    public Product (String name, double unitCost) {
+    public Product (String name, double unitCost) throws BadArgumentException{
         this.name = name;
         this.unitCost = unitCost;
         this.quantity = 0;
     }
-
-    public setQuantity (int quantity) {
-        this.quantity = quantity;
-    }
-
-    public abstract Product placeOrder(int quantity);
-
-    public abstract double price();
 
     @Override 
     public String toString() {
