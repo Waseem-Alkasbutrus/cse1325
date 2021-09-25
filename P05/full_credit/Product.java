@@ -14,6 +14,8 @@ public abstract class Product {
         this.quantity = quantity;
     }
 
+    public abstract Product placeOrder(int quantity);
+
     public abstract double price();
 
     @Override 

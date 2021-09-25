@@ -10,6 +10,13 @@ public class Taxed extends Product {
     }
 
     @Override
+    public Product placeOrder(int quantity) {
+        Product product = new Taxed(this.name, this.cost);
+        product.setQuantity(quantity);
+
+        return product;
+    }
+
     public double price() {
         return quantity * unitCost * (1 + salesTaxRate);
     }
