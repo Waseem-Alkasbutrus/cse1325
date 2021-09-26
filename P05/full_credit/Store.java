@@ -21,16 +21,20 @@ public class Store {
         }};
         ArrayList<Product> shoppingCart = new ArrayList(0);
         Menu productsMenu = new Menu("Please select a product below:", availableProducts);
+
         Menu mainMenu = new Menu("Please select an option:");
-
-        mainMenu.appendOption("Add items to shopping cart");
-        mainMenu.appendOption("Checkout items");
-
+        mainMenu.appendOption("Add Items to Cart");
+        mainMenu.appendOption("View Cart");
+        
+        Menu cartMenu = new Menu("Please select an optoin:");
+        cartMenu.appendOption("Checkout Cart");
+        cartMenu.appendOption("Keep Shopping");
 
         while(true) {
             int mainMenuSelection = mainMenu.input();
             if (mainMenuSelection == 1) {
                 int productSelection = productsMenu.input(); 
+
                 while (true) {
                     try {
                         System.out.printf("Enter the quantity you would like to add:\n>> ");
@@ -45,7 +49,36 @@ public class Store {
                         System.out.println("Invalid input. Please try again.");
                     }
                 }
+            } else if (mainMenuSelection == 2) { 
+                if (shoppingCart.size() == 0) {
+                    System.out.println("You have nothing in your cart.");
+                } else {
+                    System.out.println("Current Order:");
+
+                    for (int i = 0; i < shoppingCart.size(); i++) {
+                        System.out.println("\t" + shoppingCart.get(i));
+                    }
+
+                    System.out.println("Total due: " + calculateTotal(shoppingCart));
+                }
+
+                int cartMenuSelection = cartMenu.input();
+ 
+                if (cartMenuSelection == 2) {
+                    System.out.println("Thanks for shopping with us!");
+                    break;
+                }
             }
         }
+    }
+
+    public double calculateTotal(final ArrayList shoppingCart) {
+        double totalDue;
+
+        for (int i = 0; i < shoppingCart.size(); i++) {
+            totalDue += shoppingCart.get(i).price();
+        }
+
+        return totalDue;
     }
 }
