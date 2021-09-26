@@ -5,18 +5,18 @@ public class Taxed extends Product {
         super(name, cost);
     }
 
-    public static setSalesTaxRate (double salesTaxRate) {
-        this.tax = salesTaxRate;
+    public static void setSalesTaxRate (double salesTaxRate) {
+        tax = salesTaxRate;
     }
 
     @Override
-    public Product placeOrder(int quantity) IllegalArgumentException {
+    public Product placeOrder(int quantity) throws IllegalArgumentException {
         if (quantity < 1) {
             throw new IllegalArgumentException("Order must have a quantity of atleast 1");
         }
-        
-        Product product = new Taxed(this.name, this.cost);
-        product.setQuantity(quantity);
+
+        Product product = new Taxed(this.name, this.unitCost);
+        product.quantity = quantity;
 
         return product;
     }

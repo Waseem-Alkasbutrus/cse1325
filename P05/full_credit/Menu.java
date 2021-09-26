@@ -13,9 +13,9 @@ public class Menu {
         this.options = new ArrayList<String>(optionCount);
     }
 
-    public Menu(String prompt, ArrayList<String> options) {
+    public Menu(String prompt, ArrayList options) {
         this.prompt = prompt;
-        this.options = new ArrayList<String>(options);
+        this.options = new ArrayList<>(options);
     }
 
     public Menu(String prompt) {
