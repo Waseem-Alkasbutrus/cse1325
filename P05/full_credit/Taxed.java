@@ -12,7 +12,7 @@ public class Taxed extends Product {
     @Override
     public Product placeOrder(int quantity) throws IllegalArgumentException {
         if (quantity < 1) {
-            throw new IllegalArgumentException("Order must have a quantity of atleast 1");
+            throw new IllegalArgumentException("Order must have a quantity of 1 or more");
         }
 
         Product product = new Taxed(this.name, this.unitCost);

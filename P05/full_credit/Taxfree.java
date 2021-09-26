@@ -6,9 +6,9 @@ public class Taxfree extends Product {
     @Override
     public Product placeOrder(int quantity) throws IllegalArgumentException {
         if (quantity < 1) {
-            throw new IllegalArgumentException("Order must have a quantity of atleast 1");
+            throw new IllegalArgumentException("Order must have a quantity 1 or more");
         }
-        
+
         Product product = new Taxfree(this.name, this.unitCost);
         product.quantity = quantity;
 

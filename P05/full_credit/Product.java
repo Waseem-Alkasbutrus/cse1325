@@ -21,7 +21,7 @@ public abstract class Product {
         if (quantity == 0) {
             return String.format("%-15s ($%.2f)", name, unitCost);
         } else {
-            return String.format("%-15s (%d @ $%.2f)", name, unitCost);
+            return String.format("%-15s (%d @ $%.2f)", name, quantity, unitCost);
         }
     }
 }

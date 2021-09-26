@@ -7,6 +7,8 @@ public class Store {
     public static void main (String[] args) {
         Store store = new Store();
 
+        Taxed.setSalesTaxRate(0.08);
+
         store.cli();
     }
 
@@ -19,7 +21,7 @@ public class Store {
             add(new Taxed("DumDums", 3.64));
             add(new Taxed("Skittles", 2.28));
         }};
-        ArrayList<Product> shoppingCart = new ArrayList(0);
+        ArrayList<Product> shoppingCart = new ArrayList<Product>(0);
         Menu productsMenu = new Menu("Please select a product below:", availableProducts);
 
         Menu mainMenu = new Menu("Please select an option:");
@@ -27,11 +29,12 @@ public class Store {
         mainMenu.appendOption("View Cart");
         
         Menu cartMenu = new Menu("Please select an optoin:");
-        cartMenu.appendOption("Checkout Cart");
         cartMenu.appendOption("Keep Shopping");
+        cartMenu.appendOption("Checkout Cart");
 
         while(true) {
             int mainMenuSelection = mainMenu.input();
+
             if (mainMenuSelection == 1) {
                 int productSelection = productsMenu.input(); 
 
@@ -39,41 +42,43 @@ public class Store {
                     try {
                         System.out.printf("Enter the quantity you would like to add:\n>> ");
                         int productQuantity = Integer.parseInt(scan.nextLine());
-                        //TODO: place prder properly 
-                        //shoppingCart.add(availableProducts.get(productSelection - 1).placeOrder());
 
-                        break;
-                    } catch (IllegalArgumentException e) {
-                        System.out.println("\n" + e.getMessage() + "\n");
+                        try {
+                            shoppingCart.add(availableProducts.get(productSelection - 1).placeOrder(productQuantity));
+                            break;
+                        }  catch (IllegalArgumentException e) {
+                            System.out.println("\n" + e.getMessage() + "\n");
+                        }
+
                     } catch (Exception e) {
-                        System.out.println("Invalid input. Please try again.");
+                        System.out.println("\nInvalid input. Please try again.\n");
                     }
                 }
             } else if (mainMenuSelection == 2) { 
                 if (shoppingCart.size() == 0) {
-                    System.out.println("You have nothing in your cart.");
+                    System.out.println("\nYou have nothing in your cart.");
                 } else {
-                    System.out.println("Current Order:");
+                    System.out.println("\nCurrent Order:");
 
                     for (int i = 0; i < shoppingCart.size(); i++) {
                         System.out.println("\t" + shoppingCart.get(i));
                     }
 
-                    System.out.println("Total due: " + calculateTotal(shoppingCart));
+                    System.out.printf("Total due: $%.2f\n", calculateTotal(shoppingCart));
                 }
 
                 int cartMenuSelection = cartMenu.input();
  
                 if (cartMenuSelection == 2) {
-                    System.out.println("Thanks for shopping with us!");
+                    System.out.println("\nThanks for shopping with us!");
                     break;
                 }
             }
         }
     }
 
-    public double calculateTotal(final ArrayList shoppingCart) {
-        double totalDue;
+    public double calculateTotal(final ArrayList<Product> shoppingCart) {
+        double totalDue = 0;
 
         for (int i = 0; i < shoppingCart.size(); i++) {
             totalDue += shoppingCart.get(i).price();

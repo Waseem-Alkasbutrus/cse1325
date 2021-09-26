@@ -65,17 +65,17 @@ public class Menu {
                 if (selection > 0 && selection <= this.options.size()) {
                     return selection;
                 } else {
-                    System.out.println("\nSelection is out of bounds. Please try again.\n");
+                    System.out.println("\nSelection is out of bounds. Please try again.");
                 }
             } catch (Exception e) {
-                System.out.println("\nInvalid input. Please try again.\n");
+                System.out.println("\nInvalid input. Please try again.");
             }
         }
     }
 
     @Override
     public String toString() {
-        String menu = this.prompt + "\n";
+        String menu = "\n" + this.prompt + "\n";
 
         for (int i = 0; i < this.options.size(); i++) {
             menu += ((i + 1) + ". " + this.options.get(i) + "\n");
