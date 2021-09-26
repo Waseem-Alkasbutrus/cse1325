@@ -54,7 +54,7 @@ public class Taxed extends Product {
     }
 
     /**
-    Calculates the price of this product.
+    Calculates the price of this product including tax.
     
     @return             The total price for this product including tax (quantity * unitCost * (1 + tax)) 
     @since              1.0

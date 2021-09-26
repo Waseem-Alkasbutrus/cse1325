@@ -17,7 +17,7 @@ public abstract class Product {
     */
     protected final String name;
     /**
-    The cost of one unit if this product 
+    The cost of one unit of this product 
     */
     protected final double unitCost;
     /**
