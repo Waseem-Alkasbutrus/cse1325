@@ -1,3 +1,6 @@
+
+package cart;
+
 /**
  Represents a grocery product for sale.
 
@@ -8,10 +11,7 @@
  @since                1.0
  @license.agreement    Gnu General PUblic License 3.0
  */
-
-package cart;
-
-public abstract class Product implements Comparable {
+public abstract class Product implements Comparable<Product> {
     /**
     The name of this product 
     */
@@ -59,6 +59,7 @@ public abstract class Product implements Comparable {
         this.unitCost = unitCost;
         this.quantity = 0;
     }
+
 
     @Override 
     /** 
