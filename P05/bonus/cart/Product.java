@@ -1,3 +1,5 @@
+package cart;
+
 /**
  Represents a grocery product for sale.
 
@@ -8,9 +10,6 @@
  @since                1.0
  @license.agreement    Gnu General PUblic License 3.0
  */
-
-package cart;
-
 public abstract class Product {
     /**
     The name of this product 

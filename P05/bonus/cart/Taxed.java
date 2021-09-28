@@ -1,3 +1,5 @@
+package cart;
+
 /**
  Represents a grocery product with a slaes tax.
 
@@ -6,9 +8,6 @@
  @since                1.0
  @license.agreement    Gnu General PUblic License 3.0
  */
-
-package cart;
-
 public class Taxed extends Product {
     private static double tax;
 
