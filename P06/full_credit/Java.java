@@ -15,6 +15,11 @@ public class Java extends Product {
 
     @Override
     public String toString() {
-        //TODO: complete method
+        String javaString = super.name + " (" + this.darkness + " " + this.shots.get(0);
+        for (int i = 1; i < this.shots.size(); i++) {
+            javaString += this.shots.get(i);
+        }
+        javaString += ")";
+        return javaString;
     }
 }
