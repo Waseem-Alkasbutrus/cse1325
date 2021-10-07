@@ -4,10 +4,10 @@ public class Donut extends Product {
     protected Filling filling;
 
     public Donut(String name, double price, double cost, Frosting frosting, boolean sprinkles, Filling filling) throws IllegalArgumentException {
-        if (frosting == unfrosted && sprinkles) {
+        super(name, price, cost);
+        if (frosting == Frosting.unfrosted && sprinkles) {
             throw new IllegalArgumentException("Cannot add sprinkles on an unfrosted donut");
         } 
-        super(name, price, cost);
         this.frosting = frosting;
         this.sprinkles = sprinkles;
         this.filling = filling;
@@ -17,8 +17,9 @@ public class Donut extends Product {
     public String toString() {
         String donutString = super.name;
         if (sprinkles) {
-            donutString += " with sprinkles"
+            donutString += " with sprinkles";
         }
         donutString += " (" + this.frosting + " " + this.filling + ")";
+        return donutString;
     }
 }
