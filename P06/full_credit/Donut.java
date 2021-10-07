@@ -15,6 +15,10 @@ public class Donut extends Product {
 
     @Override
     public String toString() {
-        //TODO: complete method
+        String donutString = super.name;
+        if (sprinkles) {
+            donutString += " with sprinkles"
+        }
+        donutString += " (" + this.frosting + " " + this.filling + ")";
     }
 }
