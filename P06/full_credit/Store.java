@@ -6,6 +6,7 @@ public class Store {
 
     public Store(String storeName) {
         this.storeName = storeName;
+        products = new ArrayList<>(0);
     }
 
     public String storeName() {
@@ -28,7 +29,7 @@ public class Store {
     public String toString() {
         String storeString = this.storeName + "\n";
         for (Product p: this.products) {
-            storeName += p.toString() + "\n";
+            storeString += p.toString() + "\n";
         }
         return storeString;
     }
