@@ -7,6 +7,7 @@ public class Java extends Product {
     public Java(String name, double price, double cost, Darkness darkness) {
         super(name, price, cost);
         this.darkness = darkness;
+        this.shots = new ArrayList<>(0);
     }
 
     public void addShot(Shot shot) {
@@ -15,9 +16,14 @@ public class Java extends Product {
 
     @Override
     public String toString() {
-        String javaString = super.name + " (" + this.darkness + " " + this.shots.get(0);
-        for (int i = 1; i < this.shots.size(); i++) {
-            javaString += this.shots.get(i);
+        String javaString = super.name + " (" + this.darkness;
+        if (this.shots.size() > 0) {
+            javaString += " with ";
+            for (Shot s : this.shots) {
+                javaString += s + ", ";
+            }
+        } else {
+            javaString += " with no shots";
         }
         javaString += ")";
         return javaString;
