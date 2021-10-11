@@ -19,7 +19,7 @@ public class Donut extends Product {
         if (sprinkles) {
             donutString += " with sprinkles";
         }
-        donutString += " (" + this.frosting + " " + this.filling + ")";
+        donutString += " (" + this.frosting + " frosting " + this.filling + " filling)";
         return donutString;
     }
 }
