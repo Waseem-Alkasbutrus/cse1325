@@ -1,1 +1,1 @@
-public enum Filling {unfilled, creme, Bavarian, strawberry}
+public enum Filling {unfilled, creme, bavarian, strawberry}

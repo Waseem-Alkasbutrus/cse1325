@@ -1,1 +1,1 @@
-public enum Frosting {unfrosted, chocolate, banilla, strawberry}
+public enum Frosting {unfrosted, chocolate, vanilla, strawberry}
