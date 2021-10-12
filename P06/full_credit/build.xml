@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<project name="Grades" default="build">
+<project name="JADE" default="build">
   <presetdef name="javac">
     <javac includeantruntime="false" />
   </presetdef>
