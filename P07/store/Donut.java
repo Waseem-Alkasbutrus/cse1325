@@ -1,3 +1,5 @@
+package store;
+
 public class Donut extends Product {
     protected Frosting frosting;
     protected boolean sprinkles;
