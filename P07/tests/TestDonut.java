@@ -1,3 +1,7 @@
+import store.Donut;
+import store.Filling;
+import store.Frosting;
+
 public class TestDonut {
     public static void main(String[] args) {
         Donut donut = new Donut("Test Donut", 0.99, .33, Frosting.chocolate, true, Filling.strawberry);

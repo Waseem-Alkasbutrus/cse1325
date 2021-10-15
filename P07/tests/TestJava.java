@@ -1,3 +1,7 @@
+import store.Java;
+import store.Darkness;
+import store.Shot;
+
 public class TestJava {
     public static void main (String[] args) {
         Java java = new Java("Test Java", 3.99, 1.33, Darkness.medium);

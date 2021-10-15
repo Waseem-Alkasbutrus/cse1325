@@ -1,3 +1,6 @@
+import store.Store;
+import store.Product;
+
 public class TestStore {
     public static void main(String[] args) {
         Store store = new Store("JADE");

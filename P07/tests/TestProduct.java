@@ -1,3 +1,5 @@
+import store.Product;
+
 public class TestProduct {
     public static void main (String[] args) {
         Product product = new Product("Test Product", 2.99, 1.49);
