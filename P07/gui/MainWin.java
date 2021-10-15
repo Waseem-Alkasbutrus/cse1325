@@ -1,3 +1,8 @@
+import javax.swing.JFrame;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+
 public class MainWin extends JFrame {
     public MainWin(String title) {
         super(title);
@@ -7,14 +12,14 @@ public class MainWin extends JFrame {
         //////////////////////////////////////////////////////////////
         // M E N U
 
-        JMenuBar menubar = new MenuBar();
+        JMenuBar menubar = new JMenuBar();
 
         JMenu file = new JMenu("File");
         JMenuItem quit = new JMenuItem("Quit");
 
         JMenu create = new JMenu("Create");
         JMenuItem donut = new JMenuItem("Donut");
-        JmenuItem java = new JMenuItem("Java");
+        JMenuItem java = new JMenuItem("Java");
 
         JMenu help = new JMenu("Help");
         JMenuItem about = new JMenuItem("About");
@@ -35,6 +40,7 @@ public class MainWin extends JFrame {
 
         setJMenuBar(menubar);
 
+    }
         // Listeners
 
         protected void onQuitClick() {
@@ -52,5 +58,4 @@ public class MainWin extends JFrame {
         protected void onAboutClick() {
             //TODO: Display dialog with credits for art used, and copyright information
         }
-    }
 }
