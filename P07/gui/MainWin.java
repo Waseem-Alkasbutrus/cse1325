@@ -2,8 +2,11 @@ import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 public class MainWin extends JFrame {
+    //private Store store;
+
     public MainWin(String title) {
         super(title);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -41,21 +44,36 @@ public class MainWin extends JFrame {
         setJMenuBar(menubar);
 
     }
-        // Listeners
 
-        protected void onQuitClick() {
-            //TODO: Exit program
-        }
+    public static void main(String[] args) {
+        MainWin jade = new MainWin("JADE");
+        jade.setVisible(true);
+    }
+    
+    // Listeners
 
-        protected void onDonutClick() {
-            //TODO: Create a series of dialogs to collect info needed to create a new donut object and add it to store
-        }
+    protected void onQuitClick() {
+        int choice = JOptionPane.showConfirmDialog(this, "Are you sure?", "Exit?", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 
-        protected void onJavaClick() {
-            //TODO: Create a series of dialogs to collect info needed to create a new java object and add it to store
+        if (choice == JOptionPane.YES_OPTION) {
+            System.exit(0);
         }
+    }
 
-        protected void onAboutClick() {
-            //TODO: Display dialog with credits for art used, and copyright information
-        }
+    protected void onDonutClick() {
+        //TODO: Create a series of dialogs to collect info needed to create a new donut object and add it to store
+
+        String name = JOptionPane.showInputDialog(this, "Donut Name:");
+    }
+
+    protected void onJavaClick() {
+        //TODO: Create a series of dialogs to collect info needed to create a new java object and add it to store
+        
+        String name = JOptionPane.showInputDialog(this, "Java Name:");
+    }
+
+    protected void onAboutClick() {
+        //TODO: Display dialog with credits for art used, and copyright information
+        JOptionPane.showMessageDialog(this, "All code and art created by Waseem Alkasbutrus");
+    }
 }
