@@ -3,6 +3,12 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JToolBar;
+import javax.swing.JButton;
+import javax.swing.ImageIcon;
+import javax.swing.UIManager;
+import java.awt.BorderLayout;
+import javax.swing.Box;
 
 public class MainWin extends JFrame {
     //private Store store;
@@ -43,6 +49,35 @@ public class MainWin extends JFrame {
 
         setJMenuBar(menubar);
 
+        //////////////////////////////////////////////////////////////
+        // T O O L B A R
+
+        JToolBar toolbar = new JToolBar("Tools");
+
+        JButton javaB = new JButton(new ImageIcon("assets/JAVA.png"));
+            javaB.setActionCommand("Create a new java");
+            javaB.setToolTipText("Create a new java");
+            javaB.setBorder(null);
+            toolbar.add(javaB);
+            javaB.addActionListener(event -> onJavaClick());
+    
+        JButton donutB = new JButton(new ImageIcon("assets/DONUT.png"));
+            donutB.setActionCommand("Create a new donut");
+            donutB.setToolTipText("Create a new donut");
+            donutB.setBorder(null);
+            toolbar.add(donutB);
+            donutB.addActionListener(event -> onDonutClick());
+
+        toolbar.add(Box.createHorizontalStrut(25));
+
+        JButton aboutB = new JButton(new ImageIcon("assets/QUESTION.png"));
+            aboutB.setActionCommand("About this program");
+            aboutB.setToolTipText("About this program");
+            aboutB.setBorder(null);
+            toolbar.add(aboutB);
+            aboutB.addActionListener(event -> onAboutClick());
+
+        getContentPane().add(toolbar, BorderLayout.PAGE_START);
     }
 
     public static void main(String[] args) {
