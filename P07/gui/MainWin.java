@@ -7,6 +7,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JToolBar;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.ImageIcon;
 import javax.swing.UIManager;
 import java.awt.BorderLayout;
@@ -16,6 +17,8 @@ import store.Donut;
 import store.Java;
 import store.Filling;
 import store.Frosting;
+import store.Darkness;
+import store.Shot;
 
 public class MainWin extends JFrame {
     private Store store;
@@ -134,7 +137,24 @@ public class MainWin extends JFrame {
             return;
         }
 
-        this.store.addProduct(new Donut(name, price, cost, Frosting.unfrosted, false, Filling.unfilled));
+        Frosting frosting = (Frosting) JOptionPane.showInputDialog(this, "Donut Frosting", "Donut Frosting", JOptionPane.QUESTION_MESSAGE, null, Frosting.values(), Frosting.unfrosted);
+        if (frosting == null) {
+            return;
+        }
+
+        boolean sprinkles = false;
+        if (frosting != Frosting.unfrosted) {
+            int n = JOptionPane.showConfirmDialog(this, "Add Sprinkles to Donut?", "Donut Sprinkles", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null);
+            if (n == JOptionPane.YES_OPTION) {sprinkles = true;}
+            else if (n == JOptionPane.CANCEL_OPTION) {return;}
+        }
+
+        Filling filling = (Filling) JOptionPane.showInputDialog(this, "Donut Filling", "Donut Filling", JOptionPane.QUESTION_MESSAGE, null, Filling.values(), Filling.unfilled);
+        if (filling == null) {
+            return;
+        }
+
+        this.store.addProduct(new Donut(name, price, cost, frosting, sprinkles, filling));
         JOptionPane.showMessageDialog(this, this.store.toString());
     }
 
@@ -144,7 +164,7 @@ public class MainWin extends JFrame {
         double cost;
 
         try {
-            name = JOptionPane.showInputDialog(this, "Java Name:");
+            name = JOptionPane.showInputDialog(this, "Java Name:", "Java Name", JOptionPane.QUESTION_MESSAGE);
             if (name.equals("")) {
                 throw new Exception("Name cannot be left blank");
             }
@@ -157,21 +177,25 @@ public class MainWin extends JFrame {
         }
         
         try {
-            price = Double.parseDouble(JOptionPane.showInputDialog(this, "Donut Price:"));
+            price = Double.parseDouble(JOptionPane.showInputDialog(this, "Java Price:", "Java Price", JOptionPane.QUESTION_MESSAGE));
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Invalid Price!", "ERROR", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         try {
-            cost = Double.parseDouble(JOptionPane.showInputDialog(this, "Donut Cost:"));
+            cost = Double.parseDouble(JOptionPane.showInputDialog(this, "Java Cost:", "Java Cost", JOptionPane.QUESTION_MESSAGE));
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Invalid Cost!", "ERROR", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        this.store.addProduct(new Java(name, price, cost, Darkness.Light));
-        JOptionPane.showMessageDialog(this, "Java added to menu");
+        Object darkness = JOptionPane.showInputDialog(this, "Java Darkness", "Java Darkness", JOptionPane.QUESTION_MESSAGE, null, Darkness.values(), Darkness.blond);
+        if (darkness == null) {
+            return;
+        }
+        this.store.addProduct(new Java(name, price, cost, (Darkness) darkness));
+        JOptionPane.showMessageDialog(this, this.store.toString());
     }
 
     protected void onAboutClick() {
