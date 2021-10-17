@@ -1,3 +1,5 @@
+package gui;
+
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
@@ -9,12 +11,20 @@ import javax.swing.ImageIcon;
 import javax.swing.UIManager;
 import java.awt.BorderLayout;
 import javax.swing.Box;
+import store.Store;
+import store.Donut;
+import store.Java;
+import store.Filling;
+import store.Frosting;
 
 public class MainWin extends JFrame {
-    //private Store store;
+    private Store store;
 
     public MainWin(String title) {
         super(title);
+
+        store = new Store("JADE");
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(500,500);
 
@@ -54,14 +64,14 @@ public class MainWin extends JFrame {
 
         JToolBar toolbar = new JToolBar("Tools");
 
-        JButton javaB = new JButton(new ImageIcon("assets/JAVA.png"));
+        JButton javaB = new JButton(new ImageIcon("gui/assets/JAVA.png"));
             javaB.setActionCommand("Create a new java");
             javaB.setToolTipText("Create a new java");
             javaB.setBorder(null);
             toolbar.add(javaB);
             javaB.addActionListener(event -> onJavaClick());
     
-        JButton donutB = new JButton(new ImageIcon("assets/DONUT.png"));
+        JButton donutB = new JButton(new ImageIcon("gui/assets/DONUT.png"));
             donutB.setActionCommand("Create a new donut");
             donutB.setToolTipText("Create a new donut");
             donutB.setBorder(null);
@@ -70,7 +80,7 @@ public class MainWin extends JFrame {
 
         toolbar.add(Box.createHorizontalStrut(25));
 
-        JButton aboutB = new JButton(new ImageIcon("assets/QUESTION.png"));
+        JButton aboutB = new JButton(new ImageIcon("gui/assets/QUESTION.png"));
             aboutB.setActionCommand("About this program");
             aboutB.setToolTipText("About this program");
             aboutB.setBorder(null);
@@ -96,15 +106,72 @@ public class MainWin extends JFrame {
     }
 
     protected void onDonutClick() {
-        //TODO: Create a series of dialogs to collect info needed to create a new donut object and add it to store
+        String name;
+        double price;
+        double cost;
 
-        String name = JOptionPane.showInputDialog(this, "Donut Name:");
+        try {
+            name = JOptionPane.showInputDialog(this, "Donut Name:");
+            if (name.equals("")) {
+                throw new Exception("Name cannot be left blank");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Invalid Name!", "ERROR", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        try {
+            price = Double.parseDouble(JOptionPane.showInputDialog(this, "Donut Price:"));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Invalid Price!", "ERROR", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try {
+            cost = Double.parseDouble(JOptionPane.showInputDialog(this, "Donut Cost:"));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Invalid Cost!", "ERROR", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        this.store.addProduct(new Donut(name, price, cost, Frosting.unfrosted, false, Filling.unfilled));
+        JOptionPane.showMessageDialog(this, this.store.toString());
     }
 
     protected void onJavaClick() {
-        //TODO: Create a series of dialogs to collect info needed to create a new java object and add it to store
+        String name;
+        double price;
+        double cost;
+
+        try {
+            name = JOptionPane.showInputDialog(this, "Java Name:");
+            if (name.equals("")) {
+                throw new Exception("Name cannot be left blank");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Invalid Name!", "ERROR", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (name.equals("")) {
+            JOptionPane.showMessageDialog(this, "Invalid Name!", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
         
-        String name = JOptionPane.showInputDialog(this, "Java Name:");
+        try {
+            price = Double.parseDouble(JOptionPane.showInputDialog(this, "Donut Price:"));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Invalid Price!", "ERROR", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try {
+            cost = Double.parseDouble(JOptionPane.showInputDialog(this, "Donut Cost:"));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Invalid Cost!", "ERROR", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        this.store.addProduct(new Java(name, price, cost, Darkness.Light));
+        JOptionPane.showMessageDialog(this, "Java added to menu");
     }
 
     protected void onAboutClick() {
