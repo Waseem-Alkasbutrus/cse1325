@@ -21,7 +21,21 @@ public class Donut extends Product {
         if (sprinkles) {
             donutString += " with sprinkles";
         }
-        donutString += " (" + this.frosting + " frosting " + this.filling + " filling)";
+        
+        if (this.frosting == Frosting.unfrosted) {
+            donutString += " (" + this.frosting + " ";    
+        } else {
+            donutString += " (" + this.frosting + " frosting ";    
+        }
+
+        if (this.filling == Filling.unfilled) {
+            donutString += this.filling + ") $";
+        } else {
+            donutString += this.filling + " filling) $";
+        }
+
+        donutString += super.price;
+        
         return donutString;
     }
 }

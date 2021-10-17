@@ -27,7 +27,7 @@ public class Java extends Product {
         } else {
             javaString += " with no shots";
         }
-        javaString += ")";
+        javaString += ") $" + super.price;
         return javaString;
     }
 }
