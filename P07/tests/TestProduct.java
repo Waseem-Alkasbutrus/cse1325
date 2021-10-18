@@ -1,3 +1,5 @@
+package tests;
+
 import store.Product;
 
 public class TestProduct {

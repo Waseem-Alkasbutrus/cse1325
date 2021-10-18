@@ -1,3 +1,5 @@
+package tests;
+
 import store.Java;
 import store.Darkness;
 import store.Shot;
@@ -10,11 +12,11 @@ public class TestJava {
         //Test 1: Test if toString() returns the correct information
         final String javaString = java.toString();
 
-        if (!javaString.equals("Test Java (medium with no shots)")) {
+        if (!javaString.equals("Test Java (medium with no shots) $3.99")) {
             numOfFailedTests++;
 
             System.out.println("\nTEST 1 FAILED: toString() did not return the java information correctly.");
-            System.out.println("\tEXPECTED: \"Test Java (medium with no shots)\"");
+            System.out.println("\tEXPECTED: \"Test Java (medium with no shots) $3.99\"");
             System.out.println("\tRETURNED: \"" + javaString + "\"");            
         }
 
@@ -22,12 +24,12 @@ public class TestJava {
         java.addShot(Shot.peppermint);
         final String javaShots = java.toString();
 
-        if (!javaString.equals("Test Java (medium with no shots)")) {
+        if (!javaShots.equals("Test Java (medium with peppermint) $3.99")) {
             numOfFailedTests++;
 
-            System.out.println("\nTEST 1 FAILED: toString() did not return the java information correctly.");
-            System.out.println("\tEXPECTED: \"Test Java (medium with no shots)\"");
-            System.out.println("\tRETURNED: \"" + javaString + "\"");            
+            System.out.println("\nTEST 2 FAILED: addShot(Shot) did no add a shot to the java correctly.");
+            System.out.println("\tEXPECTED: \"Test Java (medium with peppermint) $3.99\"");
+            System.out.println("\tRETURNED: \"" + javaShots + "\"");            
         }
 
         //Print Summary

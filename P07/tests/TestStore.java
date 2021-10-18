@@ -1,3 +1,5 @@
+package tests;
+
 import store.Store;
 import store.Product;
 
