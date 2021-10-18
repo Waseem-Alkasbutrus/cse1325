@@ -21,9 +21,10 @@ public class Java extends Product {
         String javaString = super.name + " (" + this.darkness;
         if (this.shots.size() > 0) {
             javaString += " with ";
-            for (Shot s : this.shots) {
-                javaString += s + ", ";
+            for (int i = 0; i < (this.shots.size() - 1); i++) {
+                javaString += this.shots.get(i) + ", ";
             }
+            javaString += this.shots.get(this.shots.size() - 1);
         } else {
             javaString += " with no shots";
         }
