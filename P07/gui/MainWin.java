@@ -9,10 +9,15 @@ import javax.swing.JToolBar;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
+import javax.swing.JPanel;
 import javax.swing.ImageIcon;
 import javax.swing.UIManager;
+import javax.swing.BoxLayout;
 import java.awt.BorderLayout;
+import java.awt.image.BufferedImage;
 import javax.swing.Box;
+import javax.imageio.ImageIO;
+import java.io.File;
 import store.Store;
 import store.Donut;
 import store.Java;
@@ -227,6 +232,32 @@ public class MainWin extends JFrame {
 
     protected void onAboutClick() {
         //TODO: Display dialog with credits for art used, and copyright information
-        JOptionPane.showMessageDialog(this, "All code and art created by Waseem Alkasbutrus");
+        JPanel about = new JPanel();
+        about.setLayout(new BoxLayout(about, BoxLayout.PAGE_AXIS));
+
+        try {
+            BufferedImage jadeBufferedLogo = ImageIO.read(new File("gui/assets/JD.png"));
+            JLabel jadeLogo = new JLabel(new ImageIcon(jadeBufferedLogo));
+            jadeLogo.setHorizontalAlignment(JLabel.CENTER);
+            about.add(jadeLogo);
+        } catch (Exception e) {
+            //ignore the image if the file was not found
+        }
+
+        JLabel title = new JLabel("<html>"
+                                + "<p><font size =+4>Java and Donut Express</font></p>"
+                                + "</html>");
+        
+        JLabel body = new JLabel("<html>"
+                                + "<p>Version 0.1</p>"
+                                + "<p>Copyright 2021 by Waseem Alkasbutrus</p>"
+                                + "<p>Licensed under Gnu GPL 3.0"
+                                + "<p></p>"
+                                + "<p>Logo and icon buttons created by Waseem Alkasbutrus"
+                                + "</html>");
+        about.add(title);
+        about.add(body);
+
+        JOptionPane.showMessageDialog(this, about, "JADE", JOptionPane.PLAIN_MESSAGE, null);
     }
 }
