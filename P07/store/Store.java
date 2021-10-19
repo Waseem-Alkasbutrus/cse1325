@@ -29,7 +29,7 @@ public class Store {
 
     @Override
     public String toString() {
-        String storeString = this.storeName + "\n";
+        String storeString = "\nWelcome to " + this.storeName + "!\n\n";
         for (Product p: this.products) {
             storeString += p.toString() + "\n";
         }
