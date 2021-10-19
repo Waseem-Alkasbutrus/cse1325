@@ -24,6 +24,10 @@ import store.Shot;
 public class MainWin extends JFrame {
     private Store store;
     private JLabel data;
+    private JMenuItem mJava;
+    private JButton bJava;
+    private JMenuItem mDonut;
+    private JButton bDonut;
 
     public MainWin(String title) {
         super(title);
@@ -42,20 +46,20 @@ public class MainWin extends JFrame {
         JMenuItem quit = new JMenuItem("Quit");
 
         JMenu create = new JMenu("Create");
-        JMenuItem donut = new JMenuItem("Donut");
-        JMenuItem java = new JMenuItem("Java");
+        mDonut = new JMenuItem("Donut");
+        mJava = new JMenuItem("Java");
 
         JMenu help = new JMenu("Help");
         JMenuItem about = new JMenuItem("About");
 
         quit.addActionListener(event -> onQuitClick());
-        donut.addActionListener(event -> onDonutClick());
-        java.addActionListener(even -> onJavaClick());
+        mDonut.addActionListener(event -> onCreateDonutClick());
+        mJava.addActionListener(even -> onCreateJavaClick());
         about.addActionListener(event -> onAboutClick());
         
         file.add(quit);
-        create.add(donut);
-        create.add(java);
+        create.add(mDonut);
+        create.add(mJava);
         help.add(about);
 
         menubar.add(file);
@@ -69,30 +73,30 @@ public class MainWin extends JFrame {
 
         JToolBar toolbar = new JToolBar("Tools");
 
-        JButton javaB = new JButton(new ImageIcon("gui/assets/JAVA.png"));
-            javaB.setActionCommand("Create a new java");
-            javaB.setToolTipText("Create a new java");
-            javaB.setBorder(null);
-            toolbar.add(javaB);
-            javaB.addActionListener(event -> onJavaClick());
+        bJava = new JButton(new ImageIcon("gui/assets/JAVA.png"));
+            bJava.setActionCommand("Create a new java");
+            bJava.setToolTipText("Create a new java");
+            bJava.setBorder(null);
+            toolbar.add(bJava);
+            bJava.addActionListener(event -> onCreateJavaClick());
     
-        JButton donutB = new JButton(new ImageIcon("gui/assets/DONUT.png"));
-            donutB.setActionCommand("Create a new donut");
-            donutB.setToolTipText("Create a new donut");
-            donutB.setBorder(null);
-            toolbar.add(donutB);
-            donutB.addActionListener(event -> onDonutClick());
+        bDonut = new JButton(new ImageIcon("gui/assets/DONUT.png"));
+            bDonut.setActionCommand("Create a new donut");
+            bDonut.setToolTipText("Create a new donut");
+            bDonut.setBorder(null);
+            toolbar.add(bDonut);
+            bDonut.addActionListener(event -> onCreateDonutClick());
 
         toolbar.add(Box.createHorizontalStrut(25));
 
-        JButton aboutB = new JButton(new ImageIcon("gui/assets/QUESTION.png"));
-            aboutB.setActionCommand("About this program");
-            aboutB.setToolTipText("About this program");
-            aboutB.setBorder(null);
-            toolbar.add(aboutB);
-            aboutB.addActionListener(event -> onAboutClick());
+        JButton bAbout = new JButton(new ImageIcon("gui/assets/QUESTION.png"));
+            bAbout.setActionCommand("About this program");
+            bAbout.setToolTipText("About this program");
+            bAbout.setBorder(null);
+            toolbar.add(bAbout);
+            bAbout.addActionListener(event -> onAboutClick());
 
-        /////////////
+        //////////////////////////////////////////
         // S T O R E  M E N U
 
         String htmlText = "<html>" + store.toString().replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br/>");
@@ -118,7 +122,7 @@ public class MainWin extends JFrame {
         }
     }
 
-    protected void onDonutClick() {
+    protected void onCreateDonutClick() {
         String name;
         double price;
         double cost;
@@ -171,7 +175,7 @@ public class MainWin extends JFrame {
         JOptionPane.showMessageDialog(this, "Donut was added to store menu");
     }
 
-    protected void onJavaClick() {
+    protected void onCreateJavaClick() {
         String name;
         double price;
         double cost;
