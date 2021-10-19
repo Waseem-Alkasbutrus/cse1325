@@ -104,8 +104,7 @@ public class MainWin extends JFrame {
         //////////////////////////////////////////
         // S T O R E  M E N U
 
-        String htmlText = "<html>" + store.toString().replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br/>");
-        data = new JLabel(htmlText, JLabel.LEFT);
+        data = new JLabel(toHtml(this.store.toString()), JLabel.LEFT);
         data.setVerticalAlignment(JLabel.TOP);
 
         getContentPane().add(toolbar, BorderLayout.PAGE_START);
@@ -175,7 +174,7 @@ public class MainWin extends JFrame {
 
         this.store.addProduct(new Donut(name, price, cost, frosting, sprinkles, filling));
 
-        this.data.setText("<html>" + store.toString().replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br/>"));
+        this.data.setText(toHtml(this.store.toString()));
 
         JOptionPane.showMessageDialog(this, "Donut was added to store menu");
     }
@@ -226,7 +225,7 @@ public class MainWin extends JFrame {
         java.addShot(shot);
         this.store.addProduct(java);
         
-        this.data.setText("<html>" + store.toString().replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br/>"));
+        this.data.setText(toHtml(this.store.toString()));
         JOptionPane.showMessageDialog(this, "Java was added to store menu");
     }
 
@@ -259,5 +258,9 @@ public class MainWin extends JFrame {
         about.add(body);
 
         JOptionPane.showMessageDialog(this, about, "JADE", JOptionPane.PLAIN_MESSAGE, null);
+    }
+
+    protected String toHtml(String plainText) {
+        return "<html>" + plainText.replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br/>");
     }
 }
