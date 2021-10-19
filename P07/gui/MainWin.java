@@ -7,6 +7,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JToolBar;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import javax.swing.ImageIcon;
 import javax.swing.UIManager;
@@ -22,6 +23,7 @@ import store.Shot;
 
 public class MainWin extends JFrame {
     private Store store;
+    private JLabel data;
 
     public MainWin(String title) {
         super(title);
@@ -90,7 +92,15 @@ public class MainWin extends JFrame {
             toolbar.add(aboutB);
             aboutB.addActionListener(event -> onAboutClick());
 
+        /////////////
+        // S T O R E  M E N U
+
+        String htmlText = "<html>" + store.toString().replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br/>");
+        data = new JLabel(htmlText, JLabel.LEFT);
+        data.setVerticalAlignment(JLabel.TOP);
+
         getContentPane().add(toolbar, BorderLayout.PAGE_START);
+        getContentPane().add(data, BorderLayout.CENTER);
     }
 
     public static void main(String[] args) {
@@ -155,7 +165,10 @@ public class MainWin extends JFrame {
         }
 
         this.store.addProduct(new Donut(name, price, cost, frosting, sprinkles, filling));
-        JOptionPane.showMessageDialog(this, this.store.toString());
+
+        this.data.setText("<html>" + store.toString().replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br/>"));
+
+        JOptionPane.showMessageDialog(this, "Donut was added to store menu");
     }
 
     protected void onJavaClick() {
@@ -190,12 +203,22 @@ public class MainWin extends JFrame {
             return;
         }
 
-        Object darkness = JOptionPane.showInputDialog(this, "Java Darkness", "Java Darkness", JOptionPane.QUESTION_MESSAGE, null, Darkness.values(), Darkness.blond);
+        Darkness darkness = (Darkness) JOptionPane.showInputDialog(this, "Java Darkness", "Java Darkness", JOptionPane.QUESTION_MESSAGE, null, Darkness.values(), Darkness.blond);
         if (darkness == null) {
             return;
         }
-        this.store.addProduct(new Java(name, price, cost, (Darkness) darkness));
-        JOptionPane.showMessageDialog(this, this.store.toString());
+
+        Shot shot = (Shot) JOptionPane.showInputDialog(this, "Java Shots", "Java Shots", JOptionPane.QUESTION_MESSAGE, null, Shot.values(), Shot.none);
+        if (shot == null) {
+            return;
+        }
+
+        Java java = new Java(name, price, cost, darkness);
+        java.addShot(shot);
+        this.store.addProduct(java);
+        
+        this.data.setText("<html>" + store.toString().replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br/>"));
+        JOptionPane.showMessageDialog(this, "Java was added to store menu");
     }
 
     protected void onAboutClick() {
