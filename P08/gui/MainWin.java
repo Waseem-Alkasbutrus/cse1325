@@ -33,10 +33,24 @@ import store.Shot;
 public class MainWin extends JFrame {
     private Store store;
     private JLabel data;
+
     private JMenuItem mJava;
     private JButton bJava;
+    
     private JMenuItem mDonut;
     private JButton bDonut;
+
+    private JMenuItem mNew;
+    private JButton bNew;
+
+    private JMenuItem mOpen;
+    private JButton bOpen;
+
+    private JMenuItem mSave;
+    private JButton bSave;
+
+    private JMenuItem mSaveAs;
+    private JButton bSaveAs;
 
     public MainWin(String title) {
         super(title);
@@ -52,7 +66,11 @@ public class MainWin extends JFrame {
         JMenuBar menubar = new JMenuBar();
 
         JMenu file = new JMenu("File");
-        JMenuItem quit = new JMenuItem("Quit");
+        mNew    = new JMenuItem("New");
+        mOpen   = new JMenuItem("Open...");
+        mSave   = new JMenuItem("Save");
+        mSaveAs = new JMenuItem("Save As...");
+        JMenuItem mQuit = new JMenuItem("Quit");
 
         JMenu create = new JMenu("Create");
         mDonut = new JMenuItem("Donut");
@@ -61,12 +79,23 @@ public class MainWin extends JFrame {
         JMenu help = new JMenu("Help");
         JMenuItem about = new JMenuItem("About");
 
-        quit.addActionListener(event -> onQuitClick());
+        mNew.addActionListener(even -> onNewClick());
+        mOpen.addActionListener(event -> onOpenClick());
+        mSave.addActionListener(event -> onSaveClick());
+        mSaveAs.addActionListener(event -> onSaveAsClick());
+        mQuit.addActionListener(event -> onQuitClick());
         mDonut.addActionListener(event -> onCreateDonutClick());
         mJava.addActionListener(even -> onCreateJavaClick());
         about.addActionListener(event -> onAboutClick());
         
-        file.add(quit);
+        file.add(mNew);
+        file.addSeparator();
+        file.add(mOpen);
+        file.addSeparator();
+        file.add(mSave);
+        file.add(mSaveAs);
+        file.addSeparator();
+        file.add(mQuit);
         create.add(mDonut);
         create.add(mJava);
         help.add(about);
@@ -128,6 +157,21 @@ public class MainWin extends JFrame {
     }
     
     // Listeners
+    protected void onNewClick() {
+        //TODO:
+    }
+
+    protected void onOpenClick() {
+        //TODO:
+    }
+
+    protected void onSaveClick() {
+        //TODO:
+    }
+
+    protected void onSaveAsClick() {
+        //TODO:
+    }
 
     protected void onQuitClick() {
         int choice = JOptionPane.showConfirmDialog(this, "Are you sure?", "Exit?", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
