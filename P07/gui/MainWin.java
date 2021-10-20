@@ -1,6 +1,9 @@
 package gui;
 
 import java.util.ArrayList;
+import javax.imageio.ImageIO;
+import java.io.File;
+
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
@@ -14,11 +17,11 @@ import javax.swing.JPanel;
 import javax.swing.ImageIcon;
 import javax.swing.UIManager;
 import javax.swing.BoxLayout;
+import javax.swing.Box;
+
 import java.awt.BorderLayout;
 import java.awt.image.BufferedImage;
-import javax.swing.Box;
-import javax.imageio.ImageIO;
-import java.io.File;
+
 import store.Store;
 import store.Donut;
 import store.Java;
