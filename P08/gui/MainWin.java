@@ -12,10 +12,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JToolBar;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.ImageIcon;
-import javax.swing.UIManager;
 import javax.swing.BoxLayout;
 import javax.swing.Box;
 
@@ -110,6 +108,36 @@ public class MainWin extends JFrame {
         // T O O L B A R
 
         JToolBar toolbar = new JToolBar("Tools");
+        
+        bSave = new JButton(new ImageIcon("gui/assets/SAVE.png"));
+            bSave.setActionCommand("Save store");
+            bSave.setToolTipText("Save store");
+            bSave.setBorder(null);
+            toolbar.add(bSave);
+            bSave.addActionListener(event -> onSaveClick());
+
+        bNew = new JButton(new ImageIcon("gui/assets/NEW.png"));
+            bNew.setActionCommand("Create a new store");
+            bNew.setToolTipText("Create a new store");
+            bNew.setBorder(null);
+            toolbar.add(bNew);
+            bNew.addActionListener(event -> onNewClick());
+
+        bOpen = new JButton(new ImageIcon("gui/assets/OPEN.png"));
+            bOpen.setActionCommand("Open a store frmo a .jade file");
+            bOpen.setToolTipText("Open a store from a .jade file");
+            bOpen.setBorder(null);
+            toolbar.add(bOpen);
+            bOpen.addActionListener(event -> onOpenClick());
+
+        bSaveAs = new JButton(new ImageIcon("gui/assets/SAVE AS.png"));
+            bSaveAs.setActionCommand("Save store to a new .jade file");
+            bSaveAs.setToolTipText("Save store to a new .jade file");
+            bSaveAs.setBorder(null);
+            toolbar.add(bSaveAs);
+            bSaveAs.addActionListener(event -> onSaveAsClick());
+        
+        toolbar.add(Box.createHorizontalStrut(25));
 
         bJava = new JButton(new ImageIcon("gui/assets/JAVA.png"));
             bJava.setActionCommand("Create a new java");
@@ -127,7 +155,7 @@ public class MainWin extends JFrame {
 
         toolbar.add(Box.createHorizontalStrut(25));
 
-        JButton bAbout = new JButton(new ImageIcon("gui/assets/QUESTION.png"));
+        JButton bAbout = new JButton(new ImageIcon("gui/assets/ABOUT.png"));
             bAbout.setActionCommand("About this program");
             bAbout.setToolTipText("About this program");
             bAbout.setBorder(null);
@@ -156,29 +184,41 @@ public class MainWin extends JFrame {
         jade.setVisible(true);
     }
     
-    // Listeners
+    ///////////////////////////////////
+    // B U T T O N   A C T I O N S
     protected void onNewClick() {
-        //TODO:
+        try {
+            Store newStore = new Store(getString("Store name", "New Store", JOptionPane.QUESTION_MESSAGE));
+            this.store = newStore;
+            this.data.setText(toHtml(this.store.toString()));
+            return;
+        } catch (CancelDialogException e) {
+            return;
+        }
     }
 
     protected void onOpenClick() {
-        //TODO:
+        //TODO: bring up a file chooser dialog, open the specified file, read product information into the store instance
     }
 
     protected void onSaveClick() {
-        //TODO:
+        //TODO: write the current store information into the current open file (overwrite old information)
     }
 
     protected void onSaveAsClick() {
-        //TODO:
+        //TODO: bring up a file chooser dialog, open the specified file, write product information into it
     }
 
     protected void onQuitClick() {
-        int choice = JOptionPane.showConfirmDialog(this, "Are you sure?", "Exit?", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+        int choice = JOptionPane.showConfirmDialog(this, "Save before exiting?", "Save?", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
 
-        if (choice == JOptionPane.YES_OPTION) {
-            System.exit(0);
+        if (choice == JOptionPane.CANCEL_OPTION) {
+            return;
+        } else if (choice == JOptionPane.YES_OPTION) {
+            onSaveClick();
         }
+
+        System.exit(0);
     }
 
     protected void onCreateDonutClick() {
@@ -301,15 +341,20 @@ public class MainWin extends JFrame {
         JLabel body = new JLabel("<html>"
                                 + "<p>Version 0.2</p>"
                                 + "<p>Copyright 2021 by Waseem Alkasbutrus</p>"
-                                + "<p>Licensed under Gnu GPL 3.0"
+                                + "<p>Licensed under Gnu GPL 3.0</p>"
                                 + "<p></p>"
-                                + "<p>Logo and icon buttons created by Waseem Alkasbutrus"
+                                + "<p>Logo and New Donut, New Java buttons created by Waseem Alkasbutrus</p>"
+                                + "<p>New, Open, Save, Save as, About buttons from flaticon.com</p>"
+                                + "<p><font size =-1>https://www.flaticon.com/uicons</p>"
                                 + "</html>");
         about.add(title);
         about.add(body);
 
         JOptionPane.showMessageDialog(this, about, "JADE", JOptionPane.PLAIN_MESSAGE, null);
     }
+
+    /////////////////////////////////////////
+    //U T I L S
 
     //My implmentation for getDouble followed professor rice's implimentation closely
     protected Double getDouble(String message, String title, int messageType) throws CancelDialogException {
