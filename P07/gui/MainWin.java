@@ -1,5 +1,6 @@
 package gui;
 
+import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
@@ -111,6 +112,13 @@ public class MainWin extends JFrame {
         getContentPane().add(data, BorderLayout.CENTER);
     }
 
+    //CancelDialogException originally written by professor George F. Rice, reused by Waseem Alkasbutrus
+    protected class CancelDialogException extends Exception {
+        public CancelDialogException() {
+            super("Dialog canceled");
+        }
+    }
+
     public static void main(String[] args) {
         MainWin jade = new MainWin("JADE");
         jade.setVisible(true);
@@ -132,26 +140,20 @@ public class MainWin extends JFrame {
         double cost;
 
         try {
-            name = JOptionPane.showInputDialog(this, "Donut Name:");
-            if (name.equals("")) {
-                throw new Exception("Name cannot be left blank");
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Invalid Name!", "ERROR", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        
-        try {
-            price = Double.parseDouble(JOptionPane.showInputDialog(this, "Donut Price:"));
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Invalid Price!", "ERROR", JOptionPane.ERROR_MESSAGE);
+            name = getString("Donut Name", "Donut Name", JOptionPane.QUESTION_MESSAGE);
+        } catch (CancelDialogException e) {
             return;
         }
 
         try {
-            cost = Double.parseDouble(JOptionPane.showInputDialog(this, "Donut Cost:"));
+            price = getDouble("Donut Price", "Donut Price", JOptionPane.QUESTION_MESSAGE);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Invalid Cost!", "ERROR", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try {
+            cost = getDouble("Donut Cost", "Donut Cost", JOptionPane.QUESTION_MESSAGE);
+        } catch (Exception e) {
             return;
         }
 
@@ -183,46 +185,49 @@ public class MainWin extends JFrame {
         String name;
         double price;
         double cost;
+        Darkness darkness;
+        ArrayList<Shot> shots = new ArrayList<>();
 
         try {
-            name = JOptionPane.showInputDialog(this, "Java Name:", "Java Name", JOptionPane.QUESTION_MESSAGE);
-            if (name.equals("")) {
-                throw new Exception("Name cannot be left blank");
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Invalid Name!", "ERROR", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        if (name.equals("")) {
-            JOptionPane.showMessageDialog(this, "Invalid Name!", "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
-        
-        try {
-            price = Double.parseDouble(JOptionPane.showInputDialog(this, "Java Price:", "Java Price", JOptionPane.QUESTION_MESSAGE));
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Invalid Price!", "ERROR", JOptionPane.ERROR_MESSAGE);
+            name = getString("Java Name", "Java Name", JOptionPane.QUESTION_MESSAGE);
+        } catch (CancelDialogException e) {
             return;
         }
 
         try {
-            cost = Double.parseDouble(JOptionPane.showInputDialog(this, "Java Cost:", "Java Cost", JOptionPane.QUESTION_MESSAGE));
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Invalid Cost!", "ERROR", JOptionPane.ERROR_MESSAGE);
+            price = getDouble("Java Price", "Java Price", JOptionPane.QUESTION_MESSAGE);
+        } catch (CancelDialogException e) {
             return;
         }
 
-        Darkness darkness = (Darkness) JOptionPane.showInputDialog(this, "Java Darkness", "Java Darkness", JOptionPane.QUESTION_MESSAGE, null, Darkness.values(), Darkness.blond);
+        try {
+            cost = getDouble("Java Cost", "Java Cost", JOptionPane.QUESTION_MESSAGE);
+        } catch (CancelDialogException e) {
+            return;
+        }
+
+        darkness = (Darkness) JOptionPane.showInputDialog(this, "Java Darkness", "Java Darkness", JOptionPane.QUESTION_MESSAGE, null, Darkness.values(), Darkness.blond);
         if (darkness == null) {
             return;
         }
 
-        Shot shot = (Shot) JOptionPane.showInputDialog(this, "Java Shots", "Java Shots", JOptionPane.QUESTION_MESSAGE, null, Shot.values(), Shot.none);
-        if (shot == null) {
-            return;
+        while (true) {
+            Shot s = (Shot) JOptionPane.showInputDialog(this, "Java Shots", "Java Shots", JOptionPane.QUESTION_MESSAGE, null, Shot.values(), Shot.none);
+            if (s == Shot.none) {
+                break;
+            } else if (s == null) {
+                return;
+            } else {
+                shots.add(s);
+            }
         }
 
         Java java = new Java(name, price, cost, darkness);
-        java.addShot(shot);
+        
+        for (Shot s : shots) {
+            java.addShot(s);
+        }
+
         this.store.addProduct(java);
         
         this.data.setText(toHtml(this.store.toString()));
@@ -230,7 +235,6 @@ public class MainWin extends JFrame {
     }
 
     protected void onAboutClick() {
-        //TODO: Display dialog with credits for art used, and copyright information
         JPanel about = new JPanel();
         about.setLayout(new BoxLayout(about, BoxLayout.PAGE_AXIS));
 
@@ -258,6 +262,43 @@ public class MainWin extends JFrame {
         about.add(body);
 
         JOptionPane.showMessageDialog(this, about, "JADE", JOptionPane.PLAIN_MESSAGE, null);
+    }
+
+    //My implmentation for getDouble followed professor rice's implimentation closely
+    protected Double getDouble(String message, String title, int messageType) throws CancelDialogException {
+        while (true) {
+            try {
+                String stringInput = JOptionPane.showInputDialog(this, message, title, messageType);
+                if (stringInput == null) {
+                    throw new CancelDialogException();
+                } else {
+                    double parsedDouble = Double.parseDouble(stringInput);
+                    return parsedDouble;
+                }
+            } catch (CancelDialogException e) {
+                throw e;
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Invalid Input", "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    //My implmentation for getString followed professor rice's implimentation closely
+    protected String getString(String message, String title, int messageType) throws CancelDialogException {
+        while (true) {
+            try {
+                String inputString = JOptionPane.showInputDialog(this, message, title, messageType);
+                if (inputString == null) {
+                    throw new CancelDialogException();
+                } else if (inputString.equals("")) {
+                    JOptionPane.showMessageDialog(this, "Invalid Input!", "ERROR", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    return inputString;
+                }
+            } catch (CancelDialogException e) {
+                throw e;
+            }
+        }
     }
 
     protected String toHtml(String plainText) {
