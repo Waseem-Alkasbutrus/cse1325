@@ -299,7 +299,7 @@ public class MainWin extends JFrame {
                                 + "</html>");
         
         JLabel body = new JLabel("<html>"
-                                + "<p>Version 0.1</p>"
+                                + "<p>Version 0.2</p>"
                                 + "<p>Copyright 2021 by Waseem Alkasbutrus</p>"
                                 + "<p>Licensed under Gnu GPL 3.0"
                                 + "<p></p>"
