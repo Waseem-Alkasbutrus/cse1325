@@ -53,7 +53,7 @@ public class MainWin extends JFrame {
     public MainWin(String title) {
         super(title);
 
-        store = new Store("JADE");
+        store = new Store(title);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(500,500);
@@ -109,60 +109,40 @@ public class MainWin extends JFrame {
 
         JToolBar toolbar = new JToolBar("Tools");
         
-        bSave = new JButton(new ImageIcon("gui/assets/SAVE.png"));
-            bSave.setActionCommand("Save store");
-            bSave.setToolTipText("Save store");
-            bSave.setBorder(null);
+        bSave = newJButton("gui/assets/SAVE.png", "Save store", "Save store");
             toolbar.add(bSave);
             bSave.addActionListener(event -> onSaveClick());
 
-        bNew = new JButton(new ImageIcon("gui/assets/NEW.png"));
-            bNew.setActionCommand("Create a new store");
-            bNew.setToolTipText("Create a new store");
-            bNew.setBorder(null);
+
+        bNew = newJButton("gui/assets/NEW.png", "Create a new store", "Create a new store");
             toolbar.add(bNew);
             bNew.addActionListener(event -> onNewClick());
 
-        bOpen = new JButton(new ImageIcon("gui/assets/OPEN.png"));
-            bOpen.setActionCommand("Open a store frmo a .jade file");
-            bOpen.setToolTipText("Open a store from a .jade file");
-            bOpen.setBorder(null);
+        bOpen = newJButton("gui/assets/OPEN.png", "Open a store from a .jade file", "Open a store from a .jade file");
             toolbar.add(bOpen);
             bOpen.addActionListener(event -> onOpenClick());
 
-        bSaveAs = new JButton(new ImageIcon("gui/assets/SAVE AS.png"));
-            bSaveAs.setActionCommand("Save store to a new .jade file");
-            bSaveAs.setToolTipText("Save store to a new .jade file");
-            bSaveAs.setBorder(null);
+        bSaveAs = newJButton("gui/assets/SAVE AS.png", "Save store to a new .jade file", "Save store to a new .jade file");
             toolbar.add(bSaveAs);
             bSaveAs.addActionListener(event -> onSaveAsClick());
         
         toolbar.add(Box.createHorizontalStrut(25));
 
-        bJava = new JButton(new ImageIcon("gui/assets/JAVA.png"));
-            bJava.setActionCommand("Create a new java");
-            bJava.setToolTipText("Create a new java");
-            bJava.setBorder(null);
+        bJava = newJButton("gui/assets/JAVA.png", "Create a new java", "Create a new java");
             toolbar.add(bJava);
             bJava.addActionListener(event -> onCreateJavaClick());
     
-        bDonut = new JButton(new ImageIcon("gui/assets/DONUT.png"));
-            bDonut.setActionCommand("Create a new donut");
-            bDonut.setToolTipText("Create a new donut");
-            bDonut.setBorder(null);
+        bDonut = newJButton("gui/assets/DONUT.png", "Create a new donut", "Create a new donut");
             toolbar.add(bDonut);
             bDonut.addActionListener(event -> onCreateDonutClick());
 
         toolbar.add(Box.createHorizontalStrut(25));
 
-        JButton bAbout = new JButton(new ImageIcon("gui/assets/ABOUT.png"));
-            bAbout.setActionCommand("About this program");
-            bAbout.setToolTipText("About this program");
-            bAbout.setBorder(null);
+        JButton bAbout = newJButton("gui/assets/ABOUT.png", "About this program", "About this program");
             toolbar.add(bAbout);
             bAbout.addActionListener(event -> onAboutClick());
 
-        //////////////////////////////////////////
+        //////////////////////////////////////////////////////////////
         // S T O R E  M E N U
 
         data = new JLabel(toHtml(this.store.toString()), JLabel.LEFT);
@@ -184,7 +164,7 @@ public class MainWin extends JFrame {
         jade.setVisible(true);
     }
     
-    ///////////////////////////////////
+    //////////////////////////////////////////////////////////////
     // B U T T O N   A C T I O N S
     protected void onNewClick() {
         try {
@@ -353,7 +333,7 @@ public class MainWin extends JFrame {
         JOptionPane.showMessageDialog(this, about, "JADE", JOptionPane.PLAIN_MESSAGE, null);
     }
 
-    /////////////////////////////////////////
+    //////////////////////////////////////////////////////////////
     //U T I L S
 
     //My implmentation for getDouble followed professor rice's implimentation closely
@@ -395,5 +375,14 @@ public class MainWin extends JFrame {
 
     protected String toHtml(String plainText) {
         return "<html>" + plainText.replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br/>");
+    }
+
+    protected JButton newJButton(String iconPath, String actionCommand, String toolTip) {
+        JButton bNewButton = new JButton(new ImageIcon(iconPath));
+        bNewButton.setActionCommand(actionCommand);
+        bNewButton.setToolTipText(toolTip);
+        bNewButton.setBorder(null);
+
+        return bNewButton;
     }
 }
