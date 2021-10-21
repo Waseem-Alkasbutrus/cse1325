@@ -10,12 +10,14 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JToolBar;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.ImageIcon;
 import javax.swing.BoxLayout;
 import javax.swing.Box;
+import javax.swing.JFileChooser;
 
 import java.awt.BorderLayout;
 import java.awt.image.BufferedImage;
@@ -30,6 +32,7 @@ import store.Shot;
 
 public class MainWin extends JFrame {
     private Store store;
+    private File filename;
     private JLabel data;
 
     private JMenuItem mJava;
@@ -52,7 +55,6 @@ public class MainWin extends JFrame {
 
     public MainWin(String title) {
         super(title);
-
         store = new Store(title);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -179,6 +181,23 @@ public class MainWin extends JFrame {
 
     protected void onOpenClick() {
         //TODO: bring up a file chooser dialog, open the specified file, read product information into the store instance
+        JFileChooser fileChooser = new JFileChooser(this.filename);
+        FileNameExtensionFilter fileFilter = new FileNameExtensionFilter("jade files containing product information", ".jade");
+        fileChooser.addChoosableFileFilter(fileFilter);
+        fileChooser.setFileFilter(fileFilter);
+
+        int result = fileChooser.showSaveDialog(this);
+        if (result == JFileChooser.CANCEL_OPTION) {
+            return;
+        } else if (result == JFileChooser.APPROVE_OPTION) {
+            this.filename = fileChooser.getSelectedFile();
+        }
+
+        if (!this.filename.getAbsolutePath().endsWith(".jade")) {
+            this.filename = new File(this.filename.getAbsolutePath() + ".jade");
+        }
+
+        onSaveClick();
     }
 
     protected void onSaveClick() {
