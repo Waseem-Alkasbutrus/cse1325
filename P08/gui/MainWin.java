@@ -58,7 +58,7 @@ public class MainWin extends JFrame {
         store = new Store(title);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(500,500);
+        setSize(550,500);
 
         //////////////////////////////////////////////////////////////
         // M E N U
@@ -109,7 +109,7 @@ public class MainWin extends JFrame {
         //////////////////////////////////////////////////////////////
         // T O O L B A R
 
-        JToolBar toolbar = new JToolBar("Tools");
+        JToolBar toolbar = new JToolBar("JADE Tools");
         
         bSave = newJButton("gui/assets/SAVE.png", "Save store", "Save store");
             toolbar.add(bSave);
@@ -182,7 +182,7 @@ public class MainWin extends JFrame {
     protected void onOpenClick() {
         //TODO: bring up a file chooser dialog, open the specified file, read product information into the store instance
         JFileChooser fileChooser = new JFileChooser(this.filename);
-        FileNameExtensionFilter fileFilter = new FileNameExtensionFilter("jade files containing product information", ".jade");
+        FileNameExtensionFilter fileFilter = new FileNameExtensionFilter(".jade files", ".jade");
         fileChooser.addChoosableFileFilter(fileFilter);
         fileChooser.setFileFilter(fileFilter);
 
@@ -342,9 +342,9 @@ public class MainWin extends JFrame {
                                 + "<p>Copyright 2021 by Waseem Alkasbutrus</p>"
                                 + "<p>Licensed under Gnu GPL 3.0</p>"
                                 + "<p></p>"
-                                + "<p>Logo and New Donut, New Java buttons created by Waseem Alkasbutrus</p>"
-                                + "<p>New, Open, Save, Save as, About buttons from flaticon.com</p>"
-                                + "<p><font size =-1>https://www.flaticon.com/uicons</p>"
+                                + "<p>-Logo and all toolbar button icons created by Waseem Alkasbutrus</p>"
+                                + "<p>-CancelDialogException by George F. Rice, licensed under Gnu GPL 3.0</p>"
+                                + "<p>-getDouble, and getString methods by George F. Rice, licensed under Gnu GPL 3.0</p>"
                                 + "</html>");
         about.add(title);
         about.add(body);
@@ -355,7 +355,7 @@ public class MainWin extends JFrame {
     //////////////////////////////////////////////////////////////
     //U T I L S
 
-    //My implmentation for getDouble followed professor rice's implimentation closely
+    //Implmentation for getDouble followed professor rice's implimentation closely
     protected Double getDouble(String message, String title, int messageType) throws CancelDialogException {
         while (true) {
             try {
@@ -374,7 +374,7 @@ public class MainWin extends JFrame {
         }
     }
 
-    //My implmentation for getString followed professor rice's implimentation closely
+    //Implmentation for getString followed professor rice's implimentation closely
     protected String getString(String message, String title, int messageType) throws CancelDialogException {
         while (true) {
             try {
