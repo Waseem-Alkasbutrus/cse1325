@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
@@ -189,8 +191,7 @@ public class MainWin extends JFrame {
     }
 
     protected void onOpenClick() {
-        //TODO: bring up a file chooser dialog, open the specified file, read product information into the store instance
-        JFileChooser fileChooser = new JFileChooser(this.filename);
+        final JFileChooser fileChooser = new JFileChooser(this.filename);
         FileNameExtensionFilter jadeFileFilter = new FileNameExtensionFilter("jade files", ".jade");
         fileChooser.addChoosableFileFilter(jadeFileFilter);
         fileChooser.setFileFilter(jadeFileFilter);
@@ -227,11 +228,35 @@ public class MainWin extends JFrame {
     }
 
     protected void onSaveClick() {
-        //TODO: write the current store information into the current open file (overwrite old information)
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(this.filename))) {
+            bufferedWriter.write(MAGIC_COOKIE + '\n');
+            bufferedWriter.write(FILE_VERSION + '\n');
+            //TODO: create a save method that takes a bufferedWriter and saves all the store attributes in a file
+            //this.store.save(bufferedWriter);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Unable to open file", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     protected void onSaveAsClick() {
         //TODO: bring up a file chooser dialog, open the specified file, write product information into it
+        final JFileChooser fileChooser = new JFileChooser(this.filename);
+        FileNameExtensionFilter jadeFileFilter = new FileNameExtensionFilter("jade files", ".jade");
+        fileChooser.addChoosableFileFilter(jadeFileFilter);
+        fileChooser.setFileFilter(jadeFileFilter);
+
+        int result = fileChooser.showSaveDialog(this);
+        if (result == JFileChooser.CANCEL_OPTION) {
+            return;
+        } else if (result == JFileChooser.APPROVE_OPTION) {
+            this.filename = fileChooser.getSelectedFile();
+        }
+
+        if (!this.filename.getAbsolutePath().endsWith(".jade")) {
+            this.filename = new File(this.filename.getAbsolutePath() + ".jade");
+        }
+
+        onSaveClick();
     }
 
     protected void onQuitClick() {
