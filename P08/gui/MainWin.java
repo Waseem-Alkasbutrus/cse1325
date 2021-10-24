@@ -2,7 +2,10 @@ package gui;
 
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
+
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
@@ -16,6 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.ImageIcon;
 import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.Box;
 import javax.swing.JFileChooser;
 
@@ -31,6 +35,11 @@ import store.Darkness;
 import store.Shot;
 
 public class MainWin extends JFrame {
+    private String NAME = "JADE";
+    private String VERSION = "0.2";
+    private String FILE_VERSION = "1.0"; 
+    private String MAGIC_COOKIE = "WIA®";
+
     private Store store;
     private File filename;
     private JLabel data;
@@ -182,11 +191,11 @@ public class MainWin extends JFrame {
     protected void onOpenClick() {
         //TODO: bring up a file chooser dialog, open the specified file, read product information into the store instance
         JFileChooser fileChooser = new JFileChooser(this.filename);
-        FileNameExtensionFilter fileFilter = new FileNameExtensionFilter(".jade files", ".jade");
-        fileChooser.addChoosableFileFilter(fileFilter);
-        fileChooser.setFileFilter(fileFilter);
+        FileNameExtensionFilter jadeFileFilter = new FileNameExtensionFilter("jade files", ".jade");
+        fileChooser.addChoosableFileFilter(jadeFileFilter);
+        fileChooser.setFileFilter(jadeFileFilter);
 
-        int result = fileChooser.showSaveDialog(this);
+        int result = fileChooser.showOpenDialog(this);
         if (result == JFileChooser.CANCEL_OPTION) {
             return;
         } else if (result == JFileChooser.APPROVE_OPTION) {
@@ -197,7 +206,24 @@ public class MainWin extends JFrame {
             this.filename = new File(this.filename.getAbsolutePath() + ".jade");
         }
 
-        onSaveClick();
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(this.filename))) {
+            String magicCookie = bufferedReader.readLine();
+            if (!magicCookie.equals(MAGIC_COOKIE)) {
+                throw new Exception("Not a jade file");
+            }
+
+            String fileVersion = bufferedReader.readLine();
+            if (!fileVersion.equals(FILE_VERSION)) {
+                throw new Exception("Incompatiblr jade file format");
+            }
+
+            //TODO: create a new constructor in Store that takes a BufferedReader and read fields from the a file
+            //this.store = new Store(bufferedReader);
+
+            this.data.setText(toHtml(this.store.toString()));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Unable to open file", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     protected void onSaveClick() {
