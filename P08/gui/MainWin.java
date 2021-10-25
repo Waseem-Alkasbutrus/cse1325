@@ -351,7 +351,9 @@ public class MainWin extends JFrame {
         while (true) {
             Shot s = (Shot) JOptionPane.showInputDialog(this, "Java Shots", "Java Shots", JOptionPane.QUESTION_MESSAGE, null, Shot.values(), Shot.none);
             if (s == Shot.none) {
+                shots.add(s);
                 break;
+                
             } else if (s == null) {
                 return;
             } else {

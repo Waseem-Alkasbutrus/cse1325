@@ -18,15 +18,19 @@ public class Java extends Product {
     public Java(BufferedReader bufferedReader) throws IOException {
         super(bufferedReader);
         this.darkness = Darkness.valueOf(bufferedReader.readLine().replaceAll("\n", ""));
-        for (int i = 0; i < Integer.parseInt(bufferedReader.readLine()); i++) {
+        this.shots = new ArrayList<>(0);
+        while (true) {
             this.shots.add(Shot.valueOf(bufferedReader.readLine().replaceAll("\n", "")));
+            if (this.shots.get(this.shots.size() - 1) == Shot.none) {
+                break;
+            }
         }
     }
 
     public void save(BufferedWriter bufferedWriter) throws IOException {
         super.save(bufferedWriter);
         bufferedWriter.write(this.darkness.name() + '\n');
-        bufferedWriter.write(this.shots.size() + '\n');
+
         for (Shot s : this.shots) {
             bufferedWriter.write(s.name() + '\n');
         }
@@ -39,12 +43,12 @@ public class Java extends Product {
     @Override
     public String toString() {
         String javaString = super.name + " (" + this.darkness;
-        if (this.shots.size() > 0) {
+        if (this.shots.size() > 1) {
             javaString += " with ";
-            for (int i = 0; i < (this.shots.size() - 1); i++) {
+            for (int i = 0; i < (this.shots.size() - 2); i++) {
                 javaString += this.shots.get(i) + ", ";
             }
-            javaString += this.shots.get(this.shots.size() - 1);
+            javaString += this.shots.get(this.shots.size() - 2);
         } else {
             javaString += " with no shots";
         }
