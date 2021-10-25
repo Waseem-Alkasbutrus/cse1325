@@ -71,15 +71,6 @@ public class MainWin extends JFrame {
         
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(550,500);
-        addWindowListener(new WindowAdapter() {
-
-
-            @Override
-            public void windowClosing(WindowEvent e) {
-                super.windowClosing(e); 
-                JOptionPane.showConfirmDialog(null,"Are sure to close!");
-            }
-        });
 
         //////////////////////////////////////////////////////////////
         // M E N U
