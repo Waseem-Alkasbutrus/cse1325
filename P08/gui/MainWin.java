@@ -21,7 +21,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.ImageIcon;
 import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
 import javax.swing.Box;
 import javax.swing.JFileChooser;
 
@@ -37,7 +36,7 @@ import store.Darkness;
 import store.Shot;
 
 public class MainWin extends JFrame {
-    private String NAME = "JADE";
+    private String NAME = "JAVA AND DONUT EXPRESS";
     private String VERSION = "0.2";
     private String FILE_VERSION = "1.0"; 
     private String MAGIC_COOKIE = "WIA®";
@@ -70,6 +69,8 @@ public class MainWin extends JFrame {
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(550,500);
+
+        this.filename = new File("./saves/default.jade");
 
         //////////////////////////////////////////////////////////////
         // M E N U
@@ -257,6 +258,7 @@ public class MainWin extends JFrame {
             this.filename = new File(this.filename.getAbsolutePath() + ".jade");
         }
 
+        System.out.println(filename.getPath());
         onSaveClick();
     }
 
@@ -386,11 +388,11 @@ public class MainWin extends JFrame {
         }
 
         JLabel title = new JLabel("<html>"
-                                + "<p><font size =+4>Java and Donut Express</font></p>"
+                                + "<p><font size =+4>" + this.NAME + "</font></p>"
                                 + "</html>");
         
         JLabel body = new JLabel("<html>"
-                                + "<p>Version 0.2</p>"
+                                + "<p>Version "+ this.VERSION + "</p>"
                                 + "<p>Copyright 2021 by Waseem Alkasbutrus</p>"
                                 + "<p>Licensed under Gnu GPL 3.0</p>"
                                 + "<p></p>"
