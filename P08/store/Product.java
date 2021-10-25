@@ -1,8 +1,7 @@
 package store;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.BufferedWriter;
 import java.io.IOException;
 
 public class Product {
@@ -26,10 +25,10 @@ public class Product {
         return this.name;
     }
 
-    public void save(FileWriter fileWriter) throws IOException {
-        fileWriter.write(this.name + '\n');
-        fileWriter.write(Double.toString(this.price) + '\n');
-        fileWriter.write(Double.toString(this.cost) + '\n');
+    public void save(BufferedWriter bufferedWriter) throws IOException {
+        bufferedWriter.write(this.name + '\n');
+        bufferedWriter.write(Double.toString(this.price) + '\n');
+        bufferedWriter.write(Double.toString(this.cost) + '\n');
     }
 
     @Override

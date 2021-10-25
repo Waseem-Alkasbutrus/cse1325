@@ -1,5 +1,8 @@
 package store;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Java extends Product {
@@ -10,6 +13,23 @@ public class Java extends Product {
         super(name, price, cost);
         this.darkness = darkness;
         this.shots = new ArrayList<>(0);
+    }
+
+    public Java(BufferedReader bufferedReader) throws IOException {
+        super(bufferedReader);
+        this.darkness = Darkness.valueOf(bufferedReader.readLine());
+        for (int i = 0; i < Integer.parseInt(bufferedReader.readLine()); i++) {
+            this.shots.add(Shot.valueOf(bufferedReader.readLine()));
+        }
+    }
+
+    public void save(BufferedWriter bufferedWriter) throws IOException {
+        super.save(bufferedWriter);
+        bufferedWriter.write(this.darkness.name() + '\n');
+        bufferedWriter.write(this.shots.size() + '\n');
+        for (Shot s : this.shots) {
+            bufferedWriter.write(s.name() + '\n');
+        }
     }
 
     public void addShot(Shot shot) {

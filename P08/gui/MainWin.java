@@ -215,15 +215,16 @@ public class MainWin extends JFrame {
 
             String fileVersion = bufferedReader.readLine();
             if (!fileVersion.equals(FILE_VERSION)) {
-                throw new Exception("Incompatiblr jade file format");
+                throw new Exception("Incompatible jade file format");
             }
 
             //TODO: create a new constructor in Store that takes a BufferedReader and read fields from the a file
-            //this.store = new Store(bufferedReader);
+            this.store = new Store(bufferedReader);
 
             this.data.setText(toHtml(this.store.toString()));
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Unable to open file", "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Unable to open file || " + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
         }
     }
 
@@ -232,7 +233,7 @@ public class MainWin extends JFrame {
             bufferedWriter.write(MAGIC_COOKIE + '\n');
             bufferedWriter.write(FILE_VERSION + '\n');
             //TODO: create a save method that takes a bufferedWriter and saves all the store attributes in a file
-            //this.store.save(bufferedWriter);
+            this.store.save(bufferedWriter);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Unable to open file", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
