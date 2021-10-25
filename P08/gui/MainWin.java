@@ -192,7 +192,7 @@ public class MainWin extends JFrame {
 
     protected void onOpenClick() {
         final JFileChooser fileChooser = new JFileChooser(this.filename);
-        FileNameExtensionFilter jadeFileFilter = new FileNameExtensionFilter("jade files", ".jade");
+        FileNameExtensionFilter jadeFileFilter = new FileNameExtensionFilter("jade files (.jade)", "jade");
         fileChooser.addChoosableFileFilter(jadeFileFilter);
         fileChooser.setFileFilter(jadeFileFilter);
 
@@ -241,7 +241,7 @@ public class MainWin extends JFrame {
     protected void onSaveAsClick() {
         //TODO: bring up a file chooser dialog, open the specified file, write product information into it
         final JFileChooser fileChooser = new JFileChooser(this.filename);
-        FileNameExtensionFilter jadeFileFilter = new FileNameExtensionFilter("jade files", ".jade");
+        FileNameExtensionFilter jadeFileFilter = new FileNameExtensionFilter("jade files (.jade)", "jade");
         fileChooser.addChoosableFileFilter(jadeFileFilter);
         fileChooser.setFileFilter(jadeFileFilter);
 
