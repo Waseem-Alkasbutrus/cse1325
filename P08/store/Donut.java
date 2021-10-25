@@ -21,12 +21,12 @@ public class Donut extends Product {
 
     public Donut(BufferedReader bufferedReader) throws IOException, IllegalArgumentException {
         super(bufferedReader);
-        this.frosting = Frosting.valueOf(bufferedReader.readLine());
+        this.frosting = Frosting.valueOf(bufferedReader.readLine().replaceAll("\n", ""));
         this.sprinkles = Boolean.parseBoolean(bufferedReader.readLine());
         if (this.frosting == Frosting.unfrosted && this.sprinkles) {
             throw new IllegalArgumentException("Cannot add sprinkles on an unfrosted donut");
         }
-        this.filling = Filling.valueOf(bufferedReader.readLine());
+        this.filling = Filling.valueOf(bufferedReader.readLine().replaceAll("\n", ""));
     } 
 
     public void save(BufferedWriter bufferedWriter) throws IOException, IllegalArgumentException {

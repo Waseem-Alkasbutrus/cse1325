@@ -17,9 +17,9 @@ public class Java extends Product {
 
     public Java(BufferedReader bufferedReader) throws IOException {
         super(bufferedReader);
-        this.darkness = Darkness.valueOf(bufferedReader.readLine());
+        this.darkness = Darkness.valueOf(bufferedReader.readLine().replaceAll("\n", ""));
         for (int i = 0; i < Integer.parseInt(bufferedReader.readLine()); i++) {
-            this.shots.add(Shot.valueOf(bufferedReader.readLine()));
+            this.shots.add(Shot.valueOf(bufferedReader.readLine().replaceAll("\n", "")));
         }
     }
 

@@ -17,15 +17,31 @@ public class Store {
     public Store(BufferedReader bufferedReader) throws IOException{
         this.storeName = bufferedReader.readLine();
         this.products = new ArrayList<>();
-        for (int i = 0; i < Integer.parseInt(bufferedReader.readLine()); i++) {
-            this.products.add(new Product(bufferedReader));
+        int productsCount = Integer.parseInt(bufferedReader.readLine());
+        for (int i = 0; i < productsCount; i++) {
+            String productType = bufferedReader.readLine();
+            if (productType.equals("JAVA")) {
+                this.products.add(new Java(bufferedReader));
+            } else if (productType.equals("DONUT")) {
+                this.products.add(new Donut(bufferedReader));
+            } else {
+                this.products.add(new Product(bufferedReader));
+            }
         }
     }
 
-    public void save(BufferedWriter bufferedWriter) throws IOException {
+    public void save(BufferedWriter bufferedWriter) throws IOException, RuntimeException {
         bufferedWriter.write(this.storeName + '\n');
         bufferedWriter.write(Integer.toString(this.products.size()) + '\n');
         for (Product p : this.products) {
+            if (p instanceof Java) {
+                bufferedWriter.write("JAVA\n");
+            } else if (p instanceof Donut) {
+                bufferedWriter.write("DONUT\n");
+            } else {
+                bufferedWriter.write("PRODUCT\n");
+            }
+            
             p.save(bufferedWriter);
         }
     }

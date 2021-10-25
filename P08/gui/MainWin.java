@@ -219,7 +219,6 @@ public class MainWin extends JFrame {
                 throw new Exception("Incompatible jade file format");
             }
 
-            //TODO: create a new constructor in Store that takes a BufferedReader and read fields from the a file
             this.store = new Store(bufferedReader);
 
             this.data.setText(toHtml(this.store.toString()));
@@ -233,7 +232,7 @@ public class MainWin extends JFrame {
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(this.filename))) {
             bufferedWriter.write(MAGIC_COOKIE + '\n');
             bufferedWriter.write(FILE_VERSION + '\n');
-            //TODO: create a save method that takes a bufferedWriter and saves all the store attributes in a file
+            
             this.store.save(bufferedWriter);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Unable to open file", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -241,7 +240,6 @@ public class MainWin extends JFrame {
     }
 
     protected void onSaveAsClick() {
-        //TODO: bring up a file chooser dialog, open the specified file, write product information into it
         final JFileChooser fileChooser = new JFileChooser(this.filename);
         FileNameExtensionFilter jadeFileFilter = new FileNameExtensionFilter("jade files (.jade)", "jade");
         fileChooser.addChoosableFileFilter(jadeFileFilter);
@@ -258,7 +256,6 @@ public class MainWin extends JFrame {
             this.filename = new File(this.filename.getAbsolutePath() + ".jade");
         }
 
-        System.out.println(filename.getPath());
         onSaveClick();
     }
 
