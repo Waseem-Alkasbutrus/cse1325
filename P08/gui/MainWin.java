@@ -67,10 +67,19 @@ public class MainWin extends JFrame {
         super(title);
         store = new Store(title);
 
+        this.filename = new File("./saves/default.jade");
+        
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(550,500);
+        addWindowListener(new WindowAdapter() {
 
-        this.filename = new File("./saves/default.jade");
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e); 
+                JOptionPane.showConfirmDialog(null,"Are sure to close!");
+            }
+        });
 
         //////////////////////////////////////////////////////////////
         // M E N U
@@ -123,19 +132,18 @@ public class MainWin extends JFrame {
 
         JToolBar toolbar = new JToolBar("JADE Tools");
         
-        bSave = newJButton("gui/assets/SAVE.png", "Save store", "Save store");
-            toolbar.add(bSave);
-            bSave.addActionListener(event -> onSaveClick());
-
-
         bNew = newJButton("gui/assets/NEW.png", "Create a new store", "Create a new store");
-            toolbar.add(bNew);
-            bNew.addActionListener(event -> onNewClick());
-
+        toolbar.add(bNew);
+        bNew.addActionListener(event -> onNewClick());
+        
         bOpen = newJButton("gui/assets/OPEN.png", "Open a store from a .jade file", "Open a store from a .jade file");
             toolbar.add(bOpen);
             bOpen.addActionListener(event -> onOpenClick());
-
+        
+        bSave = newJButton("gui/assets/SAVE.png", "Save store", "Save store");
+            toolbar.add(bSave);
+            bSave.addActionListener(event -> onSaveClick());
+        
         bSaveAs = newJButton("gui/assets/SAVE AS.png", "Save store to a new .jade file", "Save store to a new .jade file");
             toolbar.add(bSaveAs);
             bSaveAs.addActionListener(event -> onSaveAsClick());
@@ -183,8 +191,17 @@ public class MainWin extends JFrame {
     protected void onNewClick() {
         try {
             Store newStore = new Store(getString("Store name", "New Store", JOptionPane.QUESTION_MESSAGE));
+
+            int choice = JOptionPane.showConfirmDialog(this, "Save changes in " + filename.getName(), "Save Changes", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+            if (choice == JOptionPane.CANCEL_OPTION) {
+                return;
+            } else if (choice == JOptionPane.YES_OPTION) {
+                onSaveClick();
+            }
+
             this.store = newStore;
             this.data.setText(toHtml(this.store.toString()));
+            
             return;
         } catch (CancelDialogException e) {
             return;
@@ -223,7 +240,7 @@ public class MainWin extends JFrame {
 
             this.data.setText(toHtml(this.store.toString()));
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Unable to open file || " + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Unable to open file", "ERROR", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
     }
@@ -260,7 +277,7 @@ public class MainWin extends JFrame {
     }
 
     protected void onQuitClick() {
-        int choice = JOptionPane.showConfirmDialog(this, "Save before exiting?", "Save?", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+        int choice = JOptionPane.showConfirmDialog(this, "Save changes in " + this.filename.getName() + " before exiting?", "Save Changes?", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
 
         if (choice == JOptionPane.CANCEL_OPTION) {
             return;
