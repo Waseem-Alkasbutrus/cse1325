@@ -65,12 +65,11 @@ public class MainWin extends JFrame {
 
     public MainWin(String title) {
         super(title);
-        store = new Store(title);
-
-        this.filename = new File("./saves/default.jade");
-        
+                
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(550,500);
+
+        this.store = new Store(title);
 
         //////////////////////////////////////////////////////////////
         // M E N U
@@ -92,7 +91,7 @@ public class MainWin extends JFrame {
         JMenuItem about = new JMenuItem("About");
 
         mNew.addActionListener(even -> onNewClick());
-        mOpen.addActionListener(event -> onOpenClick());
+        mOpen.addActionListener(event -> onOpenClick(false));
         mSave.addActionListener(event -> onSaveClick());
         mSaveAs.addActionListener(event -> onSaveAsClick());
         mQuit.addActionListener(event -> onQuitClick());
@@ -129,7 +128,7 @@ public class MainWin extends JFrame {
         
         bOpen = newJButton("gui/assets/OPEN.png", "Open a store from a .jade file", "Open a store from a .jade file");
             toolbar.add(bOpen);
-            bOpen.addActionListener(event -> onOpenClick());
+            bOpen.addActionListener(event -> onOpenClick(false));
         
         bSave = newJButton("gui/assets/SAVE.png", "Save store", "Save store");
             toolbar.add(bSave);
@@ -163,6 +162,11 @@ public class MainWin extends JFrame {
 
         getContentPane().add(toolbar, BorderLayout.PAGE_START);
         getContentPane().add(data, BorderLayout.CENTER);
+
+        //////////////////////////////////////////////////////////////
+        // S T O R E
+
+        onOpenClick(true);
     }
 
     //CancelDialogException originally written by professor George F. Rice, reused by Waseem Alkasbutrus
@@ -199,21 +203,25 @@ public class MainWin extends JFrame {
         }
     }
 
-    protected void onOpenClick() {
-        final JFileChooser fileChooser = new JFileChooser(this.filename);
-        FileNameExtensionFilter jadeFileFilter = new FileNameExtensionFilter("jade files (.jade)", "jade");
-        fileChooser.addChoosableFileFilter(jadeFileFilter);
-        fileChooser.setFileFilter(jadeFileFilter);
-
-        int result = fileChooser.showOpenDialog(this);
-        if (result == JFileChooser.CANCEL_OPTION) {
-            return;
-        } else if (result == JFileChooser.APPROVE_OPTION) {
-            this.filename = fileChooser.getSelectedFile();
-        }
-
-        if (!this.filename.getAbsolutePath().endsWith(".jade")) {
-            this.filename = new File(this.filename.getAbsolutePath() + ".jade");
+    protected void onOpenClick(boolean useDefaultFile) {
+        if (useDefaultFile) {
+            this.filename = new File("./saves/default.jade");
+        } else {
+            final JFileChooser fileChooser = new JFileChooser(this.filename);
+            FileNameExtensionFilter jadeFileFilter = new FileNameExtensionFilter("jade files (.jade)", "jade");
+            fileChooser.addChoosableFileFilter(jadeFileFilter);
+            fileChooser.setFileFilter(jadeFileFilter);
+    
+            int result = fileChooser.showOpenDialog(this);
+            if (result == JFileChooser.CANCEL_OPTION) {
+                return;
+            } else if (result == JFileChooser.APPROVE_OPTION) {
+                this.filename = fileChooser.getSelectedFile();
+            }
+    
+            if (!this.filename.getAbsolutePath().endsWith(".jade")) {
+                this.filename = new File(this.filename.getAbsolutePath() + ".jade");
+            }
         }
 
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(this.filename))) {
