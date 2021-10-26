@@ -69,8 +69,6 @@ public class MainWin extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(550,500);
 
-        this.store = new Store(title);
-
         //////////////////////////////////////////////////////////////
         // M E N U
 
@@ -153,19 +151,19 @@ public class MainWin extends JFrame {
         JButton bAbout = newJButton("gui/assets/ABOUT.png", "About this program", "About this program");
             toolbar.add(bAbout);
             bAbout.addActionListener(event -> onAboutClick());
-
+            
         //////////////////////////////////////////////////////////////
-        // S T O R E  M E N U
+        // S T O R E  D A T A
 
-        data = new JLabel(toHtml(this.store.toString()), JLabel.LEFT);
+        data = new JLabel(toHtml(title), JLabel.LEFT);
         data.setVerticalAlignment(JLabel.TOP);
-
+        
         getContentPane().add(toolbar, BorderLayout.PAGE_START);
         getContentPane().add(data, BorderLayout.CENTER);
-
+        
         //////////////////////////////////////////////////////////////
         // S T O R E
-
+        
         onOpenClick(true);
     }
 
