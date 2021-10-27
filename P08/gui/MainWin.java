@@ -48,6 +48,7 @@ public class MainWin extends JFrame {
     private Store store;
     private File filename;
     private JLabel data;
+    private JToolBar toolbar;
 
     private JMenuItem mJava;
     private JButton bJava;
@@ -128,39 +129,32 @@ public class MainWin extends JFrame {
         //////////////////////////////////////////////////////////////
         // T O O L B A R
 
-        JToolBar toolbar = new JToolBar("JADE Tools");
+        this.toolbar = new JToolBar("JADE Tools");
         
         bNew = newJButton("gui/assets/NEW.png", "Create a new store", "Create a new store");
-        toolbar.add(bNew);
         bNew.addActionListener(event -> onNewClick());
         
         bOpen = newJButton("gui/assets/OPEN.png", "Open a store from a .jade file", "Open a store from a .jade file");
-            toolbar.add(bOpen);
-            bOpen.addActionListener(event -> onOpenClick(false));
+        bOpen.addActionListener(event -> onOpenClick(false));
         
         bSave = newJButton("gui/assets/SAVE.png", "Save store", "Save store");
-            toolbar.add(bSave);
-            bSave.addActionListener(event -> onSaveClick());
+        bSave.addActionListener(event -> onSaveClick());
         
         bSaveAs = newJButton("gui/assets/SAVE AS.png", "Save store to a new .jade file", "Save store to a new .jade file");
-            toolbar.add(bSaveAs);
-            bSaveAs.addActionListener(event -> onSaveAsClick());
+        bSaveAs.addActionListener(event -> onSaveAsClick());
         
         toolbar.add(Box.createHorizontalStrut(25));
 
         bJava = newJButton("gui/assets/JAVA.png", "Create a new java", "Create a new java");
-            toolbar.add(bJava);
-            bJava.addActionListener(event -> onCreateJavaClick());
+        bJava.addActionListener(event -> onCreateJavaClick());
     
         bDonut = newJButton("gui/assets/DONUT.png", "Create a new donut", "Create a new donut");
-            toolbar.add(bDonut);
-            bDonut.addActionListener(event -> onCreateDonutClick());
+        bDonut.addActionListener(event -> onCreateDonutClick());
 
         toolbar.add(Box.createHorizontalStrut(25));
 
         JButton bAbout = newJButton("gui/assets/ABOUT.png", "About this program", "About this program");
-            toolbar.add(bAbout);
-            bAbout.addActionListener(event -> onAboutClick());
+        bAbout.addActionListener(event -> onAboutClick());
             
         //////////////////////////////////////////////////////////////
         // S T O R E  D A T A
@@ -183,11 +177,6 @@ public class MainWin extends JFrame {
             super("Dialog canceled");
         }
     }
-
-    public static void main(String[] args) {
-        MainWin jade = new MainWin("JADE");
-        jade.setVisible(true);
-    }
     
     //////////////////////////////////////////////////////////////
     // B U T T O N   A C T I O N S
@@ -196,7 +185,11 @@ public class MainWin extends JFrame {
             Store newStore = new Store(getString("Store name", "New Store", JOptionPane.QUESTION_MESSAGE));
 
             if (unsavedChanges) {
-                unsavedChangesDialog();
+                try {
+                    unsavedChangesDialog();
+                } catch (CancelDialogException e) {
+                    return;
+                }
             }
 
             this.store = newStore;
@@ -259,6 +252,7 @@ public class MainWin extends JFrame {
     }
 
     protected void onSaveClick() {
+        if (this.filename == null) {onSaveAsClick();}
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(this.filename))) {
             bufferedWriter.write(MAGIC_COOKIE + '\n');
             bufferedWriter.write(FILE_VERSION + '\n');
@@ -309,26 +303,14 @@ public class MainWin extends JFrame {
 
         try {
             name = getString("Donut Name", "Donut Name", JOptionPane.QUESTION_MESSAGE);
+            price = getDouble("Donut Price", "Donut Price", JOptionPane.QUESTION_MESSAGE);
+            cost = getDouble("Donut Cost", "Donut Cost", JOptionPane.QUESTION_MESSAGE);
         } catch (CancelDialogException e) {
             return;
         }
 
-        try {
-            price = getDouble("Donut Price", "Donut Price", JOptionPane.QUESTION_MESSAGE);
-        } catch (Exception e) {
-            return;
-        }
-
-        try {
-            cost = getDouble("Donut Cost", "Donut Cost", JOptionPane.QUESTION_MESSAGE);
-        } catch (Exception e) {
-            return;
-        }
-
         Frosting frosting = (Frosting) JOptionPane.showInputDialog(this, "Donut Frosting", "Donut Frosting", JOptionPane.QUESTION_MESSAGE, null, Frosting.values(), Frosting.unfrosted);
-        if (frosting == null) {
-            return;
-        }
+        if (frosting == null) {return;}
 
         boolean sprinkles = false;
         if (frosting != Frosting.unfrosted) {
@@ -338,9 +320,7 @@ public class MainWin extends JFrame {
         }
 
         Filling filling = (Filling) JOptionPane.showInputDialog(this, "Donut Filling", "Donut Filling", JOptionPane.QUESTION_MESSAGE, null, Filling.values(), Filling.unfilled);
-        if (filling == null) {
-            return;
-        }
+        if (filling == null) {return;}
 
         this.store.addProduct(new Donut(name, price, cost, frosting, sprinkles, filling));
         this.data.setText(toHtml(this.store.toString()));
@@ -358,17 +338,7 @@ public class MainWin extends JFrame {
 
         try {
             name = getString("Java Name", "Java Name", JOptionPane.QUESTION_MESSAGE);
-        } catch (CancelDialogException e) {
-            return;
-        }
-
-        try {
             price = getDouble("Java Price", "Java Price", JOptionPane.QUESTION_MESSAGE);
-        } catch (CancelDialogException e) {
-            return;
-        }
-
-        try {
             cost = getDouble("Java Cost", "Java Cost", JOptionPane.QUESTION_MESSAGE);
         } catch (CancelDialogException e) {
             return;
@@ -438,7 +408,7 @@ public class MainWin extends JFrame {
     }
 
     //////////////////////////////////////////////////////////////
-    //U T I L S
+    // U T I L S
 
     //Implmentation for getDouble followed professor rice's implimentation closely
     protected Double getDouble(String message, String title, int messageType) throws CancelDialogException {
@@ -497,7 +467,14 @@ public class MainWin extends JFrame {
         bNewButton.setActionCommand(actionCommand);
         bNewButton.setToolTipText(toolTip);
         bNewButton.setBorder(null);
-
+        this.toolbar.add(bNewButton);
         return bNewButton;
+    }
+
+    //////////////////////////////////////////////////////////////
+    // M A I N
+    public static void main(String[] args) {
+        MainWin jade = new MainWin("JADE");
+        jade.setVisible(true);
     }
 }
