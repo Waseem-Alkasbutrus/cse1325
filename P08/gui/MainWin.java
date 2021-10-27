@@ -26,6 +26,8 @@ import javax.swing.JFileChooser;
 
 import java.awt.BorderLayout;
 import java.awt.image.BufferedImage;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import store.Store;
 import store.Donut;
@@ -40,6 +42,8 @@ public class MainWin extends JFrame {
     private String VERSION = "0.2";
     private String FILE_VERSION = "1.0"; 
     private String MAGIC_COOKIE = "WIA®";
+
+    private boolean unsavedChanges;
 
     private Store store;
     private File filename;
@@ -66,8 +70,14 @@ public class MainWin extends JFrame {
     public MainWin(String title) {
         super(title);
                 
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setSize(550,500);
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                onQuitClick(); // Call this when 'x' is clicked
+            }
+        });
 
         //////////////////////////////////////////////////////////////
         // M E N U
@@ -185,16 +195,13 @@ public class MainWin extends JFrame {
         try {
             Store newStore = new Store(getString("Store name", "New Store", JOptionPane.QUESTION_MESSAGE));
 
-            int choice = JOptionPane.showConfirmDialog(this, "Save changes in " + filename.getName(), "Save Changes", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
-            if (choice == JOptionPane.CANCEL_OPTION) {
-                return;
-            } else if (choice == JOptionPane.YES_OPTION) {
-                onSaveClick();
+            if (unsavedChanges) {
+                unsavedChangesDialog();
             }
 
             this.store = newStore;
             this.data.setText(toHtml(this.store.toString()));
-            
+            this.unsavedChanges = true;
             return;
         } catch (CancelDialogException e) {
             return;
@@ -214,6 +221,15 @@ public class MainWin extends JFrame {
             if (result == JFileChooser.CANCEL_OPTION) {
                 return;
             } else if (result == JFileChooser.APPROVE_OPTION) {
+
+                if (unsavedChanges) {
+                    try {
+                        unsavedChangesDialog();
+                    } catch (CancelDialogException e) {
+                        return;
+                    }
+                }
+
                 this.filename = fileChooser.getSelectedFile();
             }
     
@@ -234,8 +250,8 @@ public class MainWin extends JFrame {
             }
 
             this.store = new Store(bufferedReader);
-
             this.data.setText(toHtml(this.store.toString()));
+            this.unsavedChanges = false;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Unable to open file", "ERROR", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
@@ -248,6 +264,7 @@ public class MainWin extends JFrame {
             bufferedWriter.write(FILE_VERSION + '\n');
             
             this.store.save(bufferedWriter);
+            this.unsavedChanges = false;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Unable to open file", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
@@ -274,12 +291,12 @@ public class MainWin extends JFrame {
     }
 
     protected void onQuitClick() {
-        int choice = JOptionPane.showConfirmDialog(this, "Save changes in " + this.filename.getName() + " before exiting?", "Save Changes?", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
-
-        if (choice == JOptionPane.CANCEL_OPTION) {
-            return;
-        } else if (choice == JOptionPane.YES_OPTION) {
-            onSaveClick();
+        if (unsavedChanges) {
+            try {
+                unsavedChangesDialog();
+            } catch (CancelDialogException e) {
+                return;
+            }
         }
 
         System.exit(0);
@@ -326,10 +343,10 @@ public class MainWin extends JFrame {
         }
 
         this.store.addProduct(new Donut(name, price, cost, frosting, sprinkles, filling));
-
         this.data.setText(toHtml(this.store.toString()));
-
         JOptionPane.showMessageDialog(this, "Donut was added to store menu");
+        
+        this.unsavedChanges = true;
     }
 
     protected void onCreateJavaClick() {
@@ -382,9 +399,10 @@ public class MainWin extends JFrame {
         }
 
         this.store.addProduct(java);
-        
         this.data.setText(toHtml(this.store.toString()));
         JOptionPane.showMessageDialog(this, "Java was added to store menu");
+
+        this.unsavedChanges = true;
     }
 
     protected void onAboutClick() {
@@ -461,6 +479,17 @@ public class MainWin extends JFrame {
 
     protected String toHtml(String plainText) {
         return "<html>" + plainText.replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br/>");
+    }
+
+    protected void unsavedChangesDialog() throws CancelDialogException {
+        String buttonOptions[] = {"Save", "Discard", "Cancel"};
+        int choice = JOptionPane.showOptionDialog(this, "Save changes to " + this.filename.getName() + "?", "Save Changes?", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, buttonOptions, buttonOptions[0]);
+    
+        if (choice == 0) {
+            onSaveClick();
+        } else if (choice == 2) {
+            throw new CancelDialogException();
+        }
     }
 
     protected JButton newJButton(String iconPath, String actionCommand, String toolTip) {
