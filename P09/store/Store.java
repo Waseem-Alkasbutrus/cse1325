@@ -71,21 +71,25 @@ public class Store {
     public int numberOfProducts() {
         return this.products.size();
     }
-    
-    public void addPerson(Person person) {
-        this.people.add(person);
-    }
-
-    public int numberOfPeople() {
-        return this.people.size();
-    }
 
     public String toString(int productIndex) {
         return this.products.get(productIndex).toString();
     }
+    
+    public void addPerson(Person person) {
+        this.people.add(person);
+    }
+    
+    public int numberOfPeople() {
+        return this.people.size();
+    }
 
     public String personToString(int peopleIndex) {
         return this.people.get(peopleIndex).toString();
+    }
+
+    public String peopleToString() {
+        //TODO: Implement this
     }
 
     @Override
