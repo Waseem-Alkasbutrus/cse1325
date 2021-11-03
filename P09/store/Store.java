@@ -8,18 +8,19 @@ import java.util.ArrayList;
 public class Store {
     protected String storeName;
     protected ArrayList<Product> products;
-    protected ArrayList<Person> customers;
+    protected ArrayList<Person> people;
 
     public Store(String storeName) {
         this.storeName = storeName;
         this.products = new ArrayList<>();
-        this.customers = new ArrayList<>();
+        this.people = new ArrayList<>();
     }
 
     public Store(BufferedReader bufferedReader) throws IOException{
         this(bufferedReader.readLine());
-        int productsCount = Integer.parseInt(bufferedReader.readLine());
-        for (int i = 0; i < productsCount; i++) {
+       
+        int numOfProducts = Integer.parseInt(bufferedReader.readLine());
+        for (int i = 0; i < numOfProducts; i++) {
             String productType = bufferedReader.readLine();
             if (productType.equals("JAVA")) {
                 this.products.add(new Java(bufferedReader));
@@ -29,20 +30,26 @@ public class Store {
                 this.products.add(new Product(bufferedReader));
             }
         }
+
+        int numOfPeople = Integer.parseInt(bufferedReader.readLine());
+        for(int i = 0; i < numOfPeople; i++) {
+            String personType = bufferedReader.readLine();
+            if (personType.equals("CUSTOMER")) {
+                this.people.add(new Customer(bufferedReader));
+            } else if (personType.equals("SERVER")) {
+                //TODO: Add new server to people
+            } else if (personType.equals("MANAGER")) {
+                //TODO: Add new manager to people
+            } else {
+                this.people.add(new Person(bufferedReader));
+            }
+        }
     }
 
     public void save(BufferedWriter bufferedWriter) throws IOException, RuntimeException {
         bufferedWriter.write(this.storeName + '\n');
         bufferedWriter.write(Integer.toString(this.products.size()) + '\n');
-        for (Product p : this.products) {
-            if (p instanceof Java) {
-                bufferedWriter.write("JAVA\n");
-            } else if (p instanceof Donut) {
-                bufferedWriter.write("DONUT\n");
-            } else {
-                bufferedWriter.write("PRODUCT\n");
-            }
-            
+        for (Product p : this.products) {           
             p.save(bufferedWriter);
         }
     }
