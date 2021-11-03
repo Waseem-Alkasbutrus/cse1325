@@ -28,6 +28,7 @@ public class Java extends Product {
     }
 
     public void save(BufferedWriter bufferedWriter) throws IOException {
+        bufferedWriter.write("JAVA");
         super.save(bufferedWriter);
         bufferedWriter.write(this.darkness.name() + '\n');
 
