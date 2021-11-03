@@ -8,15 +8,16 @@ import java.util.ArrayList;
 public class Store {
     protected String storeName;
     protected ArrayList<Product> products;
+    protected ArrayList<Person> customers;
 
     public Store(String storeName) {
         this.storeName = storeName;
-        products = new ArrayList<>();
+        this.products = new ArrayList<>();
+        this.customers = new ArrayList<>();
     }
 
     public Store(BufferedReader bufferedReader) throws IOException{
-        this.storeName = bufferedReader.readLine();
-        this.products = new ArrayList<>();
+        this(bufferedReader.readLine());
         int productsCount = Integer.parseInt(bufferedReader.readLine());
         for (int i = 0; i < productsCount; i++) {
             String productType = bufferedReader.readLine();
