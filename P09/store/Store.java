@@ -48,8 +48,14 @@ public class Store {
 
     public void save(BufferedWriter bufferedWriter) throws IOException, RuntimeException {
         bufferedWriter.write(this.storeName + '\n');
+        
         bufferedWriter.write(Integer.toString(this.products.size()) + '\n');
         for (Product p : this.products) {           
+            p.save(bufferedWriter);
+        }
+
+        bufferedWriter.write(Integer.toString(this.people.size() + '\n'));
+        for (Person p : this.people) {
             p.save(bufferedWriter);
         }
     }
@@ -61,13 +67,25 @@ public class Store {
     public void addProduct(Product product) {
         this.products.add(product);
     }
-
+    
     public int numberOfProducts() {
-        return products.size();
+        return this.products.size();
+    }
+    
+    public void addPerson(Person person) {
+        this.people.add(person);
+    }
+
+    public int numberOfPeople() {
+        return this.people.size();
     }
 
     public String toString(int productIndex) {
         return this.products.get(productIndex).toString();
+    }
+
+    public String personToString(int peopleIndex) {
+        return this.people.get(peopleIndex).toString();
     }
 
     @Override
