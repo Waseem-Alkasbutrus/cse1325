@@ -96,6 +96,9 @@ public class MainWin extends JFrame {
         mDonut = new JMenuItem("Donut");
         mJava = new JMenuItem("Java");
 
+        JMenu view = new JMenu("View");
+        //TODO: Checkpoint
+
         JMenu help = new JMenu("Help");
         JMenuItem about = new JMenuItem("About");
 
