@@ -90,13 +90,18 @@ public class Store {
 
     public String peopleToString() {
         //TODO: Implement this
+        String peopleString = "";
+        for (Person p : this.people) {
+            peopleString += p.toString() + '\n';
+        }
+        return peopleString;
     }
 
     @Override
     public String toString() {
         String storeString = "\nWelcome to " + this.storeName + "!\n\n";
         for (Product p: this.products) {
-            storeString += p.toString() + "\n";
+            storeString += p.toString() + '\n';
         }
         return storeString;
     }
