@@ -68,6 +68,12 @@ public class MainWin extends JFrame {
     private JMenuItem mSaveAs;
     private JButton bSaveAs;
 
+    private JMenuItem mCustomers;
+    private JButton bCustomers;
+
+    private JMenuItem mProducts;
+    private JButton bProducts;
+
     public MainWin(String title) {
         super(title);
                 
@@ -97,10 +103,11 @@ public class MainWin extends JFrame {
         mJava = new JMenuItem("Java");
 
         JMenu view = new JMenu("View");
-        //TODO: Checkpoint
+        mCustomers = new JMenuItem("Customers");
+        mProducts = new JMenuItem("Products");
 
         JMenu help = new JMenu("Help");
-        JMenuItem about = new JMenuItem("About");
+        JMenuItem mAbout = new JMenuItem("About");
 
         mNew.addActionListener(even -> onNewClick());
         mOpen.addActionListener(event -> onOpenClick(false));
@@ -108,8 +115,10 @@ public class MainWin extends JFrame {
         mSaveAs.addActionListener(event -> onSaveAsClick());
         mQuit.addActionListener(event -> onQuitClick());
         mDonut.addActionListener(event -> onCreateDonutClick());
-        mJava.addActionListener(even -> onCreateJavaClick());
-        about.addActionListener(event -> onAboutClick());
+        mJava.addActionListener(event -> onCreateJavaClick());
+        mCustomers.addActionListener(event -> onCustomersClick());
+        mProducts.addActionListener(event -> onProductsClick());
+        mAbout.addActionListener(event -> onAboutClick());
         
         file.add(mNew);
         file.addSeparator();
@@ -121,10 +130,13 @@ public class MainWin extends JFrame {
         file.add(mQuit);
         create.add(mDonut);
         create.add(mJava);
-        help.add(about);
+        view.add(mCustomers);
+        view.add(mProducts);
+        help.add(mAbout);
 
         menubar.add(file);
         menubar.add(create);
+        menubar.add(view);
         menubar.add(help);
 
         setJMenuBar(menubar);
