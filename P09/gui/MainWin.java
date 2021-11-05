@@ -56,6 +56,9 @@ public class MainWin extends JFrame {
     private JMenuItem mDonut;
     private JButton bDonut;
 
+    private JMenuItem mCustomer;
+    private JButton bCustomer;
+
     private JMenuItem mNew;
     private JButton bNew;
 
@@ -68,8 +71,8 @@ public class MainWin extends JFrame {
     private JMenuItem mSaveAs;
     private JButton bSaveAs;
 
-    private JMenuItem mCustomers;
-    private JButton bCustomers;
+    private JMenuItem mPeople;
+    private JButton bPeople;
 
     private JMenuItem mProducts;
     private JButton bProducts;
@@ -101,9 +104,11 @@ public class MainWin extends JFrame {
         JMenu create = new JMenu("Create");
         mDonut = new JMenuItem("Donut");
         mJava = new JMenuItem("Java");
+        mCustomer = new JMenuItem("Customer");
+
 
         JMenu view = new JMenu("View");
-        mCustomers = new JMenuItem("Customers");
+        mPeople = new JMenuItem("Customers");
         mProducts = new JMenuItem("Products");
 
         JMenu help = new JMenu("Help");
@@ -116,7 +121,8 @@ public class MainWin extends JFrame {
         mQuit.addActionListener(event -> onQuitClick());
         mDonut.addActionListener(event -> onCreateDonutClick());
         mJava.addActionListener(event -> onCreateJavaClick());
-        mCustomers.addActionListener(event -> onCustomersClick());
+        mCustomer.addActionListener(event -> onCreateCustomerClick());
+        mPeople.addActionListener(event -> onPeopleClick());
         mProducts.addActionListener(event -> onProductsClick());
         mAbout.addActionListener(event -> onAboutClick());
         
@@ -130,7 +136,9 @@ public class MainWin extends JFrame {
         file.add(mQuit);
         create.add(mDonut);
         create.add(mJava);
-        view.add(mCustomers);
+        create.addSeparator();
+        create.add(mCustomer);
+        view.add(mPeople);
         view.add(mProducts);
         help.add(mAbout);
 
@@ -392,7 +400,11 @@ public class MainWin extends JFrame {
         this.unsavedChanges = true;
     }
 
-    protected void onCustomersClick() {
+    protected void onCreateCustomerClick() {
+        
+    }
+
+    protected void onPeopleClick() {
 
     }
 
