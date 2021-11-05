@@ -39,8 +39,8 @@ import store.Shot;
 
 public class MainWin extends JFrame {
     private String NAME = "JAVA AND DONUT EXPRESS";
-    private String VERSION = "0.2";
-    private String FILE_VERSION = "1.0"; 
+    private String VERSION = "0.3";
+    private String FILE_VERSION = "1.1"; 
     private String MAGIC_COOKIE = "WIA®";
 
     private boolean unsavedChanges;
@@ -173,6 +173,8 @@ public class MainWin extends JFrame {
             
         //////////////////////////////////////////////////////////////
         // S T O R E  D A T A
+
+        //this.store = new Store(title);
 
         data = new JLabel(toHtml(title), JLabel.LEFT);
         data.setVerticalAlignment(JLabel.TOP);
@@ -388,6 +390,14 @@ public class MainWin extends JFrame {
         JOptionPane.showMessageDialog(this, "Java was added to store menu");
 
         this.unsavedChanges = true;
+    }
+
+    protected void onCustomersClick() {
+
+    }
+
+    protected void onProductsClick() {
+
     }
 
     protected void onAboutClick() {
