@@ -39,6 +39,8 @@ import store.Darkness;
 import store.Shot;
 import store.Customer;
 
+enum ViewMode {Product, People};
+
 public class MainWin extends JFrame {
     private String NAME = "JAVA AND DONUT EXPRESS";
     private String VERSION = "0.3";
@@ -46,6 +48,7 @@ public class MainWin extends JFrame {
     private String MAGIC_COOKIE = "WIA®";
 
     private boolean unsavedChanges;
+    private ViewMode viewMode;
 
     private Store store;
     private File filename;
@@ -82,6 +85,7 @@ public class MainWin extends JFrame {
     public MainWin(String title) {
         super(title);
         this.filename = new File("./saves/default.jade");
+        this.viewMode = ViewMode.Product;
                 
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setSize(550,500);
@@ -342,7 +346,7 @@ public class MainWin extends JFrame {
         if (filling == null) {return;}
 
         this.store.addProduct(new Donut(name, price, cost, frosting, sprinkles, filling));
-        onProductsClick();
+        updateData();
         JOptionPane.showMessageDialog(this, "Donut was added to store menu");
         
         this.unsavedChanges = true;
@@ -388,7 +392,7 @@ public class MainWin extends JFrame {
         }
 
         this.store.addProduct(java);
-        onProductsClick();
+        updateData();
         JOptionPane.showMessageDialog(this, "Java was added to store menu");
 
         this.unsavedChanges = true;
@@ -412,6 +416,9 @@ public class MainWin extends JFrame {
                 break;
             } else if (!(tName.getText() == null || tPhone.getText().equals("")) && !(tPhone.getText() == null || tPhone.getText().equals(""))) {
                 this.store.addPerson(new Customer(tName.getText(), tPhone.getText()));
+                updateData();
+                JOptionPane.showMessageDialog(this, "Customer was added to the store");
+                
                 this.unsavedChanges = true;
                 break;
             } else {
@@ -420,11 +427,18 @@ public class MainWin extends JFrame {
         }
     }
 
+    protected void updateData() {
+        if (this.viewMode == ViewMode.Product) {onProductsClick();}
+        else if (this.viewMode == ViewMode.People) {onPeopleClick();}
+    }
+
     protected void onPeopleClick() {
+        this.viewMode = ViewMode.People;
         this.data.setText(toHtml(this.store.peopleToString()));
     }
 
     protected void onProductsClick() {
+        this.viewMode = ViewMode.Product;
         this.data.setText(toHtml(this.store.toString()));
     }
 
