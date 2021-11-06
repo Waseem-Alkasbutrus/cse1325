@@ -10,7 +10,7 @@ public class Person {
 
     public Person(String name, String phone) {
         this.name = name;
-        this.name = phone;
+        this.phone = phone;
     }
 
     public Person(BufferedReader bufferedReader) throws IOException {

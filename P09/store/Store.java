@@ -87,7 +87,7 @@ public class Store {
     }
 
     public String peopleToString() {
-        String peopleString = "Our Beloved Customers!\n\n";
+        String peopleString = "\nOur Beloved Customers!\n\n";
         for (Person p : this.people) {
             peopleString += p.toString() + '\n';
         }
