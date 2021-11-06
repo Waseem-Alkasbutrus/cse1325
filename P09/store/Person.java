@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 
-class Person {
+public class Person {
     protected String name;
     protected String phone;
 

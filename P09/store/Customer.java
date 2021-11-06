@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 
-class Customer extends Person {
+public class Customer extends Person {
     public Customer(String name, String phone) {
         super(name, phone);
     }
