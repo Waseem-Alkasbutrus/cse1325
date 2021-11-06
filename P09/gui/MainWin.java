@@ -37,6 +37,7 @@ import store.Filling;
 import store.Frosting;
 import store.Darkness;
 import store.Shot;
+import store.Customer;
 
 public class MainWin extends JFrame {
     private String NAME = "JAVA AND DONUT EXPRESS";
@@ -341,7 +342,7 @@ public class MainWin extends JFrame {
         if (filling == null) {return;}
 
         this.store.addProduct(new Donut(name, price, cost, frosting, sprinkles, filling));
-        this.data.setText(toHtml(this.store.toString()));
+        onProductsClick();
         JOptionPane.showMessageDialog(this, "Donut was added to store menu");
         
         this.unsavedChanges = true;
@@ -387,7 +388,7 @@ public class MainWin extends JFrame {
         }
 
         this.store.addProduct(java);
-        this.data.setText(toHtml(this.store.toString()));
+        onProductsClick();
         JOptionPane.showMessageDialog(this, "Java was added to store menu");
 
         this.unsavedChanges = true;
@@ -404,15 +405,27 @@ public class MainWin extends JFrame {
             lPhone, tPhone
         };
         
-        int choice = JOptionPane.showConfirmDialog(this, objects, "New Customer", JOptionPane.OK_CANCEL_OPTION);
+        while (true) {
+            int choice = JOptionPane.showConfirmDialog(this, objects, "New Customer", JOptionPane.OK_CANCEL_OPTION);
+    
+            if (choice == JOptionPane.CANCEL_OPTION) {
+                break;
+            } else if (!(tName.getText() == null || tPhone.getText().equals("")) && !(tPhone.getText() == null || tPhone.getText().equals(""))) {
+                this.store.addPerson(new Customer(tName.getText(), tPhone.getText()));
+                this.unsavedChanges = true;
+                break;
+            } else {
+                JOptionPane.showMessageDialog(this, "All fields must be filled", "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }
 
     protected void onPeopleClick() {
-
+        this.data.setText(toHtml(this.store.peopleToString()));
     }
 
     protected void onProductsClick() {
-
+        this.data.setText(toHtml(this.store.toString()));
     }
 
     protected void onAboutClick() {
