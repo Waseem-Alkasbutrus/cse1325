@@ -19,6 +19,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.ImageIcon;
 import javax.swing.BoxLayout;
 import javax.swing.Box;
@@ -393,7 +394,17 @@ public class MainWin extends JFrame {
     }
 
     protected void onCreateCustomerClick() {
+        JLabel lName = new JLabel("Customer Name:");
+        JTextField tName = new JTextField(20);
+        JLabel lPhone = new JLabel("Phone Number:");
+        JTextField tPhone = new JTextField(20);
+
+        Object objects[] = {
+            lName, tName,
+            lPhone, tPhone
+        };
         
+        int choice = JOptionPane.showConfirmDialog(this, objects, "New Customer", JOptionPane.OK_CANCEL_OPTION);
     }
 
     protected void onPeopleClick() {
