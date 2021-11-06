@@ -12,26 +12,25 @@ public class Store {
 
     public Store(String storeName) {
         this.storeName = storeName;
-        this.products = new ArrayList<>();
-        this.people = new ArrayList<>();
+        this.products = new ArrayList<>(0);
+        this.people = new ArrayList<>(0);
     }
 
     public Store(BufferedReader bufferedReader) throws IOException{
         this(bufferedReader.readLine());
        
         int numOfProducts = Integer.parseInt(bufferedReader.readLine());
+        int numOfPeople = Integer.parseInt(bufferedReader.readLine());
+
         for (int i = 0; i < numOfProducts; i++) {
             String productType = bufferedReader.readLine();
             if (productType.equals("JAVA")) {
                 this.products.add(new Java(bufferedReader));
             } else if (productType.equals("DONUT")) {
                 this.products.add(new Donut(bufferedReader));
-            } else {
-                this.products.add(new Product(bufferedReader));
             }
         }
 
-        int numOfPeople = Integer.parseInt(bufferedReader.readLine());
         for(int i = 0; i < numOfPeople; i++) {
             String personType = bufferedReader.readLine();
             if (personType.equals("CUSTOMER")) {
@@ -40,8 +39,6 @@ public class Store {
                 //TODO: Add new server to people
             } else if (personType.equals("MANAGER")) {
                 //TODO: Add new manager to people
-            } else {
-                this.people.add(new Person(bufferedReader));
             }
         }
     }
@@ -50,11 +47,12 @@ public class Store {
         bufferedWriter.write(this.storeName + '\n');
         
         bufferedWriter.write(Integer.toString(this.products.size()) + '\n');
+        bufferedWriter.write(Integer.toString(this.people.size()) + '\n');
+        
         for (Product p : this.products) {           
             p.save(bufferedWriter);
         }
 
-        bufferedWriter.write(Integer.toString(this.people.size() + '\n'));
         for (Person p : this.people) {
             p.save(bufferedWriter);
         }

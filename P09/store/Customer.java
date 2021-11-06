@@ -15,7 +15,7 @@ class Customer extends Person {
 
     @Override
     public void save(BufferedWriter bufferedWriter) throws IOException {
-        bufferedWriter.write("CUSTOMER");
+        bufferedWriter.write("CUSTOMER\n");
         super.save(bufferedWriter);
     }
 }

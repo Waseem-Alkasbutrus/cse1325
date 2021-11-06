@@ -30,7 +30,7 @@ public class Donut extends Product {
     } 
 
     public void save(BufferedWriter bufferedWriter) throws IOException, IllegalArgumentException {
-        bufferedWriter.write("DONUT");
+        bufferedWriter.write("DONUT\n");
         super.save(bufferedWriter);
         bufferedWriter.write(this.frosting.name() + '\n');
         bufferedWriter.write(Boolean.toString(this.sprinkles) + '\n');
