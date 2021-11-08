@@ -15,10 +15,14 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JToolBar;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
 import javax.swing.BoxLayout;
@@ -320,31 +324,71 @@ public class MainWin extends JFrame {
     }
 
     protected void onCreateDonutClick() {
+        //Donut Fields
         String name;
         double price;
         double cost;
+        Frosting frosting;
+        boolean sprinkles;
+        Filling filling;
+      
+        //Dialog Components
+        JLabel lName = new JLabel("Name:");
+        JTextField tName = new JTextField(20);
 
-        try {
-            name = getString("Donut Name", "Donut Name", JOptionPane.QUESTION_MESSAGE);
-            price = getDouble("Donut Price", "Donut Price", JOptionPane.QUESTION_MESSAGE);
-            cost = getDouble("Donut Cost", "Donut Cost", JOptionPane.QUESTION_MESSAGE);
-        } catch (CancelDialogException e) {
-            return;
+        SpinnerModel sPriceModel = new SpinnerNumberModel(0.01, 0.0, 1000.0, 0.01);
+        JLabel lPrice = new JLabel("Price:");
+        JSpinner sPrice = new JSpinner(sPriceModel);
+        
+        SpinnerModel sCostModel = new SpinnerNumberModel(0.01, 0.0, 1000.0, 0.01);
+        JLabel lCost = new JLabel("Cost:");
+        JSpinner sCost = new JSpinner(sCostModel);
+
+        JLabel lFrosting = new JLabel("Frosting:");
+        JComboBox<Frosting> cFrosting = new JComboBox<>(Frosting.values());
+
+        JLabel lSprinkles = new JLabel("Sprinkles:");
+        String yesNoOpts[] = {"Yes", "No"};
+        JComboBox<String> cSprinkles = new JComboBox<>(yesNoOpts);
+
+        JLabel lFilling = new JLabel("Filling:");
+        JComboBox<Filling> cFilling = new JComboBox<>(Filling.values());
+        
+        Object newDonutComponents[] = {
+            lName, tName,
+            lPrice, sPrice,
+            lCost, sCost,
+            lFrosting, cFrosting,
+            lSprinkles, cSprinkles,
+            lFilling, cFilling
+        };
+
+        while (true) {
+            JOptionPane.showConfirmDialog(this, newDonutComponents, "New Donut", JOptionPane.OK_CANCEL_OPTION);
+
+            name = tName.getText();
+            if (name.equals("") || name == null) {
+                //TODO: Display error message
+                continue;
+            }
+
+            price = (double) sPriceModel.getValue();
+            cost = (double) sCostModel.getValue();
+
+            frosting = (Frosting) cFrosting.getSelectedItem();
+
+            sprinkles = (cSprinkles.getSelectedItem().equals("Yes")) ? true : false;
+            if (frosting == Frosting.unfrosted && sprinkles) {
+                //TODO: doisplay error message
+                continue;
+            }
+
+            filling = (Filling) cFilling.getSelectedItem();
+
+            break;
         }
 
-        Frosting frosting = (Frosting) JOptionPane.showInputDialog(this, "Donut Frosting", "Donut Frosting", JOptionPane.QUESTION_MESSAGE, null, Frosting.values(), Frosting.unfrosted);
-        if (frosting == null) {return;}
-
-        boolean sprinkles = false;
-        if (frosting != Frosting.unfrosted) {
-            int n = JOptionPane.showConfirmDialog(this, "Add Sprinkles to Donut?", "Donut Sprinkles", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null);
-            if (n == JOptionPane.YES_OPTION) {sprinkles = true;}
-            else if (n == JOptionPane.CANCEL_OPTION) {return;}
-        }
-
-        Filling filling = (Filling) JOptionPane.showInputDialog(this, "Donut Filling", "Donut Filling", JOptionPane.QUESTION_MESSAGE, null, Filling.values(), Filling.unfilled);
-        if (filling == null) {return;}
-
+        //Adding donut to store
         this.store.addProduct(new Donut(name, price, cost, frosting, sprinkles, filling));
         updateData();
         JOptionPane.showMessageDialog(this, "Donut was added to store menu");
