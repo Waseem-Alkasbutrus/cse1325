@@ -191,7 +191,7 @@ public class MainWin extends JFrame {
 
         this.store = new Store(title);
 
-        data = new JLabel(toHtml(title), JLabel.LEFT);
+        data = new JLabel(toHtml(this.store.toString()), JLabel.LEFT);
         data.setVerticalAlignment(JLabel.TOP);
         
         getContentPane().add(toolbar, BorderLayout.PAGE_START);
