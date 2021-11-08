@@ -185,6 +185,14 @@ public class MainWin extends JFrame {
         bDonut = newJButton("gui/assets/DONUT.png", "Create a new donut", "Create a new donut");
         bDonut.addActionListener(event -> onCreateDonutClick());
 
+        bCustomer = newJButton("gui/assets/CUSTOMER.png", "Create a new customer", "Create a new customer");
+        bCustomer.addActionListener(event -> onCreateCustomerClick());
+
+        toolbar.add(Box.createHorizontalStrut(25));
+
+        bPeople = newJButton("gui/assets/VIEW PEOPLE.png", "View customers", "View customers");
+        bPeople.addActionListener(event -> onPeopleClick());
+
         toolbar.add(Box.createHorizontalStrut(25));
 
         JButton bAbout = newJButton("gui/assets/ABOUT.png", "About this program", "About this program");
