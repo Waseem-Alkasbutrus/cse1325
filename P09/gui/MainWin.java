@@ -336,11 +336,11 @@ public class MainWin extends JFrame {
         JLabel lName = new JLabel("Name:");
         JTextField tName = new JTextField(20);
 
-        SpinnerModel sPriceModel = new SpinnerNumberModel(0.01, 0.0, 1000.0, 0.01);
+        SpinnerModel sPriceModel = new SpinnerNumberModel(0.01, 0.01, 1000.0, 0.01);
         JLabel lPrice = new JLabel("Price:");
         JSpinner sPrice = new JSpinner(sPriceModel);
         
-        SpinnerModel sCostModel = new SpinnerNumberModel(0.01, 0.0, 1000.0, 0.01);
+        SpinnerModel sCostModel = new SpinnerNumberModel(0.01, 0.01, 1000.0, 0.01);
         JLabel lCost = new JLabel("Cost:");
         JSpinner sCost = new JSpinner(sCostModel);
 
@@ -364,28 +364,32 @@ public class MainWin extends JFrame {
         };
 
         while (true) {
-            JOptionPane.showConfirmDialog(this, newDonutComponents, "New Donut", JOptionPane.OK_CANCEL_OPTION);
+            int choice = JOptionPane.showConfirmDialog(this, newDonutComponents, "New Donut", JOptionPane.OK_CANCEL_OPTION);
 
-            name = tName.getText();
-            if (name.equals("") || name == null) {
-                //TODO: Display error message
-                continue;
+            if (choice == JOptionPane.CANCEL_OPTION) {
+                return;
+            } else {
+                name = tName.getText();
+                if (name.equals("") || name == null) {
+                    JOptionPane.showMessageDialog(this, "Name Cannot be empty", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    continue;
+                }
+    
+                price = (double) sPriceModel.getValue();
+                cost = (double) sCostModel.getValue();
+    
+                frosting = (Frosting) cFrosting.getSelectedItem();
+    
+                sprinkles = (cSprinkles.getSelectedItem().equals("Yes")) ? true : false;
+                if (frosting == Frosting.unfrosted && sprinkles) {
+                    JOptionPane.showMessageDialog(this, "Sprinkles require frosting on the donut", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    continue;
+                }
+    
+                filling = (Filling) cFilling.getSelectedItem();
+    
+                break;
             }
-
-            price = (double) sPriceModel.getValue();
-            cost = (double) sCostModel.getValue();
-
-            frosting = (Frosting) cFrosting.getSelectedItem();
-
-            sprinkles = (cSprinkles.getSelectedItem().equals("Yes")) ? true : false;
-            if (frosting == Frosting.unfrosted && sprinkles) {
-                //TODO: doisplay error message
-                continue;
-            }
-
-            filling = (Filling) cFilling.getSelectedItem();
-
-            break;
         }
 
         //Adding donut to store
