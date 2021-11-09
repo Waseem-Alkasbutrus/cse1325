@@ -92,7 +92,7 @@ public class MainWin extends JFrame {
         this.viewMode = ViewMode.Product;
                 
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        setSize(550,500);
+        setSize(750,500);
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -418,29 +418,58 @@ public class MainWin extends JFrame {
         Darkness darkness;
         ArrayList<Shot> shots = new ArrayList<>();
 
-        try {
-            name = getString("Java Name", "Java Name", JOptionPane.QUESTION_MESSAGE);
-            price = getDouble("Java Price", "Java Price", JOptionPane.QUESTION_MESSAGE);
-            cost = getDouble("Java Cost", "Java Cost", JOptionPane.QUESTION_MESSAGE);
-        } catch (CancelDialogException e) {
-            return;
-        }
+        JLabel lName = new JLabel("Name:");
+        JTextField tName = new JTextField(20);
 
-        darkness = (Darkness) JOptionPane.showInputDialog(this, "Java Darkness", "Java Darkness", JOptionPane.QUESTION_MESSAGE, null, Darkness.values(), Darkness.blond);
-        if (darkness == null) {
-            return;
-        }
+        SpinnerModel sPriceModel = new SpinnerNumberModel(0.01, 0.01, 1000.0, 0.01);
+        JLabel lPrice = new JLabel("Price:");
+        JSpinner sPrice = new JSpinner(sPriceModel);
+
+        SpinnerModel sCostModel = new SpinnerNumberModel(0.01, 0.01, 1000.0, 0.01);
+        JLabel lCost = new JLabel("Cost:");
+        JSpinner sCost = new JSpinner(sCostModel);
+
+        JLabel lDarkness = new JLabel("Darkness:");
+        JComboBox<Darkness> cDakness = new JComboBox<>(Darkness.values());
+
+        Object newJavaComponents[] = {
+            lName, tName,
+            lPrice, sPrice,
+            lCost, sCost,
+            lDarkness, cDakness
+        };
 
         while (true) {
-            Shot s = (Shot) JOptionPane.showInputDialog(this, "Java Shots", "Java Shots", JOptionPane.QUESTION_MESSAGE, null, Shot.values(), Shot.none);
-            if (s == Shot.none) {
-                shots.add(s);
-                break;
-                
-            } else if (s == null) {
+            int choice = JOptionPane.showConfirmDialog(this, newJavaComponents, "New Java", JOptionPane.OK_CANCEL_OPTION);
+
+            if (choice == JOptionPane.CANCEL_OPTION) {
                 return;
             } else {
-                shots.add(s);
+                name = tName.getText();
+                if (name.equals("") || name == null) {
+                    JOptionPane.showMessageDialog(this, "Name Cannot be empty", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    continue;
+                }
+    
+                price = (double) sPriceModel.getValue();
+                cost = (double) sCostModel.getValue();
+    
+                darkness = (Darkness) cDakness.getSelectedItem();
+
+                while (true) {
+                    Shot s = (Shot) JOptionPane.showInputDialog(this, "Java Shots", "Java Shots", JOptionPane.QUESTION_MESSAGE, null, Shot.values(), Shot.none);
+                    if (s == Shot.none) {
+                        shots.add(s);
+                        break;
+                        
+                    } else if (s == null) {
+                        return;
+                    } else {
+                        shots.add(s);
+                    }
+                }
+    
+                break;
             }
         }
 
