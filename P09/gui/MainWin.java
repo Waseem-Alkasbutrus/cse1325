@@ -22,6 +22,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
@@ -30,6 +31,7 @@ import javax.swing.Box;
 import javax.swing.JFileChooser;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -432,11 +434,25 @@ public class MainWin extends JFrame {
         JLabel lDarkness = new JLabel("Darkness:");
         JComboBox<Darkness> cDakness = new JComboBox<>(Darkness.values());
 
+        //Shots
+        JLabel lShots = new JLabel("Shots:");
+        
+        JPanel pShots = new JPanel();
+        pShots.setPreferredSize(new Dimension(20, 100));
+        pShots.add(new JComboBox<Shot>(Shot.values()));
+
+        JScrollPane sShots = new JScrollPane(pShots);
+        sShots.setAutoscrolls(true);
+
+        JButton bAddShot = new JButton("Add Shot");
+        bAddShot.addActionListener(event -> pShots.add(new JComboBox<Shot>(Shot.values())));
+
         Object newJavaComponents[] = {
             lName, tName,
             lPrice, sPrice,
             lCost, sCost,
-            lDarkness, cDakness
+            lDarkness, cDakness,
+            lShots, bAddShot, sShots
         };
 
         while (true) {
