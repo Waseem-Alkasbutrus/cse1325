@@ -436,11 +436,13 @@ public class MainWin extends JFrame {
 
         //Shots
         JLabel lShots = new JLabel("Shots:");
-        
+
         JPanel pShots = new JPanel();
         pShots.setPreferredSize(new Dimension(20, 100));
-        pShots.add(new JComboBox<Shot>(Shot.values()));
-
+        for (int i = 0; i < 3; i++) {
+            pShots.add(new JComboBox<Shot>(Shot.values()));
+        }
+        
         JScrollPane sShots = new JScrollPane(pShots);
         sShots.setAutoscrolls(true);
 
