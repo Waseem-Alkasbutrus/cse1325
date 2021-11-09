@@ -165,40 +165,40 @@ public class MainWin extends JFrame {
 
         this.toolbar = new JToolBar("JADE Tools");
         
-        bNew = newJButton("gui/assets/NEW.png", "Create a new store", "Create a new store");
+        bNew = newToolbarButton("gui/assets/NEW.png", "Create a new store", "Create a new store");
         bNew.addActionListener(event -> onNewClick());
         
-        bOpen = newJButton("gui/assets/OPEN.png", "Open a store from a .jade file", "Open a store from a .jade file");
+        bOpen = newToolbarButton("gui/assets/OPEN.png", "Open a store from a .jade file", "Open a store from a .jade file");
         bOpen.addActionListener(event -> onOpenClick());
         
-        bSave = newJButton("gui/assets/SAVE.png", "Save store", "Save store");
+        bSave = newToolbarButton("gui/assets/SAVE.png", "Save store", "Save store");
         bSave.addActionListener(event -> onSaveClick());
         
-        bSaveAs = newJButton("gui/assets/SAVE AS.png", "Save store to a new .jade file", "Save store to a new .jade file");
+        bSaveAs = newToolbarButton("gui/assets/SAVE AS.png", "Save store to a new .jade file", "Save store to a new .jade file");
         bSaveAs.addActionListener(event -> onSaveAsClick());
         
         toolbar.add(Box.createHorizontalStrut(25));
 
-        bJava = newJButton("gui/assets/JAVA.png", "Create a new java", "Create a new java");
+        bJava = newToolbarButton("gui/assets/JAVA.png", "Create a new java", "Create a new java");
         bJava.addActionListener(event -> onCreateJavaClick());
     
-        bDonut = newJButton("gui/assets/DONUT.png", "Create a new donut", "Create a new donut");
+        bDonut = newToolbarButton("gui/assets/DONUT.png", "Create a new donut", "Create a new donut");
         bDonut.addActionListener(event -> onCreateDonutClick());
 
-        bCustomer = newJButton("gui/assets/CUSTOMER.png", "Create a new customer", "Create a new customer");
+        bCustomer = newToolbarButton("gui/assets/CUSTOMER.png", "Create a new customer", "Create a new customer");
         bCustomer.addActionListener(event -> onCreateCustomerClick());
 
         toolbar.add(Box.createHorizontalStrut(25));
 
-        bPeople = newJButton("gui/assets/VIEW PEOPLE.png", "View customers", "View customers");
+        bPeople = newToolbarButton("gui/assets/VIEW PEOPLE.png", "View customers", "View customers");
         bPeople.addActionListener(event -> onPeopleClick());
 
-        bProducts = newJButton("gui/assets/VIEW PRODUCTS.png", "View products", "View products");
+        bProducts = newToolbarButton("gui/assets/VIEW PRODUCTS.png", "View products", "View products");
         bProducts.addActionListener(event -> onProductsClick());
 
         toolbar.add(Box.createHorizontalStrut(25));
 
-        JButton bAbout = newJButton("gui/assets/ABOUT.png", "About this program", "About this program");
+        JButton bAbout = newToolbarButton("gui/assets/ABOUT.png", "About this program", "About this program");
         bAbout.addActionListener(event -> onAboutClick());
             
         //////////////////////////////////////////////////////////////
@@ -617,7 +617,7 @@ public class MainWin extends JFrame {
         }
     }
 
-    protected JButton newJButton(String iconPath, String actionCommand, String toolTip) {
+    protected JButton newToolbarButton(String iconPath, String actionCommand, String toolTip) {
         JButton bNewButton = new JButton(new ImageIcon(iconPath));
         bNewButton.setActionCommand(actionCommand);
         bNewButton.setToolTipText(toolTip);
