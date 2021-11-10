@@ -27,6 +27,7 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
 import javax.swing.BoxLayout;
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.JFileChooser;
 
@@ -46,7 +47,7 @@ import store.Shot;
 import store.Customer;
 import store.Server;
 
-enum ViewMode {Products, People, Orders};
+enum ViewMode {Product, People, Order};
 
 public class MainWin extends JFrame {
     private String NAME = "JAVA AND DONUT EXPRESS";
@@ -98,7 +99,7 @@ public class MainWin extends JFrame {
         this.viewMode = ViewMode.Product;
                 
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        setSize(750,500);
+        setSize(900,500);
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -172,40 +173,56 @@ public class MainWin extends JFrame {
 
         this.toolbar = new JToolBar("JADE Tools");
         
-        bNew = newToolbarButton("gui/assets/NEW.png", "Create a new store", "Create a new store");
+        JPanel fileButtons = new JPanel();
+        fileButtons.setBorder(BorderFactory.createTitledBorder("File"));
+        this.toolbar.add(fileButtons);
+
+        bNew = newToolbarButton("gui/assets/NEW.png", "Create a new store", "Create a new store", fileButtons);
         bNew.addActionListener(event -> onNewClick());
         
-        bOpen = newToolbarButton("gui/assets/OPEN.png", "Open a store from a .jade file", "Open a store from a .jade file");
+        bOpen = newToolbarButton("gui/assets/OPEN.png", "Open a store from a .jade file", "Open a store from a .jade file", fileButtons);
         bOpen.addActionListener(event -> onOpenClick());
         
-        bSave = newToolbarButton("gui/assets/SAVE.png", "Save store", "Save store");
+        bSave = newToolbarButton("gui/assets/SAVE.png", "Save store", "Save store", fileButtons);
         bSave.addActionListener(event -> onSaveClick());
         
-        bSaveAs = newToolbarButton("gui/assets/SAVE AS.png", "Save store to a new .jade file", "Save store to a new .jade file");
+        bSaveAs = newToolbarButton("gui/assets/SAVE AS.png", "Save store to a new .jade file", "Save store to a new .jade file", fileButtons);
         bSaveAs.addActionListener(event -> onSaveAsClick());
         
         toolbar.add(Box.createHorizontalStrut(25));
-
-        bJava = newToolbarButton("gui/assets/JAVA.png", "Create a new java", "Create a new java");
-        bJava.addActionListener(event -> onCreateJavaClick());
     
-        bDonut = newToolbarButton("gui/assets/DONUT.png", "Create a new donut", "Create a new donut");
+        JPanel createButtons = new JPanel();
+        createButtons.setBorder(BorderFactory.createTitledBorder("Create"));
+        this.toolbar.add(createButtons);
+
+        bJava = newToolbarButton("gui/assets/JAVA.png", "Create a new java", "Create a new java", createButtons);
+        bJava.addActionListener(event -> onCreateJavaClick());
+
+        bDonut = newToolbarButton("gui/assets/DONUT.png", "Create a new donut", "Create a new donut", createButtons);
         bDonut.addActionListener(event -> onCreateDonutClick());
 
-        bCustomer = newToolbarButton("gui/assets/CUSTOMER.png", "Create a new customer", "Create a new customer");
+        bCustomer = newToolbarButton("gui/assets/CUSTOMER.png", "Create a new customer", "Create a new customer", createButtons);
         bCustomer.addActionListener(event -> onCreateCustomerClick());
 
         toolbar.add(Box.createHorizontalStrut(25));
 
-        bPeople = newToolbarButton("gui/assets/VIEW PEOPLE.png", "View customers", "View customers");
+        JPanel viewButtons = new JPanel();
+        viewButtons.setBorder(BorderFactory.createTitledBorder("View"));
+        this.toolbar.add(viewButtons);
+
+        bPeople = newToolbarButton("gui/assets/VIEW PEOPLE.png", "View customers", "View customers", viewButtons);
         bPeople.addActionListener(event -> onPeopleClick());
 
-        bProducts = newToolbarButton("gui/assets/VIEW PRODUCTS.png", "View products", "View products");
+        bProducts = newToolbarButton("gui/assets/VIEW PRODUCTS.png", "View products", "View products", viewButtons);
         bProducts.addActionListener(event -> onProductsClick());
 
         toolbar.add(Box.createHorizontalStrut(25));
 
-        JButton bAbout = newToolbarButton("gui/assets/ABOUT.png", "About this program", "About this program");
+        JPanel helpButtons = new JPanel();
+        helpButtons.setBorder(BorderFactory.createTitledBorder("Help"));
+        this.toolbar.add(helpButtons);
+
+        JButton bAbout = newToolbarButton("gui/assets/ABOUT.png", "About this program", "About this program", helpButtons);
         bAbout.addActionListener(event -> onAboutClick());
             
         //////////////////////////////////////////////////////////////
@@ -675,12 +692,12 @@ public class MainWin extends JFrame {
         }
     }
 
-    protected JButton newToolbarButton(String iconPath, String actionCommand, String toolTip) {
+    protected JButton newToolbarButton(String iconPath, String actionCommand, String toolTip, JPanel buttonPanel) {
         JButton bNewButton = new JButton(new ImageIcon(iconPath));
         bNewButton.setActionCommand(actionCommand);
         bNewButton.setToolTipText(toolTip);
         bNewButton.setBorder(null);
-        this.toolbar.add(bNewButton);
+        buttonPanel.add(bNewButton);
         return bNewButton;
     }
 
