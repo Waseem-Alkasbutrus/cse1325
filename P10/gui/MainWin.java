@@ -44,8 +44,9 @@ import store.Frosting;
 import store.Darkness;
 import store.Shot;
 import store.Customer;
+import store.Server;
 
-enum ViewMode {Product, People};
+enum ViewMode {Products, People, Orders};
 
 public class MainWin extends JFrame {
     private String NAME = "JAVA AND DONUT EXPRESS";
@@ -538,38 +539,38 @@ public class MainWin extends JFrame {
     }
 
     protected void onCreateServerClick() {
-        JLabel lName = new JLabel("Name:");
-        JTextField tName = new JTextField(20);
-        JLabel lPhone = new JLabel("Phone:");
-        JTextField tPhone = new JTextField(20);
-        JLabel lSSN = new JLabel("SSN:");
-        JTextField tSSN = new JTextField(20);
+        // JLabel lName = new JLabel("Name:");
+        // JTextField tName = new JTextField(20);
+        // JLabel lPhone = new JLabel("Phone:");
+        // JTextField tPhone = new JTextField(20);
+        // JLabel lSSN = new JLabel("SSN:");
+        // JTextField tSSN = new JTextField(20);
 
-        Object objects[] = {
-            lName, tName,
-            lPhone, tPhone,
-            lSSN, tSSN
-        };
+        // Object objects[] = {
+        //     lName, tName,
+        //     lPhone, tPhone,
+        //     lSSN, tSSN
+        // };
         
-        while (true) {
-            int choice = JOptionPane.showConfirmDialog(this, objects, "New Customer", JOptionPane.OK_CANCEL_OPTION);
+        // while (true) {
+        //     int choice = JOptionPane.showConfirmDialog(this, objects, "New Customer", JOptionPane.OK_CANCEL_OPTION);
     
-            //TODO: shorten if statements
-            if (choice == JOptionPane.CANCEL_OPTION) {
-                break;
-            } else if (choice == JOptionPane.OK_OPTION) {
-                if (!(tName.getText() == null || tPhone.getText().equals("")) && !(tPhone.getText() == null || tPhone.getText().equals(""))) {
-                    this.store.addPerson(new Customer(tName.getText(), tPhone.getText()));
-                    updateData();
-                    JOptionPane.showMessageDialog(this, "Customer was added to the store");
+        //     //TODO: shorten if statements
+        //     if (choice == JOptionPane.CANCEL_OPTION) {
+        //         break;
+        //     } else if (choice == JOptionPane.OK_OPTION) {
+        //         if (!(tName.getText() == null || tPhone.getText().equals("")) && !(tPhone.getText() == null || tPhone.getText().equals(""))) {
+        //             this.store.addPerson(new Server(tName.getText(), tPhone.getText()), tSSN.getText());
+        //             updateData();
+        //             JOptionPane.showMessageDialog(this, "Customer was added to the store");
                     
-                    this.unsavedChanges = true;
-                    break;
-                } else {
-                    JOptionPane.showMessageDialog(this, "All fields must be filled", "ERROR", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        }
+        //             this.unsavedChanges = true;
+        //             break;
+        //         } else {
+        //             JOptionPane.showMessageDialog(this, "All fields must be filled", "ERROR", JOptionPane.ERROR_MESSAGE);
+        //         }
+        //     }
+        // }
     }
 
     protected void updateData() {
