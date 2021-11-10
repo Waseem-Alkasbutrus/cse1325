@@ -70,6 +70,9 @@ public class MainWin extends JFrame {
     private JMenuItem mCustomer;
     private JButton bCustomer;
 
+    private JMenuItem mServer;
+    private JButton bServer;
+
     private JMenuItem mNew;
     private JButton bNew;
 
@@ -118,7 +121,7 @@ public class MainWin extends JFrame {
         mDonut = new JMenuItem("Donut");
         mJava = new JMenuItem("Java");
         mCustomer = new JMenuItem("Customer");
-
+        mServer = new JMenuItem("Server");
 
         JMenu view = new JMenu("View");
         mPeople = new JMenuItem("Customers");
@@ -135,6 +138,7 @@ public class MainWin extends JFrame {
         mDonut.addActionListener(event -> onCreateDonutClick());
         mJava.addActionListener(event -> onCreateJavaClick());
         mCustomer.addActionListener(event -> onCreateCustomerClick());
+        mServer.addActionListener(event -> onCreateServerClick());
         mPeople.addActionListener(event -> onPeopleClick());
         mProducts.addActionListener(event -> onProductsClick());
         mAbout.addActionListener(event -> onAboutClick());
@@ -505,9 +509,9 @@ public class MainWin extends JFrame {
     }
 
     protected void onCreateCustomerClick() {
-        JLabel lName = new JLabel("Customer Name:");
+        JLabel lName = new JLabel("Name:");
         JTextField tName = new JTextField(20);
-        JLabel lPhone = new JLabel("Phone Number:");
+        JLabel lPhone = new JLabel("Phone:");
         JTextField tPhone = new JTextField(20);
 
         Object objects[] = {
@@ -529,6 +533,41 @@ public class MainWin extends JFrame {
                 break;
             } else {
                 JOptionPane.showMessageDialog(this, "All fields must be filled", "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    protected void onCreateServerClick() {
+        JLabel lName = new JLabel("Name:");
+        JTextField tName = new JTextField(20);
+        JLabel lPhone = new JLabel("Phone:");
+        JTextField tPhone = new JTextField(20);
+        JLabel lSSN = new JLabel("SSN:");
+        JTextField tSSN = new JTextField(20);
+
+        Object objects[] = {
+            lName, tName,
+            lPhone, tPhone,
+            lSSN, tSSN
+        };
+        
+        while (true) {
+            int choice = JOptionPane.showConfirmDialog(this, objects, "New Customer", JOptionPane.OK_CANCEL_OPTION);
+    
+            //TODO: shorten if statements
+            if (choice == JOptionPane.CANCEL_OPTION) {
+                break;
+            } else if (choice == JOptionPane.OK_OPTION) {
+                if (!(tName.getText() == null || tPhone.getText().equals("")) && !(tPhone.getText() == null || tPhone.getText().equals(""))) {
+                    this.store.addPerson(new Customer(tName.getText(), tPhone.getText()));
+                    updateData();
+                    JOptionPane.showMessageDialog(this, "Customer was added to the store");
+                    
+                    this.unsavedChanges = true;
+                    break;
+                } else {
+                    JOptionPane.showMessageDialog(this, "All fields must be filled", "ERROR", JOptionPane.ERROR_MESSAGE);
+                }
             }
         }
     }
