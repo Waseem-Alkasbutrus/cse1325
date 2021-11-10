@@ -629,7 +629,7 @@ public class MainWin extends JFrame {
                                 + "<p></p>"
                                 + "<p>-Logo and all toolbar button icons created by Waseem Alkasbutrus</p>"
                                 + "<p>-CancelDialogException by George F. Rice, licensed under Gnu GPL 3.0</p>"
-                                + "<p>-getDouble, and getString methods by George F. Rice, licensed under Gnu GPL 3.0</p>"
+                                + "<p>-getString methods by George F. Rice, licensed under Gnu GPL 3.0</p>"
                                 + "</html>");
         about.add(title);
         about.add(body);
@@ -639,25 +639,6 @@ public class MainWin extends JFrame {
 
     //////////////////////////////////////////////////////////////
     // U T I L S
-
-    //Implmentation for getDouble followed professor rice's implimentation closely
-    protected Double getDouble(String message, String title, int messageType) throws CancelDialogException {
-        while (true) {
-            try {
-                String stringInput = JOptionPane.showInputDialog(this, message, title, messageType);
-                if (stringInput == null) {
-                    throw new CancelDialogException();
-                } else {
-                    double parsedDouble = Double.parseDouble(stringInput);
-                    return parsedDouble;
-                }
-            } catch (CancelDialogException e) {
-                throw e;
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Invalid Input", "ERROR", JOptionPane.ERROR_MESSAGE);
-            }
-        }
-    }
 
     //Implmentation for getString followed professor rice's implimentation closely
     protected String getString(String message, String title, int messageType) throws CancelDialogException {
