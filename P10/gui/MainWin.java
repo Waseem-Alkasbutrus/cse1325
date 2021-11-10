@@ -174,7 +174,7 @@ public class MainWin extends JFrame {
         this.toolbar = new JToolBar("JADE Tools");
         
         JPanel fileButtons = new JPanel();
-        fileButtons.setBorder(BorderFactory.createTitledBorder("File"));
+        fileButtons.setBorder(BorderFactory.createTitledBorder("Manage Store"));
         this.toolbar.add(fileButtons);
 
         bNew = newToolbarButton("gui/assets/NEW.png", "Create a new store", "Create a new store", fileButtons);
@@ -192,7 +192,7 @@ public class MainWin extends JFrame {
         toolbar.add(Box.createHorizontalStrut(25));
     
         JPanel createButtons = new JPanel();
-        createButtons.setBorder(BorderFactory.createTitledBorder("Create"));
+        createButtons.setBorder(BorderFactory.createTitledBorder("Create..."));
         this.toolbar.add(createButtons);
 
         bJava = newToolbarButton("gui/assets/JAVA.png", "Create a new java", "Create a new java", createButtons);
@@ -207,7 +207,7 @@ public class MainWin extends JFrame {
         toolbar.add(Box.createHorizontalStrut(25));
 
         JPanel viewButtons = new JPanel();
-        viewButtons.setBorder(BorderFactory.createTitledBorder("View"));
+        viewButtons.setBorder(BorderFactory.createTitledBorder("View..."));
         this.toolbar.add(viewButtons);
 
         bPeople = newToolbarButton("gui/assets/VIEW PEOPLE.png", "View customers", "View customers", viewButtons);
