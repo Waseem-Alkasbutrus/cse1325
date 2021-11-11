@@ -56,7 +56,6 @@ public class MainWin extends JFrame {
     private String MAGIC_COOKIE = "WIA®";
 
     private boolean unsavedChanges;
-    private ViewMode viewMode;
 
     private Store store;
     private File filename;
@@ -102,7 +101,6 @@ public class MainWin extends JFrame {
     public MainWin(String title) {
         super(title);
         this.filename = new File("./saves/default.jade");
-        this.viewMode = ViewMode.Product;
                 
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setSize(1070,500);
@@ -151,8 +149,9 @@ public class MainWin extends JFrame {
         mCustomer.addActionListener(event -> onCreateCustomerClick());
         mServer.addActionListener(event -> onCreateServerClick());
 
-        mPeople.addActionListener(event -> onPeopleClick());
-        mProducts.addActionListener(event -> onProductsClick());
+        mPeople.addActionListener(event -> updateData(ViewMode.People));
+        mProducts.addActionListener(event -> updateData(ViewMode.Product));
+        mOrders.addActionListener(event -> updateData(ViewMode.Order));
 
         mAbout.addActionListener(event -> onAboutClick());
         
@@ -231,13 +230,13 @@ public class MainWin extends JFrame {
         this.toolbar.add(viewButtons);
 
         bPeople = newToolbarButton("gui/assets/VIEW PEOPLE.png", "View customers", "View customers", viewButtons);
-        bPeople.addActionListener(event -> onPeopleClick());
+        bPeople.addActionListener(event -> updateData(ViewMode.People));
 
         bProducts = newToolbarButton("gui/assets/VIEW PRODUCTS.png", "View products", "View products", viewButtons);
-        bProducts.addActionListener(event -> onProductsClick());
+        bProducts.addActionListener(event -> updateData(ViewMode.Product));
 
         bOrders = newToolbarButton("gui/assets/VIEW ORDERS.png", "View orders", "View orders", viewButtons);
-        //TODO: add action listener
+        bOrders.addActionListener(event -> updateData(ViewMode.Order));
 
         JPanel helpButtons = new JPanel();
         helpButtons.setBorder(BorderFactory.createTitledBorder("Help"));
@@ -450,7 +449,7 @@ public class MainWin extends JFrame {
 
         //Adding donut to store
         this.store.addProduct(new Donut(name, price, cost, frosting, sprinkles, filling));
-        updateData();
+        updateData(ViewMode.Product);
         JOptionPane.showMessageDialog(this, "Donut was added to store menu");
         
         this.unsavedChanges = true;
@@ -541,7 +540,7 @@ public class MainWin extends JFrame {
         }
 
         this.store.addProduct(java);
-        updateData();
+        updateData(ViewMode.Product);
         JOptionPane.showMessageDialog(this, "Java was added to store menu");
 
         this.unsavedChanges = true;
@@ -584,7 +583,7 @@ public class MainWin extends JFrame {
         }
 
         this.store.addPerson(new Customer(name, phone));
-        updateData();
+        updateData(ViewMode.People);
         JOptionPane.showMessageDialog(this, "Customer was added to the store");
         
         this.unsavedChanges = true;
@@ -639,25 +638,20 @@ public class MainWin extends JFrame {
         }
 
         this.store.addPerson(new Server(name, phone, SSN));
-        updateData();
+        updateData(ViewMode.People);
         JOptionPane.showMessageDialog(this, "Server was added to the store");
         
         this.unsavedChanges = true;
     }
 
-    protected void updateData() {
-        if (this.viewMode == ViewMode.Product) {onProductsClick();}
-        else if (this.viewMode == ViewMode.People) {onPeopleClick();}
-    }
-
-    protected void onPeopleClick() {
-        this.viewMode = ViewMode.People;
-        this.data.setText(toHtml(this.store.peopleToString()));
-    }
-
-    protected void onProductsClick() {
-        this.viewMode = ViewMode.Product;
-        this.data.setText(toHtml(this.store.toString()));
+    protected void updateData(ViewMode viewMode) {
+        if (ViewMode.People == viewMode) {
+            this.data.setText(toHtml(this.store.peopleToString()));
+        } else if (ViewMode.Product == viewMode) {
+            this.data.setText(toHtml(this.store.toString()));
+        } else if (ViewMode.Order == viewMode) {
+            //TODO: Implement this
+        }
     }
 
     protected void onAboutClick() {
