@@ -220,7 +220,7 @@ public class MainWin extends JFrame {
         bCustomer.addActionListener(event -> onCreateCustomerClick());
 
         bServer = newToolbarButton("gui/assets/SERVER.png", "Create a new server", "Create a new server", createButtons);
-        //TODO: add action listener
+        bServer.addActionListener(event -> onCreateServerClick());
 
         bOrder = newToolbarButton("gui/assets/ORDER.png", "Create a new order", "Create a new order", createButtons);
         //TODO: add action listener
@@ -388,25 +388,25 @@ public class MainWin extends JFrame {
         Filling filling;
       
         //Dialog Components
-        JLabel lName = new JLabel("Name:");
+        JLabel lName = new JLabel(toHtml("\nName:"));
         JTextField tName = new JTextField(20);
 
         SpinnerModel sPriceModel = new SpinnerNumberModel(0.01, 0.01, 1000.0, 0.01);
-        JLabel lPrice = new JLabel("Price:");
+        JLabel lPrice = new JLabel(toHtml("\nPrice:"));
         JSpinner sPrice = new JSpinner(sPriceModel);
         
         SpinnerModel sCostModel = new SpinnerNumberModel(0.01, 0.01, 1000.0, 0.01);
-        JLabel lCost = new JLabel("Cost:");
+        JLabel lCost = new JLabel(toHtml("\nCost:"));
         JSpinner sCost = new JSpinner(sCostModel);
 
-        JLabel lFrosting = new JLabel("Frosting:");
+        JLabel lFrosting = new JLabel(toHtml("\nFrosting:"));
         JComboBox<Frosting> cFrosting = new JComboBox<>(Frosting.values());
 
-        JLabel lSprinkles = new JLabel("Sprinkles:");
+        JLabel lSprinkles = new JLabel(toHtml("\nSprinkles:"));
         String yesNoOpts[] = {"Yes", "No"};
         JComboBox<String> cSprinkles = new JComboBox<>(yesNoOpts);
 
-        JLabel lFilling = new JLabel("Filling:");
+        JLabel lFilling = new JLabel(toHtml("\nFilling:"));
         JComboBox<Filling> cFilling = new JComboBox<>(Filling.values());
         
         Object newDonutComponents[] = {
@@ -421,9 +421,7 @@ public class MainWin extends JFrame {
         while (true) {
             int choice = JOptionPane.showConfirmDialog(this, newDonutComponents, "New Donut", JOptionPane.OK_CANCEL_OPTION);
 
-            if (choice == JOptionPane.CANCEL_OPTION) {
-                return;
-            } else if (choice == JOptionPane.OK_OPTION) {
+            if (choice == JOptionPane.OK_OPTION) {
                 name = tName.getText();
                 if (name.equals("") || name == null) {
                     JOptionPane.showMessageDialog(this, "Name Cannot be empty", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -444,6 +442,8 @@ public class MainWin extends JFrame {
                 filling = (Filling) cFilling.getSelectedItem();
     
                 break;
+            } else {
+                return;
             }
         }
 
@@ -502,9 +502,7 @@ public class MainWin extends JFrame {
         while (true) {
             int choice = JOptionPane.showConfirmDialog(this, newJavaComponents, "New Java", JOptionPane.OK_CANCEL_OPTION);
 
-            if (choice == JOptionPane.CANCEL_OPTION) {
-                return;
-            } else if (choice == JOptionPane.OK_OPTION) {
+            if (choice == JOptionPane.OK_OPTION) {
                 name = tName.getText();
                 if (name.equals("") || name == null) {
                     JOptionPane.showMessageDialog(this, "Name Cannot be empty", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -530,6 +528,8 @@ public class MainWin extends JFrame {
                 }
     
                 break;
+            } else {
+                return;
             }
         }
 
@@ -563,9 +563,7 @@ public class MainWin extends JFrame {
         while (true) {
             int choice = JOptionPane.showConfirmDialog(this, objects, "New Customer", JOptionPane.OK_CANCEL_OPTION);
     
-            if (choice == JOptionPane.CANCEL_OPTION) {
-                return;
-            } else if (choice == JOptionPane.OK_OPTION) {
+            if (choice == JOptionPane.OK_OPTION) {
                 name = tName.getText();
                 if (name.equals("") || name == null) {
                     JOptionPane.showMessageDialog(this, "Name Cannot be empty", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -579,6 +577,8 @@ public class MainWin extends JFrame {
                 }
 
                 break;
+            } else {
+                return;
             }
         }
 
@@ -612,9 +612,7 @@ public class MainWin extends JFrame {
         while (true) {
             int choice = JOptionPane.showConfirmDialog(this, objects, "New Customer", JOptionPane.OK_CANCEL_OPTION);
     
-            if (choice == JOptionPane.CANCEL_OPTION) {
-                return;
-            } else if (choice == JOptionPane.OK_OPTION) {
+            if (choice == JOptionPane.OK_OPTION) {
                 name = tName.getText();
                 if (name.equals("") || name == null) {
                     JOptionPane.showMessageDialog(this, "Name Cannot be empty", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -634,6 +632,8 @@ public class MainWin extends JFrame {
                 }
 
                 break;
+            } else {
+                return;
             }
         }
 
