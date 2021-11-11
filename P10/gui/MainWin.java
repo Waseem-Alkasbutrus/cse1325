@@ -105,7 +105,7 @@ public class MainWin extends JFrame {
         this.viewMode = ViewMode.Product;
                 
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        setSize(1000,500);
+        setSize(1070,500);
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -130,10 +130,12 @@ public class MainWin extends JFrame {
         mJava = new JMenuItem("Java");
         mCustomer = new JMenuItem("Customer");
         mServer = new JMenuItem("Server");
+        mOrder = new JMenuItem("Order");
 
         JMenu view = new JMenu("View");
         mPeople = new JMenuItem("Customers");
         mProducts = new JMenuItem("Products");
+        mOrders = new JMenuItem("Orders");
 
         JMenu help = new JMenu("Help");
         JMenuItem mAbout = new JMenuItem("About");
@@ -143,12 +145,15 @@ public class MainWin extends JFrame {
         mSave.addActionListener(event -> onSaveClick());
         mSaveAs.addActionListener(event -> onSaveAsClick());
         mQuit.addActionListener(event -> onQuitClick());
+
         mDonut.addActionListener(event -> onCreateDonutClick());
         mJava.addActionListener(event -> onCreateJavaClick());
         mCustomer.addActionListener(event -> onCreateCustomerClick());
         mServer.addActionListener(event -> onCreateServerClick());
+
         mPeople.addActionListener(event -> onPeopleClick());
         mProducts.addActionListener(event -> onProductsClick());
+
         mAbout.addActionListener(event -> onAboutClick());
         
         file.add(mNew);
@@ -159,12 +164,19 @@ public class MainWin extends JFrame {
         file.add(mSaveAs);
         file.addSeparator();
         file.add(mQuit);
+
         create.add(mDonut);
         create.add(mJava);
         create.addSeparator();
         create.add(mCustomer);
+        create.add(mServer);
+        create.addSeparator();
+        create.add(mOrder);
+
         view.add(mPeople);
         view.add(mProducts);
+        view.add(mOrders);
+
         help.add(mAbout);
 
         menubar.add(file);
@@ -194,8 +206,6 @@ public class MainWin extends JFrame {
         
         bSaveAs = newToolbarButton("gui/assets/SAVE AS.png", "Save store to a new .jade file", "Save store to a new .jade file", fileButtons);
         bSaveAs.addActionListener(event -> onSaveAsClick());
-        
-        toolbar.add(Box.createHorizontalStrut(25));
     
         JPanel createButtons = new JPanel();
         createButtons.setBorder(BorderFactory.createTitledBorder("Create..."));
@@ -210,10 +220,11 @@ public class MainWin extends JFrame {
         bCustomer = newToolbarButton("gui/assets/CUSTOMER.png", "Create a new customer", "Create a new customer", createButtons);
         bCustomer.addActionListener(event -> onCreateCustomerClick());
 
-        bOrder = newToolbarButton("gui/assets/ORDER.png", "Create a new order", "Create a new order", createButtons);
+        bServer = newToolbarButton("gui/assets/SERVER.png", "Create a new server", "Create a new server", createButtons);
         //TODO: add action listener
 
-        toolbar.add(Box.createHorizontalStrut(25));
+        bOrder = newToolbarButton("gui/assets/ORDER.png", "Create a new order", "Create a new order", createButtons);
+        //TODO: add action listener
 
         JPanel viewButtons = new JPanel();
         viewButtons.setBorder(BorderFactory.createTitledBorder("View..."));
@@ -227,8 +238,6 @@ public class MainWin extends JFrame {
 
         bOrders = newToolbarButton("gui/assets/VIEW ORDERS.png", "View orders", "View orders", viewButtons);
         //TODO: add action listener
-
-        toolbar.add(Box.createHorizontalStrut(25));
 
         JPanel helpButtons = new JPanel();
         helpButtons.setBorder(BorderFactory.createTitledBorder("Help"));
