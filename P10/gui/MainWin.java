@@ -424,7 +424,7 @@ public class MainWin extends JFrame {
 
             if (choice == JOptionPane.CANCEL_OPTION) {
                 return;
-            } else {
+            } else if (choice == JOptionPane.OK_OPTION) {
                 name = tName.getText();
                 if (name.equals("") || name == null) {
                     JOptionPane.showMessageDialog(this, "Name Cannot be empty", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -505,7 +505,7 @@ public class MainWin extends JFrame {
 
             if (choice == JOptionPane.CANCEL_OPTION) {
                 return;
-            } else {
+            } else if (choice == JOptionPane.OK_OPTION) {
                 name = tName.getText();
                 if (name.equals("") || name == null) {
                     JOptionPane.showMessageDialog(this, "Name Cannot be empty", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -548,6 +548,9 @@ public class MainWin extends JFrame {
     }
 
     protected void onCreateCustomerClick() {
+        String name;
+        String phone;
+        
         JLabel lName = new JLabel("Name:");
         JTextField tName = new JTextField(20);
         JLabel lPhone = new JLabel("Phone:");
@@ -562,53 +565,84 @@ public class MainWin extends JFrame {
             int choice = JOptionPane.showConfirmDialog(this, objects, "New Customer", JOptionPane.OK_CANCEL_OPTION);
     
             if (choice == JOptionPane.CANCEL_OPTION) {
+                return;
+            } else if (choice == JOptionPane.OK_OPTION) {
+                name = tName.getText();
+                if (name.equals("") || name == null) {
+                    JOptionPane.showMessageDialog(this, "Name Cannot be empty", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    continue;
+                }
+
+                phone = tPhone.getText();
+                if (phone.equals("") || phone == null || phone.length() != 10) {
+                    JOptionPane.showMessageDialog(this, "Not a valid phone number", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    continue;
+                }
+
                 break;
-            } else if (!(tName.getText() == null || tPhone.getText().equals("")) && !(tPhone.getText() == null || tPhone.getText().equals(""))) {
-                this.store.addPerson(new Customer(tName.getText(), tPhone.getText()));
-                updateData();
-                JOptionPane.showMessageDialog(this, "Customer was added to the store");
-                
-                this.unsavedChanges = true;
-                break;
-            } else {
-                JOptionPane.showMessageDialog(this, "All fields must be filled", "ERROR", JOptionPane.ERROR_MESSAGE);
             }
         }
+
+        this.store.addPerson(new Customer(name, phone));
+        updateData();
+        JOptionPane.showMessageDialog(this, "Customer was added to the store");
+        
+        this.unsavedChanges = true;
     }
 
     protected void onCreateServerClick() {
-        // JLabel lName = new JLabel("Name:");
-        // JTextField tName = new JTextField(20);
-        // JLabel lPhone = new JLabel("Phone:");
-        // JTextField tPhone = new JTextField(20);
-        // JLabel lSSN = new JLabel("SSN:");
-        // JTextField tSSN = new JTextField(20);
-
-        // Object objects[] = {
-        //     lName, tName,
-        //     lPhone, tPhone,
-        //     lSSN, tSSN
-        // };
+        String name;
+        String phone;
+        String SSN;
         
-        // while (true) {
-        //     int choice = JOptionPane.showConfirmDialog(this, objects, "New Customer", JOptionPane.OK_CANCEL_OPTION);
+        JLabel lName = new JLabel("Name:");
+        JTextField tName = new JTextField(20);
+
+        JLabel lPhone = new JLabel("Phone:");
+        JTextField tPhone = new JTextField(20);
+
+        JLabel lSSN = new JLabel("SSN:");
+        JTextField tSSN = new JTextField(20);
+
+        Object objects[] = {
+            lName, tName,
+            lPhone, tPhone,
+            lSSN, tSSN
+        };
+        
+        while (true) {
+            int choice = JOptionPane.showConfirmDialog(this, objects, "New Customer", JOptionPane.OK_CANCEL_OPTION);
     
-        //     //TODO: shorten if statements
-        //     if (choice == JOptionPane.CANCEL_OPTION) {
-        //         break;
-        //     } else if (choice == JOptionPane.OK_OPTION) {
-        //         if (!(tName.getText() == null || tPhone.getText().equals("")) && !(tPhone.getText() == null || tPhone.getText().equals(""))) {
-        //             this.store.addPerson(new Server(tName.getText(), tPhone.getText()), tSSN.getText());
-        //             updateData();
-        //             JOptionPane.showMessageDialog(this, "Customer was added to the store");
-                    
-        //             this.unsavedChanges = true;
-        //             break;
-        //         } else {
-        //             JOptionPane.showMessageDialog(this, "All fields must be filled", "ERROR", JOptionPane.ERROR_MESSAGE);
-        //         }
-        //     }
-        // }
+            if (choice == JOptionPane.CANCEL_OPTION) {
+                return;
+            } else if (choice == JOptionPane.OK_OPTION) {
+                name = tName.getText();
+                if (name.equals("") || name == null) {
+                    JOptionPane.showMessageDialog(this, "Name Cannot be empty", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    continue;
+                }
+
+                phone = tPhone.getText();
+                if (phone.equals("") || phone == null || phone.length() != 10) {
+                    JOptionPane.showMessageDialog(this, "Not a valid phone number", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    continue;
+                }
+
+                SSN = tSSN.getText();
+                if (SSN.equals("") || SSN == null || SSN.length() != 9) {
+                    JOptionPane.showMessageDialog(this, "Not a valid social security number", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    continue;
+                }
+
+                break;
+            }
+        }
+
+        this.store.addPerson(new Server(name, phone, SSN));
+        updateData();
+        JOptionPane.showMessageDialog(this, "Server was added to the store");
+        
+        this.unsavedChanges = true;
     }
 
     protected void updateData() {
