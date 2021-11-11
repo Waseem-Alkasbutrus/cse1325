@@ -8,6 +8,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.text.ParseException;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
@@ -18,6 +19,7 @@ import javax.swing.JToolBar;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.text.MaskFormatter;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -30,6 +32,7 @@ import javax.swing.BoxLayout;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.JFileChooser;
+import javax.swing.JFormattedTextField;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -551,8 +554,16 @@ public class MainWin extends JFrame {
         
         JLabel lName = new JLabel("Name:");
         JTextField tName = new JTextField(20);
+
         JLabel lPhone = new JLabel("Phone:");
-        JTextField tPhone = new JTextField(20);
+        MaskFormatter phoneFormat = new MaskFormatter();
+        JFormattedTextField tPhone = new JFormattedTextField();
+        try {
+            phoneFormat = new MaskFormatter("(###) ###-####");
+            tPhone = new JFormattedTextField(phoneFormat);
+        } catch (ParseException e) {
+            System.out.println(e.getMessage());
+        }
 
         Object objects[] = {
             lName, tName,
@@ -569,10 +580,11 @@ public class MainWin extends JFrame {
                     continue;
                 }
 
-                phone = tPhone.getText();
-                if (phone.equals("") || phone == null || phone.length() != 10) {
+                if (!tPhone.isEditValid()) {
                     JOptionPane.showMessageDialog(this, "Not a valid phone number", "ERROR", JOptionPane.ERROR_MESSAGE);
                     continue;
+                } else {
+                    phone = tPhone.getText();
                 }
 
                 break;
@@ -597,10 +609,25 @@ public class MainWin extends JFrame {
         JTextField tName = new JTextField(20);
 
         JLabel lPhone = new JLabel("Phone:");
-        JTextField tPhone = new JTextField(20);
+        MaskFormatter phoneFormat = new MaskFormatter();
+        JFormattedTextField tPhone = new JFormattedTextField();
+        try {
+            phoneFormat = new MaskFormatter("(###) ###-####");
+            tPhone = new JFormattedTextField(phoneFormat);
+        } catch (ParseException e) {
+            System.out.println(e.getMessage());
+        }
 
         JLabel lSSN = new JLabel("SSN:");
-        JTextField tSSN = new JTextField(20);
+        MaskFormatter ssnFormat = new MaskFormatter();
+        JFormattedTextField tSSN = new JFormattedTextField();
+        try {
+            ssnFormat = new MaskFormatter("###-##-####");
+            tSSN = new JFormattedTextField(ssnFormat);
+        } catch (ParseException e) {
+            System.out.println(e.getMessage());
+        }
+
 
         Object objects[] = {
             lName, tName,
@@ -618,16 +645,18 @@ public class MainWin extends JFrame {
                     continue;
                 }
 
-                phone = tPhone.getText();
-                if (phone.equals("") || phone == null || phone.length() != 10) {
+                if (!tPhone.isEditValid()) {
                     JOptionPane.showMessageDialog(this, "Not a valid phone number", "ERROR", JOptionPane.ERROR_MESSAGE);
                     continue;
+                } else {
+                    phone = tPhone.getText();
                 }
 
-                SSN = tSSN.getText();
-                if (SSN.equals("") || SSN == null || SSN.length() != 9) {
+                if (!tSSN.isEditValid()) {
                     JOptionPane.showMessageDialog(this, "Not a valid social security number", "ERROR", JOptionPane.ERROR_MESSAGE);
                     continue;
+                } else {
+                    SSN = tSSN.getText();
                 }
 
                 break;
