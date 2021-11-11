@@ -75,6 +75,9 @@ public class MainWin extends JFrame {
     private JMenuItem mServer;
     private JButton bServer;
 
+    private JMenuItem mOrder;
+    private JButton bOrder;
+
     private JMenuItem mNew;
     private JButton bNew;
 
@@ -93,13 +96,16 @@ public class MainWin extends JFrame {
     private JMenuItem mProducts;
     private JButton bProducts;
 
+    private JMenuItem mOrders;
+    private JButton bOrders;
+
     public MainWin(String title) {
         super(title);
         this.filename = new File("./saves/default.jade");
         this.viewMode = ViewMode.Product;
                 
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        setSize(900,500);
+        setSize(1000,500);
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -204,6 +210,9 @@ public class MainWin extends JFrame {
         bCustomer = newToolbarButton("gui/assets/CUSTOMER.png", "Create a new customer", "Create a new customer", createButtons);
         bCustomer.addActionListener(event -> onCreateCustomerClick());
 
+        bOrder = newToolbarButton("gui/assets/ORDER.png", "Create a new order", "Create a new order", createButtons);
+        //TODO: add action listener
+
         toolbar.add(Box.createHorizontalStrut(25));
 
         JPanel viewButtons = new JPanel();
@@ -215,6 +224,9 @@ public class MainWin extends JFrame {
 
         bProducts = newToolbarButton("gui/assets/VIEW PRODUCTS.png", "View products", "View products", viewButtons);
         bProducts.addActionListener(event -> onProductsClick());
+
+        bOrders = newToolbarButton("gui/assets/VIEW ORDERS.png", "View orders", "View orders", viewButtons);
+        //TODO: add action listener
 
         toolbar.add(Box.createHorizontalStrut(25));
 
