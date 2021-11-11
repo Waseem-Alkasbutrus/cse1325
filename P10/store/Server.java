@@ -23,4 +23,9 @@ public class Server extends Person {
         super.save(bufferedWriter);
         bufferedWriter.write(this.ssn + '\n');
     }
+
+    @Override
+    public String toString() {
+        return "Server " + this.name + " (" + this.phone + ", SSN " + this.ssn + ")";
+    } 
 }

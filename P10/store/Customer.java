@@ -18,4 +18,9 @@ public class Customer extends Person {
         bufferedWriter.write("CUSTOMER\n");
         super.save(bufferedWriter);
     }
+
+    @Override
+    public String toString() {
+        return "Customer " + this.name + " (" + this.phone + ")";
+    }
 }
