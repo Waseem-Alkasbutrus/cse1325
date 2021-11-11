@@ -52,7 +52,7 @@ enum ViewMode {Product, People, Order};
 public class MainWin extends JFrame {
     private String NAME = "JAVA AND DONUT EXPRESS";
     private String VERSION = "0.3";
-    private String FILE_VERSION = "1.1"; 
+    private String FILE_VERSION = "1.2"; 
     private String MAGIC_COOKIE = "WIA®";
 
     private boolean unsavedChanges;
@@ -515,16 +515,14 @@ public class MainWin extends JFrame {
     
                 darkness = (Darkness) cDakness.getSelectedItem();
 
-                while (true) {
-                    Shot s = (Shot) JOptionPane.showInputDialog(this, "Java Shots", "Java Shots", JOptionPane.QUESTION_MESSAGE, null, Shot.values(), Shot.none);
-                    if (s == Shot.none) {
-                        shots.add(s);
-                        break;
+                for (Object o : pShots.getComponents()) {
+                    if (o instanceof JComboBox) {
+                        @SuppressWarnings("unchecked")
+                        JComboBox<Shot> c = (JComboBox<Shot>) o;
                         
-                    } else if (s == null) {
-                        return;
-                    } else {
-                        shots.add(s);
+                        if (((Shot) c.getSelectedItem()) != Shot.none) {
+                            shots.add((Shot) c.getSelectedItem());
+                        }
                     }
                 }
     
