@@ -36,7 +36,7 @@ public class Store {
             if (personType.equals("CUSTOMER")) {
                 this.people.add(new Customer(bufferedReader));
             } else if (personType.equals("SERVER")) {
-                //TODO: Add new server to people
+                this.people.add(new Server(bufferedReader));
             } else if (personType.equals("MANAGER")) {
                 //TODO: Add new manager to people
             }
