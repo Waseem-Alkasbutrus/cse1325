@@ -480,13 +480,14 @@ public class MainWin extends JFrame {
         JLabel lShots = new JLabel("Shots:");
 
         JPanel pShots = new JPanel();
-        pShots.setPreferredSize(new Dimension(20, 100));
+        pShots.setLayout(new BoxLayout(pShots, BoxLayout.PAGE_AXIS));
+
         for (int i = 0; i < 3; i++) {
             pShots.add(new JComboBox<Shot>(Shot.values()));
         }
         
         JScrollPane sShots = new JScrollPane(pShots);
-        sShots.setAutoscrolls(true);
+        sShots.setPreferredSize(new Dimension(200, 80));
 
         JButton bAddShot = new JButton("Add Shot");
         bAddShot.addActionListener(event -> pShots.add(new JComboBox<Shot>(Shot.values())));
@@ -496,7 +497,7 @@ public class MainWin extends JFrame {
             lPrice, sPrice,
             lCost, sCost,
             lDarkness, cDakness,
-            lShots, bAddShot, sShots
+            lShots, sShots, bAddShot
         };
 
         while (true) {
