@@ -60,4 +60,13 @@ public class Donut extends Product {
         
         return donutString;
     }
+
+    @Override 
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null) return false;
+        if (this.getClass() != o.getClass()) return false;
+        Donut donut = (Donut) o;
+        return super.equals(donut) && (this.frosting == donut.frosting) && (this.sprinkles == donut.sprinkles) && (this.filling == donut.filling);
+    }
 }
