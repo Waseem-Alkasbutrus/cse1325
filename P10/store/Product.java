@@ -44,4 +44,11 @@ public class Product {
         Product product = (Product) o;
         return (this.name.equals(product.name)) && (this.price == product.price) && (this.cost == product.cost);
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = (31*hash) + this.name.hashCode() + Double.hashCode(this.price) + Double.hashCode(this.cost);
+        return hash;
+    }
 }
