@@ -35,4 +35,13 @@ public class Product {
     public String toString() {
         return this.name + " @ $" + this.price + "(Costs $" + this.cost + ")";
     }
+
+    @Override 
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null) return false;
+        if (this.getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return (this.name.equals(product.name)) && (this.price == product.price) && (this.cost == product.cost);
+    }
 }
