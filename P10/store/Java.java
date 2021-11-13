@@ -57,4 +57,13 @@ public class Java extends Product {
         javaString += ") $" + super.price;
         return javaString;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null) return true;
+        if (this.getClass() != o.getClass()) return false;
+        Java java = (Java) o;
+        return (super.equals(java)) && (this.darkness == java.darkness) && (this.shots.equals(java.shots));
+    }
 }
