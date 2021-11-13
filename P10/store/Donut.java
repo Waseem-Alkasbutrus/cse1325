@@ -69,4 +69,11 @@ public class Donut extends Product {
         Donut donut = (Donut) o;
         return super.equals(donut) && (this.frosting == donut.frosting) && (this.sprinkles == donut.sprinkles) && (this.filling == donut.filling);
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = (31*hash) + super.hashCode() + this.frosting.hashCode() + Boolean.hashCode(this.sprinkles) + this.filling.hashCode();
+        return hash;
+    }
 }
