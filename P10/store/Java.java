@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Enumeration;
 
 public class Java extends Product {
     protected Darkness darkness;
@@ -65,5 +66,12 @@ public class Java extends Product {
         if (this.getClass() != o.getClass()) return false;
         Java java = (Java) o;
         return (super.equals(java)) && (this.darkness == java.darkness) && (this.shots.equals(java.shots));
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = (31*hash) + super.hashCode() + darkness.hashCode() + this.shots.hashCode();
+        return hash;
     }
 }
