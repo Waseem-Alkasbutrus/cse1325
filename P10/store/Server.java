@@ -23,7 +23,7 @@ public class Server extends Person {
 
     @Override
     public void save(BufferedWriter bufferedWriter) throws IOException {
-        bufferedWriter.write("SERVER");
+        bufferedWriter.write("SERVER" + '\n');
         super.save(bufferedWriter);
         bufferedWriter.write(this.ssn + '\n');
     }
