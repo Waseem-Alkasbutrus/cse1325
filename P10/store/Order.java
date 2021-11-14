@@ -30,10 +30,21 @@ public class Order {
     public Order(BufferedReader bufferedReader) throws IOException {
         bufferedReader.readLine(); //Read "CUSTOMER" written by Customer.save
         this.customer = new Customer(bufferedReader);
+        
         bufferedReader.readLine(); //Read "SERVER" written by Server.save
         this.server = new Server(bufferedReader);
-        //TODO: handle id
-        this.products = new HashMap<>();
+        
+        this.id = Integer.parseInt(bufferedReader.readLine());
+        if (nextId <= this.id || nextId == null) {
+            nextId = this.id + 1;
+        }
+        
+        this.products = new HashMap<>(Integer.parseInt(bufferedReader.readLine()));
+        for (int i = 0; i < this.products.size(); i++) {
+            int quantity = Integer.parseInt(bufferedReader.readLine());
+            Product product = new Product(bufferedReader);
+            this.products.put(product, quantity);
+        }
     }
 
     public int getID() {
@@ -47,9 +58,13 @@ public class Order {
     public void save(BufferedWriter bufferedWriter) throws IOException {
         this.customer.save(bufferedWriter);
         this.server.save(bufferedWriter);
-        //TODO: handle id
+        bufferedWriter.write(Integer.toString(this.id));
+        
         bufferedWriter.write(Integer.toString(this.products.size()));
-
+        for (Map.Entry<Product, Integer> p : this.products.entrySet()) {
+            bufferedWriter.write(Integer.toString(p.getValue()) + '\n');
+            bufferedWriter.write(p.getKey().toString() + '\n');
+        }
     }
 
     @Override
