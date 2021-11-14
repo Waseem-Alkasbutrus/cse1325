@@ -229,7 +229,7 @@ public class MainWin extends JFrame {
         bServer.addActionListener(event -> onCreateServerClick());
 
         bOrder = newToolbarButton("gui/assets/ORDER.png", "Create a new order", "Create a new order", createButtons);
-        //TODO: add action listener
+        bOrder.addActionListener(event -> onCreateOrderClick());
 
         JPanel viewButtons = new JPanel();
         viewButtons.setBorder(BorderFactory.createTitledBorder("View..."));
@@ -682,8 +682,17 @@ public class MainWin extends JFrame {
         ArrayList<Integer> quantities = new ArrayList<>();
 
         JLabel lCustomer = new JLabel("Customer:");
+        JComboBox<Object> cCustomer = new JComboBox<>(this.store.getCustomers());
 
-        JComboBox<Customer> cCustomer = new JComboBox<>();
+        JLabel lServers = new JLabel("Server:");
+        JComboBox<Object> cServer = new JComboBox<>(this.store.getServers());
+
+        Object[] beginOrderComponents = {
+            lCustomer, cCustomer,
+            lServers, cServer
+        };
+
+        JOptionPane.showConfirmDialog(this, beginOrderComponents, "Begin Order", JOptionPane.OK_CANCEL_OPTION);
     }
 
     protected void updateData(ViewMode viewMode) {
