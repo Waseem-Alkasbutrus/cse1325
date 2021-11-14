@@ -703,6 +703,8 @@ public class MainWin extends JFrame {
         newOrder = new Order(customer, server);
         
         JLabel orderDetails = new JLabel(toHtml(newOrder.toString()));
+        JScrollPane orderDetailScrollPane = new JScrollPane(orderDetails);
+        orderDetailScrollPane.setPreferredSize(new Dimension(200, 100));
         
         SpinnerModel quantityModel = new SpinnerNumberModel(1, 1, 1000, 1);
         JSpinner sQuantity = new JSpinner(quantityModel);
@@ -715,9 +717,14 @@ public class MainWin extends JFrame {
             orderDetails.setText(toHtml(newOrder.toString()));
         });
 
+        JPanel uiPanel = new JPanel();
+        uiPanel.add(bAdd);
+        uiPanel.add(sQuantity);
+        uiPanel.add(cProduct);
+
         Object[] addProductComponents = {
-            orderDetails,
-            bAdd, sQuantity, cProduct
+            orderDetailScrollPane,
+            uiPanel
         };
 
         int addProductsChoice = JOptionPane.showConfirmDialog(this, addProductComponents, "Add Products", JOptionPane.OK_CANCEL_OPTION);
