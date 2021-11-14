@@ -17,6 +17,10 @@ public class Server extends Person {
         this.ssn = bufferedReader.readLine();
     }
 
+    public String getSSN() {
+        return this.ssn;
+    }
+
     @Override
     public void save(BufferedWriter bufferedWriter) throws IOException {
         bufferedWriter.write("SERVER");
@@ -26,6 +30,6 @@ public class Server extends Person {
 
     @Override
     public String toString() {
-        return "Server " + this.name + " (" + this.phone + ", SSN " + this.ssn + ")";
+        return "Server " + this.name + " (" + this.phone + ")";
     } 
 }
