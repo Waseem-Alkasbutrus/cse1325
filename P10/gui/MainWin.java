@@ -44,6 +44,7 @@ import java.awt.event.WindowEvent;
 import store.Store;
 import store.Donut;
 import store.Java;
+import store.Order;
 import store.Product;
 import store.Filling;
 import store.Frosting;
@@ -678,8 +679,7 @@ public class MainWin extends JFrame {
     protected void onCreateOrderClick() {
         Customer customer;
         Server server;
-        ArrayList<Product> products = new ArrayList<>();
-        ArrayList<Integer> quantities = new ArrayList<>();
+        Order newOrder;
 
         JLabel lCustomer = new JLabel("Customer:");
         JComboBox<Object> cCustomer = new JComboBox<>(this.store.getCustomers());
@@ -691,12 +691,38 @@ public class MainWin extends JFrame {
             lCustomer, cCustomer,
             lServers, cServer
         };
-
+        
         int beginOrderChoice = JOptionPane.showConfirmDialog(this, beginOrderComponents, "Begin Order", JOptionPane.OK_CANCEL_OPTION);
-
         if (beginOrderChoice == JOptionPane.OK_OPTION) {
             customer = (Customer) cCustomer.getSelectedItem();
             server = (Server) cServer.getSelectedItem();
+        } else {
+            return;
+        }
+
+        newOrder = new Order(customer, server);
+        
+        JLabel orderDetails = new JLabel(toHtml(newOrder.toString()));
+        
+        SpinnerModel quantityModel = new SpinnerNumberModel(1, 1, 1000, 1);
+        JSpinner sQuantity = new JSpinner(quantityModel);
+        
+        JComboBox<Object> cProduct = new JComboBox<>(this.store.getProducts());
+        
+        JButton bAdd = new JButton("Add");
+        bAdd.addActionListener(event -> {
+            newOrder.addProduct((Product) cProduct.getSelectedItem(), (Integer) sQuantity.getValue());
+            orderDetails.setText(toHtml(newOrder.toString()));
+        });
+
+        Object[] addProductComponents = {
+            orderDetails,
+            bAdd, sQuantity, cProduct
+        };
+
+        int addProductsChoice = JOptionPane.showConfirmDialog(this, addProductComponents, "Add Products", JOptionPane.OK_CANCEL_OPTION);
+        if (addProductsChoice == JOptionPane.OK_OPTION) {
+            this.store.addOrder(newOrder);
         } else {
             return;
         }
