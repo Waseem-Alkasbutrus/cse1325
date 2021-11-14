@@ -9,11 +9,13 @@ public class Store {
     protected String storeName;
     protected ArrayList<Product> products;
     protected ArrayList<Person> people;
+    protected ArrayList<Order> orders;
 
     public Store(String storeName) {
         this.storeName = storeName;
         this.products = new ArrayList<>(0);
         this.people = new ArrayList<>(0);
+        this.orders = new ArrayList<>(0);
     }
 
     public Store(BufferedReader bufferedReader) throws IOException{
@@ -21,6 +23,7 @@ public class Store {
        
         int numOfProducts = Integer.parseInt(bufferedReader.readLine());
         int numOfPeople = Integer.parseInt(bufferedReader.readLine());
+        int numOfOrders = Integer.parseInt(bufferedReader.readLine());
 
         for (int i = 0; i < numOfProducts; i++) {
             String productType = bufferedReader.readLine();
@@ -31,7 +34,7 @@ public class Store {
             }
         }
 
-        for(int i = 0; i < numOfPeople; i++) {
+        for (int i = 0; i < numOfPeople; i++) {
             String personType = bufferedReader.readLine();
             if (personType.equals("CUSTOMER")) {
                 this.people.add(new Customer(bufferedReader));
@@ -41,6 +44,10 @@ public class Store {
                 //TODO: Add new manager to people
             }
         }
+
+        for (int i = 0; i < numOfOrders; i++) {
+            this.orders.add(new Order(bufferedReader));
+        }
     }
 
     public void save(BufferedWriter bufferedWriter) throws IOException, RuntimeException {
@@ -48,13 +55,18 @@ public class Store {
         
         bufferedWriter.write(Integer.toString(this.products.size()) + '\n');
         bufferedWriter.write(Integer.toString(this.people.size()) + '\n');
-        
+        bufferedWriter.write(Integer.toString(this.orders.size()) + '\n');
+
         for (Product p : this.products) {           
             p.save(bufferedWriter);
         }
 
         for (Person p : this.people) {
             p.save(bufferedWriter);
+        }
+
+        for (Order o :  this.orders) {
+            o.save(bufferedWriter);
         }
     }
 
@@ -84,6 +96,30 @@ public class Store {
 
     public String personToString(int peopleIndex) {
         return this.people.get(peopleIndex).toString();
+    }
+
+    public void addOrder(Order order) {
+        this.orders.add(order);
+    }
+
+    public int numberOfOrders() {
+        return this.orders.size();
+    }
+
+    public String orderToString(int orderIndex) {
+        return this.orders.get(orderIndex).toString();
+    }
+
+    public Order[] getOrders() {
+        return (Order[]) this.orders.toArray();
+    }
+
+    public String ordersToString() {
+        String ordersString = "\nCurrent Orders\n\n";
+        for (Order o : this.orders) {
+            ordersString += o.toString() + '\n';
+        }
+        return ordersString;
     }
 
     public String peopleToString() {
