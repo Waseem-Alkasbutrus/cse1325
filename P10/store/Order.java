@@ -35,6 +35,14 @@ public class Order {
         this.orders = new HashMap<>();
     }
 
+    public int getID() {
+        return this.id;
+    }
+
+    public void addProduct(Product product) {
+        //TODO: Implement this
+    }
+
     public void save(BufferedWriter bufferedWriter) throws IOException {
         this.customer.save(bufferedWriter);
         this.server.save(bufferedWriter);
@@ -43,16 +51,12 @@ public class Order {
 
     }
 
-    public int getID() {
-        return this.id;
-    }
-
     @Override
     public String toString() {
         String orderString = "Order " + this.id + " for " + this.customer.toString() + "\nServer: " + this.server.toString();
 
-        for (Order o : this.orders) {
+        //TODO: add products and quantities to string
 
-        }
+        return orderString;
     }
 }
