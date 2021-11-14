@@ -60,7 +60,7 @@ public class Order {
         this.server.save(bufferedWriter);
         bufferedWriter.write(Integer.toString(this.id));
         
-        bufferedWriter.write(Integer.toString(this.products.size()));
+        bufferedWriter.write(Integer.toString(this.products.size()) + '\n');
         for (Map.Entry<Product, Integer> p : this.products.entrySet()) {
             bufferedWriter.write(Integer.toString(p.getValue()) + '\n');
             bufferedWriter.write(p.getKey().toString() + '\n');
