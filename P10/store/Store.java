@@ -98,6 +98,26 @@ public class Store {
         return this.people.get(peopleIndex).toString();
     }
 
+    public ArrayList<Customer> getCustomers() {
+        ArrayList<Customer> customers = new ArrayList<>();
+        for (Person p : this.people) {
+            if (p instanceof Customer) {
+                customers.add((Customer) p);
+            }
+        }
+        return customers;
+    }
+
+    public ArrayList<Server> getServers() {
+        ArrayList<Server> servers = new ArrayList<>();
+        for (Person p : this.people) {
+            if (p instanceof Server) {
+                servers.add((Server) p);
+            }
+        }
+        return servers;
+    }
+
     public void addOrder(Order order) {
         this.orders.add(order);
     }
