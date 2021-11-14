@@ -17,7 +17,7 @@ public class Order {
     public Order(Customer customer, Server server) {
         this.customer = customer;
         this.server = server;
-        if (nextId != null) {
+        if (nextId == null) {
             this.id = 0;
             nextId = 1;    
         } else {
