@@ -86,6 +86,10 @@ public class Store {
         return this.products.get(productIndex).toString();
     }
     
+    public Object[] getProducts() {
+        return this.products.toArray();
+    }
+
     public void addPerson(Person person) {
         this.people.add(person);
     }
