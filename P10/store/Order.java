@@ -5,13 +5,14 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class Order {
     private int id;
     private static Integer nextId;
     private Server server;
     private Customer customer;
-    private HashMap<Product, Integer> orders;
+    private HashMap<Product, Integer> products;
 
     public Order(Customer customer, Server server) {
         this.customer = customer;
@@ -23,7 +24,7 @@ public class Order {
             this.id = nextId;
             nextId++;
         }
-        this.orders = new HashMap<>();
+        this.products = new HashMap<>();
     }
     
     public Order(BufferedReader bufferedReader) throws IOException {
@@ -32,30 +33,36 @@ public class Order {
         bufferedReader.readLine(); //Read "SERVER" written by Server.save
         this.server = new Server(bufferedReader);
         //TODO: handle id
-        this.orders = new HashMap<>();
+        this.products = new HashMap<>();
     }
 
     public int getID() {
         return this.id;
     }
 
-    public void addProduct(Product product) {
-        //TODO: Implement this
+    public void addProduct(Product product, Integer quantity) {
+        this.products.put(product, quantity);
     }
 
     public void save(BufferedWriter bufferedWriter) throws IOException {
         this.customer.save(bufferedWriter);
         this.server.save(bufferedWriter);
         //TODO: handle id
-        bufferedWriter.write(Integer.toString(this.orders.size()));
+        bufferedWriter.write(Integer.toString(this.products.size()));
 
     }
 
     @Override
     public String toString() {
-        String orderString = "Order " + this.id + " for " + this.customer.toString() + "\nServer: " + this.server.toString();
+        String orderString = "Order " + this.id + " for " + this.customer.toString() + "\nServer: " + this.server.toString() + "\n";
+        double totalPrice = 0;
 
-        //TODO: add products and quantities to string
+        for (Map.Entry<Product, Integer> p : this.products.entrySet()) {
+            orderString += p.getValue() + " " + p.getKey() + "\n";
+            totalPrice += p.getValue() * p.getKey().price;
+        }
+
+        orderString += "Total price: $" + totalPrice;
 
         return orderString;
     }
