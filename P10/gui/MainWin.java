@@ -1,6 +1,7 @@
 package gui;
 
 import java.util.ArrayList;
+
 import javax.imageio.ImageIO;
 
 import java.io.BufferedReader;
@@ -43,6 +44,7 @@ import java.awt.event.WindowEvent;
 import store.Store;
 import store.Donut;
 import store.Java;
+import store.Product;
 import store.Filling;
 import store.Frosting;
 import store.Darkness;
@@ -151,6 +153,7 @@ public class MainWin extends JFrame {
         mJava.addActionListener(event -> onCreateJavaClick());
         mCustomer.addActionListener(event -> onCreateCustomerClick());
         mServer.addActionListener(event -> onCreateServerClick());
+        mOrder.addActionListener(event -> onCreateOrderClick());
 
         mPeople.addActionListener(event -> updateData(ViewMode.People));
         mProducts.addActionListener(event -> updateData(ViewMode.Product));
@@ -672,13 +675,24 @@ public class MainWin extends JFrame {
         this.unsavedChanges = true;
     }
 
+    protected void onCreateOrderClick() {
+        Customer customer;
+        Server server;
+        ArrayList<Product> products = new ArrayList<>();
+        ArrayList<Integer> quantities = new ArrayList<>();
+
+        JLabel lCustomer = new JLabel("Customer:");
+
+        JComboBox<Customer> cCustomer = new JComboBox<>();
+    }
+
     protected void updateData(ViewMode viewMode) {
         if (ViewMode.People == viewMode) {
             this.data.setText(toHtml(this.store.peopleToString()));
         } else if (ViewMode.Product == viewMode) {
             this.data.setText(toHtml(this.store.toString()));
         } else if (ViewMode.Order == viewMode) {
-            //TODO: Implement this
+            this.data.setText(toHtml(this.store.ordersToString()));
         }
     }
 
