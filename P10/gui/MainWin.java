@@ -692,7 +692,14 @@ public class MainWin extends JFrame {
             lServers, cServer
         };
 
-        JOptionPane.showConfirmDialog(this, beginOrderComponents, "Begin Order", JOptionPane.OK_CANCEL_OPTION);
+        int beginOrderChoice = JOptionPane.showConfirmDialog(this, beginOrderComponents, "Begin Order", JOptionPane.OK_CANCEL_OPTION);
+
+        if (beginOrderChoice == JOptionPane.OK_OPTION) {
+            customer = (Customer) cCustomer.getSelectedItem();
+            server = (Server) cServer.getSelectedItem();
+        } else {
+            return;
+        }
     }
 
     protected void updateData(ViewMode viewMode) {
