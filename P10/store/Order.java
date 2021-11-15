@@ -28,43 +28,57 @@ public class Order {
     }
     
     public Order(BufferedReader bufferedReader) throws IOException {
+        this.id = Integer.parseInt(bufferedReader.readLine());
+        if (nextId == null) {
+            nextId = this.id + 1;
+        } else if (nextId <= this.id) {
+            nextId = this.id + 1;
+        }
+
         bufferedReader.readLine(); //Read "CUSTOMER" written by Customer.save
         this.customer = new Customer(bufferedReader);
         
         bufferedReader.readLine(); //Read "SERVER" written by Server.save
         this.server = new Server(bufferedReader);
         
-        this.id = Integer.parseInt(bufferedReader.readLine());
-        if (nextId <= this.id || nextId == null) {
-            nextId = this.id + 1;
-        }
-        
-        this.products = new HashMap<>(Integer.parseInt(bufferedReader.readLine()));
-        for (int i = 0; i < this.products.size(); i++) {
+        int numOfProducts = Integer.parseInt(bufferedReader.readLine());
+        this.products = new HashMap<>(numOfProducts);
+        for (int i = 0; i < numOfProducts; i++) {
             int quantity = Integer.parseInt(bufferedReader.readLine());
-            Product product = new Product(bufferedReader);
+            Product product;
+            
+            String productType = bufferedReader.readLine();
+            if (productType.equals("DONUT")) {
+                product = new Donut(bufferedReader);
+            } else if (productType.equals("JAVA")) {
+                product = new Java(bufferedReader);
+            } else {
+                throw new IOException("Unrecognizable product type");
+            }
+            
             this.products.put(product, quantity);
         }
     }
 
+    public void save(BufferedWriter bufferedWriter) throws IOException {
+        bufferedWriter.write(Integer.toString(this.id) + '\n');
+
+        this.customer.save(bufferedWriter);
+        this.server.save(bufferedWriter);
+        
+        bufferedWriter.write(Integer.toString(this.products.size()) + '\n');
+        for (Map.Entry<Product, Integer> p : this.products.entrySet()) {
+            bufferedWriter.write(Integer.toString(p.getValue()) + '\n');
+            p.getKey().save(bufferedWriter);
+        }
+    }
+    
     public int getID() {
         return this.id;
     }
 
     public void addProduct(Product product, Integer quantity) {
         this.products.put(product, quantity);
-    }
-
-    public void save(BufferedWriter bufferedWriter) throws IOException {
-        this.customer.save(bufferedWriter);
-        this.server.save(bufferedWriter);
-        bufferedWriter.write(Integer.toString(this.id));
-        
-        bufferedWriter.write(Integer.toString(this.products.size()) + '\n');
-        for (Map.Entry<Product, Integer> p : this.products.entrySet()) {
-            bufferedWriter.write(Integer.toString(p.getValue()) + '\n');
-            bufferedWriter.write(p.getKey().toString() + '\n');
-        }
     }
 
     @Override
@@ -77,7 +91,7 @@ public class Order {
             totalPrice += p.getValue() * p.getKey().price;
         }
 
-        orderString += "Total price: $" + totalPrice;
+        orderString += "Total price: $" + totalPrice + '\n';
 
         return orderString;
     }
