@@ -640,7 +640,7 @@ public class MainWin extends JFrame {
         };
         
         while (true) {
-            int choice = JOptionPane.showConfirmDialog(this, objects, "New Customer", JOptionPane.OK_CANCEL_OPTION);
+            int choice = JOptionPane.showConfirmDialog(this, objects, "New Server", JOptionPane.OK_CANCEL_OPTION);
     
             if (choice == JOptionPane.OK_OPTION) {
                 name = tName.getText();
