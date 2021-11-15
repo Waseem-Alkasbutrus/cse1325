@@ -137,7 +137,7 @@ public class Store {
     }
 
     public String ordersToString() {
-        String ordersString = "\nCurrent Orders\n\n";
+        String ordersString = "\nWelcome to " + this.storeName + "!\n\nCurrent Orders\n\n";
         for (Order o : this.orders) {
             ordersString += o.toString() + '\n';
         }
@@ -145,7 +145,7 @@ public class Store {
     }
 
     public String peopleToString() {
-        String peopleString = "\nOur beloved people!\n\n";
+        String peopleString = "\nWelcome to " + this.storeName + "!\n\nOur Beloved People!\n\n";
         for (Person p : this.people) {
             peopleString += p.toString() + '\n';
         }
@@ -154,7 +154,7 @@ public class Store {
 
     @Override
     public String toString() {
-        String storeString = "\nWelcome to " + this.storeName + "!\n\n";
+        String storeString = "\nWelcome to " + this.storeName + "!\n\nOur Featured Products:\n\n";
         for (Product p: this.products) {
             storeString += p.toString() + '\n';
         }
