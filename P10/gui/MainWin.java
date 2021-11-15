@@ -733,6 +733,8 @@ public class MainWin extends JFrame {
         } else {
             return;
         }
+
+        updateData(ViewMode.Order);
     }
 
     protected void updateData(ViewMode viewMode) {
