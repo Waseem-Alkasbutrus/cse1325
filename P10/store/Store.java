@@ -22,9 +22,6 @@ public class Store {
         this(bufferedReader.readLine());
        
         int numOfProducts = Integer.parseInt(bufferedReader.readLine());
-        int numOfPeople = Integer.parseInt(bufferedReader.readLine());
-        int numOfOrders = Integer.parseInt(bufferedReader.readLine());
-
         for (int i = 0; i < numOfProducts; i++) {
             String productType = bufferedReader.readLine();
             if (productType.equals("JAVA")) {
@@ -33,7 +30,8 @@ public class Store {
                 this.products.add(new Donut(bufferedReader));
             }
         }
-
+        
+        int numOfPeople = Integer.parseInt(bufferedReader.readLine());
         for (int i = 0; i < numOfPeople; i++) {
             String personType = bufferedReader.readLine();
             if (personType.equals("CUSTOMER")) {
@@ -44,7 +42,8 @@ public class Store {
                 //TODO: Add new manager to people
             }
         }
-
+        
+        int numOfOrders = Integer.parseInt(bufferedReader.readLine());
         for (int i = 0; i < numOfOrders; i++) {
             this.orders.add(new Order(bufferedReader));
         }
@@ -54,18 +53,17 @@ public class Store {
         bufferedWriter.write(this.storeName + '\n');
         
         bufferedWriter.write(Integer.toString(this.products.size()) + '\n');
-        bufferedWriter.write(Integer.toString(this.people.size()) + '\n');
-        bufferedWriter.write(Integer.toString(this.orders.size()) + '\n');
-
         for (Product p : this.products) {           
             p.save(bufferedWriter);
         }
-
+        
+        bufferedWriter.write(Integer.toString(this.people.size()) + '\n');
         for (Person p : this.people) {
             p.save(bufferedWriter);
         }
-
-        for (Order o :  this.orders) {
+        
+        bufferedWriter.write(Integer.toString(this.orders.size()) + '\n');
+        for (Order o : this.orders) {
             o.save(bufferedWriter);
         }
     }
