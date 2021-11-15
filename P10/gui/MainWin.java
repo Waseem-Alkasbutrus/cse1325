@@ -410,7 +410,7 @@ public class MainWin extends JFrame {
         JComboBox<Frosting> cFrosting = new JComboBox<>(Frosting.values());
 
         JLabel lSprinkles = new JLabel(toHtml("\nSprinkles:"));
-        String yesNoOpts[] = {"Yes", "No"};
+        String yesNoOpts[] = {"No", "Yes"};
         JComboBox<String> cSprinkles = new JComboBox<>(yesNoOpts);
 
         JLabel lFilling = new JLabel(toHtml("\nFilling:"));
