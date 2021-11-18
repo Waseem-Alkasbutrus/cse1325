@@ -54,7 +54,7 @@ public class Primes {
         
         Primes primes = new Primes(numThreads); // Search using one thread
         int sumOfPrimes = 0;
-        for(int prime : primes.findPrimes(lower, upper).toPrimeArray())
+        for(int prime : primes.findPrimes(lower, upper).toArray())
             sumOfPrimes += prime;
         System.out.println("Sum of the " + primes.numberOfPrimes() + " primes between " 
                          + lower + " and " 
