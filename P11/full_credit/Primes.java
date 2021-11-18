@@ -4,16 +4,28 @@ import java.text.NumberFormat;
 // main method by Professor George F. Rice
 
 public class Primes {
+    private int numThreads;
+    private ArrayList<Integer> primes;
+
     public Primes(int numThreads) {
+        this.numThreads = numThreads;
+        this.primes = new ArrayList<>();
     }
+
     public Primes findPrimes(int lower, int upper) {
         return this;    
     }
-    public int numberOfPrimes() {
-        return 0; // replace
+
+    protected boolean isPrime(int number) {
+        return true;
     }
+
+    public int numberOfPrimes() {
+        return this.primes.size();
+    }
+
     public Integer[] toArray() {
-        return new Integer[0]; // replace
+        return (Integer[]) this.primes.toArray(); // replace
     }
     
     public static void main(String[] args) {
