@@ -9,15 +9,27 @@ public class Primes {
 
     public Primes(int numThreads) {
         this.numThreads = numThreads;
-        this.primes = new ArrayList<>();
+        this.primes = new ArrayList<>(0);
     }
 
     public Primes findPrimes(int lower, int upper) {
+        for (int i = lower; i <= upper; i++) {
+            if (isPrime(i)) {
+                this.primes.add(i);
+            }
+        }
         return this;    
     }
 
     protected boolean isPrime(int number) {
-        return true;
+        boolean isPrime = true;
+        int sqrt = (int) Math.sqrt(number);
+
+        for(int i = 2; i <= sqrt; i++) {
+            if (number%i == 0) isPrime = false;
+        }
+
+        return isPrime;
     }
 
     public int numberOfPrimes() {
@@ -42,7 +54,7 @@ public class Primes {
         
         Primes primes = new Primes(numThreads); // Search using one thread
         int sumOfPrimes = 0;
-        for(int prime : primes.findPrimes(lower, upper).toArray())
+        for(int prime : primes.findPrimes(lower, upper).toPrimeArray())
             sumOfPrimes += prime;
         System.out.println("Sum of the " + primes.numberOfPrimes() + " primes between " 
                          + lower + " and " 
