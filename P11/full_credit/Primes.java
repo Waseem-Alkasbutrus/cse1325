@@ -36,8 +36,8 @@ public class Primes {
         return this.primes.size();
     }
 
-    public Integer[] toArray() {
-        return (Integer[]) this.primes.toArray(); // replace
+    public Object[] toArray() {
+        return this.primes.toArray();
     }
     
     public static void main(String[] args) {
@@ -54,11 +54,15 @@ public class Primes {
         
         Primes primes = new Primes(numThreads); // Search using one thread
         int sumOfPrimes = 0;
-        for(int prime : primes.findPrimes(lower, upper).toArray())
-            sumOfPrimes += prime;
-        System.out.println("Sum of the " + primes.numberOfPrimes() + " primes between " 
-                         + lower + " and " 
-                         + upper + " is " 
-                         + NumberFormat.getIntegerInstance().format(sumOfPrimes));
+        for(Object o : primes.findPrimes(lower, upper).toArray())
+            if (o instanceof Integer) {
+                Integer prime = (Integer) o;
+                sumOfPrimes += prime;
+                System.out.println("Sum of the " + primes.numberOfPrimes() + " primes between " 
+                             + lower + " and " 
+                             + upper + " is " 
+                             + NumberFormat.getIntegerInstance().format(sumOfPrimes));
+
+            }
     }
 }
