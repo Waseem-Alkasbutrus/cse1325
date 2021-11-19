@@ -23,7 +23,6 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.MaskFormatter;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -224,11 +223,15 @@ public class MainWin extends JFrame {
         bDonut = newToolbarButton("gui/assets/DONUT.png", "Create a new donut", "Create a new donut", createButtons);
         bDonut.addActionListener(event -> onCreateDonutClick());
 
+        createButtons.add(Box.createHorizontalStrut(15));
+
         bCustomer = newToolbarButton("gui/assets/CUSTOMER.png", "Create a new customer", "Create a new customer", createButtons);
         bCustomer.addActionListener(event -> onCreateCustomerClick());
 
         bServer = newToolbarButton("gui/assets/SERVER.png", "Create a new server", "Create a new server", createButtons);
         bServer.addActionListener(event -> onCreateServerClick());
+
+        createButtons.add(Box.createHorizontalStrut(15));
 
         bOrder = newToolbarButton("gui/assets/ORDER.png", "Create a new order", "Create a new order", createButtons);
         bOrder.addActionListener(event -> onCreateOrderClick());
