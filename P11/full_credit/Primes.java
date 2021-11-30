@@ -3,22 +3,52 @@ import java.text.NumberFormat;
 
 // main method by Professor George F. Rice
 
-public class Primes {
+public class Primes implements Runnable {
+    private final static Object lock = new Object();
     private int numThreads;
-    private ArrayList<Integer> primes;
+    private final static ArrayList<Integer> primes = new ArrayList<>(0);;
+    private int threadLower;
+    private int threadUpper;
 
     public Primes(int numThreads) {
         this.numThreads = numThreads;
-        this.primes = new ArrayList<>(0);
     }
 
-    public Primes findPrimes(int lower, int upper) {
+    public Primes(int threadLower, int threadUpper) {
+        this.threadLower = threadLower;
+        this.threadUpper = threadUpper;
+    }
+
+    public Primes findPrimes(int lower, int upper) throws InterruptedException {
+        //break total upper and lower into sections based on numThreads
+        //create and start threads
+        Thread[] threads = new Thread[numThreads];
+        int sectionSize = upper/numThreads;
+        for (int i = 0; i < numThreads; i++) {
+            threads[i] = new Thread(new Primes(upper - (sectionSize * (i + 1)), upper - (sectionSize * (i + 0))));
+            threads[i].start();
+        }
+        //join threads
+        for (Thread t : threads) {
+            t.join();
+        }
+
+        return this;
+    }
+
+    @Override
+    public void run() {
+        addPrimes(threadLower, threadUpper);
+    }
+
+    protected void addPrimes(int lower, int upper) {
         for (int i = lower; i <= upper; i++) {
             if (isPrime(i)) {
-                this.primes.add(i);
+                synchronized (lock) {
+                    primes.add(i);
+                }
             }
         }
-        return this;    
     }
 
     protected boolean isPrime(int number) {
@@ -33,14 +63,14 @@ public class Primes {
     }
 
     public int numberOfPrimes() {
-        return this.primes.size();
+        return primes.size();
     }
 
     public Object[] toArray() {
-        return this.primes.toArray();
+        return primes.toArray();
     }
     
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         int numThreads = 1;
         int lower = 0;
         int upper = 3000000; // defaults
