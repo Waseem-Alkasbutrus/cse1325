@@ -43,7 +43,7 @@ public class Primes {
     public static void main(String[] args) {
         int numThreads = 1;
         int lower = 0;
-        int upper = 10000000; // defaults
+        int upper = 3000000; // defaults
         if(args.length > 0) numThreads = Integer.parseInt(args[0]);
         if(args.length > 1) lower = Integer.parseInt(args[1]);
         if(args.length > 2) upper = Integer.parseInt(args[2]);
