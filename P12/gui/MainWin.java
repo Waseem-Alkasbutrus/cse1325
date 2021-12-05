@@ -156,7 +156,7 @@ public class MainWin extends JFrame {
         //TODO: implement actionlistener
         mProduct.addActionListener(event -> onEditProductClick());
 
-        mDonut.addActionListener(event -> onCreateDonutClick());
+        mDonut.addActionListener(event -> onCreateDonutClick(null));
         mJava.addActionListener(event -> onCreateJavaClick());
         mCustomer.addActionListener(event -> onCreateCustomerClick());
         mServer.addActionListener(event -> onCreateServerClick());
@@ -230,7 +230,7 @@ public class MainWin extends JFrame {
         bJava.addActionListener(event -> onCreateJavaClick());
 
         bDonut = newToolbarButton("gui/assets/DONUT.png", "Create a new donut", "Create a new donut", createButtons);
-        bDonut.addActionListener(event -> onCreateDonutClick());
+        bDonut.addActionListener(event -> onCreateDonutClick(null));
 
         createButtons.add(Box.createHorizontalStrut(15));
 
@@ -408,9 +408,17 @@ public class MainWin extends JFrame {
         };
 
         int choice = JOptionPane.showConfirmDialog(this, editProductComponents, "Edit Products", JOptionPane.OK_CANCEL_OPTION);
+
+        if (choice == JOptionPane.OK_OPTION) {
+            if (cProduct.getSelectedItem() instanceof Donut) {
+                onCreateDonutClick((Donut) cProduct.getSelectedItem());
+            } else if (cProduct.getSelectedItem() instanceof Java) {
+                
+            }
+        }
     }
 
-    protected void onCreateDonutClick() {
+    protected void onCreateDonutClick(Donut donutTemplate) {
         //Donut Fields
         String name;
         double price;
@@ -422,27 +430,49 @@ public class MainWin extends JFrame {
         //Dialog Components
         JLabel lName = new JLabel(toHtml("\nName:"));
         JTextField tName = new JTextField(20);
+        if (donutTemplate != null) {
+            tName.setText(donutTemplate.name());
+        }
 
         SpinnerModel sPriceModel = new SpinnerNumberModel(0.01, 0.01, 1000.0, 0.01);
         JLabel lPrice = new JLabel(toHtml("\nPrice:"));
         JSpinner sPrice = new JSpinner(sPriceModel);
         sPrice.setEditor(new JSpinner.NumberEditor(sPrice, "#,###.##"));
+        if (donutTemplate != null) {
+            sPrice.setValue(donutTemplate.price());
+        }
         
         SpinnerModel sCostModel = new SpinnerNumberModel(0.01, 0.01, 1000.0, 0.01);
         JLabel lCost = new JLabel(toHtml("\nCost:"));
         JSpinner sCost = new JSpinner(sCostModel);
         sCost.setEditor(new JSpinner.NumberEditor(sCost, "#,###.##"));
+        if (donutTemplate != null) {
+            sCost.setValue(donutTemplate.cost());
+        }
 
         JLabel lFrosting = new JLabel(toHtml("\nFrosting:"));
         JComboBox<Frosting> cFrosting = new JComboBox<>(Frosting.values());
+        if (donutTemplate != null) {
+            cFrosting.setSelectedItem(donutTemplate.frosting());
+        }
 
         JLabel lSprinkles = new JLabel(toHtml("\nSprinkles:"));
         String yesNoOpts[] = {"No", "Yes"};
         JComboBox<String> cSprinkles = new JComboBox<>(yesNoOpts);
+        if (donutTemplate != null) {
+            if (donutTemplate.sprinkles()) {
+                cSprinkles.setSelectedItem(yesNoOpts[1]);
+            } else {
+                cSprinkles.setSelectedItem(yesNoOpts[0]);
+            }
+        }
 
         JLabel lFilling = new JLabel(toHtml("\nFilling:"));
         JComboBox<Filling> cFilling = new JComboBox<>(Filling.values());
-        
+        if (donutTemplate != null) {
+            cFilling.setSelectedItem(donutTemplate.filling());
+        }
+
         Object newDonutComponents[] = {
             lName, tName,
             lPrice, sPrice,
