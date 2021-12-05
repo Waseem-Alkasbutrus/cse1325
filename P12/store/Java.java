@@ -25,6 +25,14 @@ public class Java extends Product {
         }
     }
 
+    public Darkness darkness() {
+        return this.darkness;
+    }
+
+    public Object[] shots() {
+        return this.shots.toArray();
+    }
+
     public void save(BufferedWriter bufferedWriter) throws IOException {
         bufferedWriter.write("JAVA\n");
         super.save(bufferedWriter);
