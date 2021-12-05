@@ -157,7 +157,7 @@ public class MainWin extends JFrame {
         mProduct.addActionListener(event -> onEditProductClick());
 
         mDonut.addActionListener(event -> onCreateDonutClick(null));
-        mJava.addActionListener(event -> onCreateJavaClick());
+        mJava.addActionListener(event -> onCreateJavaClick(null));
         mCustomer.addActionListener(event -> onCreateCustomerClick());
         mServer.addActionListener(event -> onCreateServerClick());
         mOrder.addActionListener(event -> onCreateOrderClick());
@@ -227,7 +227,7 @@ public class MainWin extends JFrame {
         this.toolbar.add(createButtons);
 
         bJava = newToolbarButton("gui/assets/JAVA.png", "Create a new java", "Create a new java", createButtons);
-        bJava.addActionListener(event -> onCreateJavaClick());
+        bJava.addActionListener(event -> onCreateJavaClick(null));
 
         bDonut = newToolbarButton("gui/assets/DONUT.png", "Create a new donut", "Create a new donut", createButtons);
         bDonut.addActionListener(event -> onCreateDonutClick(null));
@@ -413,7 +413,7 @@ public class MainWin extends JFrame {
             if (cProduct.getSelectedItem() instanceof Donut) {
                 onCreateDonutClick((Donut) cProduct.getSelectedItem());
             } else if (cProduct.getSelectedItem() instanceof Java) {
-                onCreateJavaClick();
+                onCreateJavaClick((Java) cProduct.getSelectedItem());
             }
         }
     }
@@ -430,27 +430,27 @@ public class MainWin extends JFrame {
         //Dialog Components
         String title = "New Donut";
 
-        JLabel lName = new JLabel(toHtml("\nName:"));
+        JLabel lName = new JLabel(toHtml("Name:"));
         JTextField tName = new JTextField(20);
 
         SpinnerModel sPriceModel = new SpinnerNumberModel(0.01, 0.01, 1000.0, 0.01);
-        JLabel lPrice = new JLabel(toHtml("\nPrice:"));
+        JLabel lPrice = new JLabel(toHtml("Price:"));
         JSpinner sPrice = new JSpinner(sPriceModel);
         sPrice.setEditor(new JSpinner.NumberEditor(sPrice, "#,###.##"));
         
         SpinnerModel sCostModel = new SpinnerNumberModel(0.01, 0.01, 1000.0, 0.01);
-        JLabel lCost = new JLabel(toHtml("\nCost:"));
+        JLabel lCost = new JLabel(toHtml("Cost:"));
         JSpinner sCost = new JSpinner(sCostModel);
         sCost.setEditor(new JSpinner.NumberEditor(sCost, "#,###.##"));
 
-        JLabel lFrosting = new JLabel(toHtml("\nFrosting:"));
+        JLabel lFrosting = new JLabel(toHtml("Frosting:"));
         JComboBox<Frosting> cFrosting = new JComboBox<>(Frosting.values());
 
-        JLabel lSprinkles = new JLabel(toHtml("\nSprinkles:"));
+        JLabel lSprinkles = new JLabel(toHtml("Sprinkles:"));
         String yesNoOpts[] = {"No", "Yes"};
         JComboBox<String> cSprinkles = new JComboBox<>(yesNoOpts);
 
-        JLabel lFilling = new JLabel(toHtml("\nFilling:"));
+        JLabel lFilling = new JLabel(toHtml("Filling:"));
         JComboBox<Filling> cFilling = new JComboBox<>(Filling.values());
         
         if (donutTemplate != null) {
@@ -520,12 +520,14 @@ public class MainWin extends JFrame {
         this.unsavedChanges = true;
     }
 
-    protected void onCreateJavaClick() {
+    protected void onCreateJavaClick(Java javaTemplate) {
         String name;
         double price;
         double cost;
         Darkness darkness;
         ArrayList<Shot> shots = new ArrayList<>();
+
+        String title = "New Java";
 
         JLabel lName = new JLabel("Name:");
         JTextField tName = new JTextField(20);
@@ -547,8 +549,24 @@ public class MainWin extends JFrame {
         JPanel pShots = new JPanel();
         pShots.setLayout(new BoxLayout(pShots, BoxLayout.PAGE_AXIS));
 
-        for (int i = 0; i < 3; i++) {
-            pShots.add(new JComboBox<Shot>(Shot.values()));
+        if (javaTemplate != null) {
+            title = "Edit Java";
+
+            tName.setText(javaTemplate.name());
+            sPrice.setValue(javaTemplate.price());
+            sCost.setValue(javaTemplate.cost());
+            cDakness.setSelectedItem(javaTemplate.darkness());
+
+            Object[] templateShots = javaTemplate.shots();
+            for (int i = 0; i < templateShots.length; i++) {
+                JComboBox<Shot> cShots = new JComboBox<Shot>(Shot.values());
+                cShots.setSelectedItem((Shot) templateShots[i]);
+                pShots.add(cShots);
+            }
+        } else {
+            for (int i = 0; i < 3; i++) {
+                pShots.add(new JComboBox<Shot>(Shot.values()));
+            }
         }
         
         JScrollPane sShots = new JScrollPane(pShots);
@@ -566,7 +584,7 @@ public class MainWin extends JFrame {
         };
 
         while (true) {
-            int choice = JOptionPane.showConfirmDialog(this, newJavaComponents, "New Java", JOptionPane.OK_CANCEL_OPTION);
+            int choice = JOptionPane.showConfirmDialog(this, newJavaComponents, title, JOptionPane.OK_CANCEL_OPTION);
 
             if (choice == JOptionPane.OK_OPTION) {
                 name = tName.getText();
@@ -603,9 +621,14 @@ public class MainWin extends JFrame {
             java.addShot(s);
         }
 
-        this.store.addProduct(java);
+        if (javaTemplate != null) {
+            this.store.editProduct(javaTemplate, java);
+        } else {
+            this.store.addProduct(java);
+            JOptionPane.showMessageDialog(this, "Java was added to store menu");
+        }
+        
         updateData(ViewMode.Product);
-        JOptionPane.showMessageDialog(this, "Java was added to store menu");
 
         this.unsavedChanges = true;
     }
