@@ -144,6 +144,10 @@ public class MainWin extends JFrame {
         mProducts = new JMenuItem("Products");
         mOrders = new JMenuItem("Orders");
 
+        JMenu reports = new JMenu("Reports");
+        JMenuItem mPnLReport = new JMenuItem("P&L");
+        JMenuItem mServerReport = new JMenuItem("Server");
+
         JMenu help = new JMenu("Help");
         JMenuItem mAbout = new JMenuItem("About");
 
@@ -165,6 +169,9 @@ public class MainWin extends JFrame {
         mPeople.addActionListener(event -> updateData(ViewMode.People));
         mProducts.addActionListener(event -> updateData(ViewMode.Product));
         mOrders.addActionListener(event -> updateData(ViewMode.Order));
+
+        mPnLReport.addActionListener(event -> onPnLReportClick());
+        mServerReport.addActionListener(event -> onServerReportClick());
 
         mAbout.addActionListener(event -> onAboutClick());
         
@@ -191,12 +198,16 @@ public class MainWin extends JFrame {
         view.add(mProducts);
         view.add(mOrders);
 
+        reports.add(mPnLReport);
+        reports.add(mServerReport);
+
         help.add(mAbout);
 
         menubar.add(file);
         menubar.add(edit);
         menubar.add(create);
         menubar.add(view);
+        menubar.add(reports);
         menubar.add(help);
 
         setJMenuBar(menubar);
@@ -826,6 +837,14 @@ public class MainWin extends JFrame {
         } else if (ViewMode.Order == viewMode) {
             this.data.setText(toHtml(this.store.ordersToString()));
         }
+    }
+
+    protected void onPnLReportClick() {
+        //TODO:
+    }
+
+    protected void onServerReportClick() {
+        //TODO:
     }
 
     protected void onAboutClick() {
