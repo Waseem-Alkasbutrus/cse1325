@@ -25,6 +25,14 @@ public class Product {
         return this.name;
     }
 
+    public double price() {
+        return this.price;
+    }
+
+    public double cost() {
+        return this.cost;
+    }
+
     public void save(BufferedWriter bufferedWriter) throws IOException {
         bufferedWriter.write(this.name + '\n');
         bufferedWriter.write(Double.toString(this.price) + '\n');
