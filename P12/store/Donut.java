@@ -29,6 +29,18 @@ public class Donut extends Product {
         this.filling = Filling.valueOf(bufferedReader.readLine().replaceAll("\n", ""));
     } 
 
+    public Frosting frosting() {
+        return this.frosting;
+    }
+
+    public boolean sprinkles() {
+        return this.sprinkles;
+    }
+
+    public Filling filling() {
+        return this.filling;
+    }
+
     public void save(BufferedWriter bufferedWriter) throws IOException, IllegalArgumentException {
         bufferedWriter.write("DONUT\n");
         super.save(bufferedWriter);
