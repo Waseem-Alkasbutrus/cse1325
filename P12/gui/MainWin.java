@@ -128,6 +128,9 @@ public class MainWin extends JFrame {
         mSave   = new JMenuItem("Save");
         mSaveAs = new JMenuItem("Save As...");
         JMenuItem mQuit = new JMenuItem("Quit");
+        
+        JMenu edit = new JMenu("Edit");
+        JMenuItem mProduct = new JMenuItem("Product"); 
 
         JMenu create = new JMenu("Create");
         mDonut = new JMenuItem("Donut");
@@ -150,6 +153,9 @@ public class MainWin extends JFrame {
         mSaveAs.addActionListener(event -> onSaveAsClick());
         mQuit.addActionListener(event -> onQuitClick());
 
+        //TODO: implement actionlistener
+        mProduct.addActionListener(event -> onEditProductClick());
+
         mDonut.addActionListener(event -> onCreateDonutClick());
         mJava.addActionListener(event -> onCreateJavaClick());
         mCustomer.addActionListener(event -> onCreateCustomerClick());
@@ -171,6 +177,8 @@ public class MainWin extends JFrame {
         file.addSeparator();
         file.add(mQuit);
 
+        edit.add(mProduct);
+
         create.add(mDonut);
         create.add(mJava);
         create.addSeparator();
@@ -186,6 +194,7 @@ public class MainWin extends JFrame {
         help.add(mAbout);
 
         menubar.add(file);
+        menubar.add(edit);
         menubar.add(create);
         menubar.add(view);
         menubar.add(help);
@@ -387,6 +396,18 @@ public class MainWin extends JFrame {
         }
 
         System.exit(0);
+    }
+
+    protected void onEditProductClick() {
+        //TODO: Implement
+        JLabel lProduct = new JLabel(toHtml("Select product to edit:"));
+        JComboBox<Object> cProduct = new JComboBox<>(this.store.getProducts());
+
+        Object[] editProductComponents = {
+            lProduct, cProduct
+        };
+
+        int choice = JOptionPane.showConfirmDialog(this, editProductComponents, "Edit Products", JOptionPane.OK_CANCEL_OPTION);
     }
 
     protected void onCreateDonutClick() {
