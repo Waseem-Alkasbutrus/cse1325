@@ -413,7 +413,7 @@ public class MainWin extends JFrame {
             if (cProduct.getSelectedItem() instanceof Donut) {
                 onCreateDonutClick((Donut) cProduct.getSelectedItem());
             } else if (cProduct.getSelectedItem() instanceof Java) {
-                
+                onCreateJavaClick();
             }
         }
     }
@@ -428,48 +428,45 @@ public class MainWin extends JFrame {
         Filling filling;
       
         //Dialog Components
+        String title = "New Donut";
+
         JLabel lName = new JLabel(toHtml("\nName:"));
         JTextField tName = new JTextField(20);
-        if (donutTemplate != null) {
-            tName.setText(donutTemplate.name());
-        }
 
         SpinnerModel sPriceModel = new SpinnerNumberModel(0.01, 0.01, 1000.0, 0.01);
         JLabel lPrice = new JLabel(toHtml("\nPrice:"));
         JSpinner sPrice = new JSpinner(sPriceModel);
         sPrice.setEditor(new JSpinner.NumberEditor(sPrice, "#,###.##"));
-        if (donutTemplate != null) {
-            sPrice.setValue(donutTemplate.price());
-        }
         
         SpinnerModel sCostModel = new SpinnerNumberModel(0.01, 0.01, 1000.0, 0.01);
         JLabel lCost = new JLabel(toHtml("\nCost:"));
         JSpinner sCost = new JSpinner(sCostModel);
         sCost.setEditor(new JSpinner.NumberEditor(sCost, "#,###.##"));
-        if (donutTemplate != null) {
-            sCost.setValue(donutTemplate.cost());
-        }
 
         JLabel lFrosting = new JLabel(toHtml("\nFrosting:"));
         JComboBox<Frosting> cFrosting = new JComboBox<>(Frosting.values());
-        if (donutTemplate != null) {
-            cFrosting.setSelectedItem(donutTemplate.frosting());
-        }
 
         JLabel lSprinkles = new JLabel(toHtml("\nSprinkles:"));
         String yesNoOpts[] = {"No", "Yes"};
         JComboBox<String> cSprinkles = new JComboBox<>(yesNoOpts);
+
+        JLabel lFilling = new JLabel(toHtml("\nFilling:"));
+        JComboBox<Filling> cFilling = new JComboBox<>(Filling.values());
+        
         if (donutTemplate != null) {
+            title = "Edit Donut";
+
+            tName.setText(donutTemplate.name());
+            sPrice.setValue(donutTemplate.price());
+            sCost.setValue(donutTemplate.cost());
+            cFrosting.setSelectedItem(donutTemplate.frosting());
+
             if (donutTemplate.sprinkles()) {
                 cSprinkles.setSelectedItem(yesNoOpts[1]);
             } else {
                 cSprinkles.setSelectedItem(yesNoOpts[0]);
             }
-        }
 
-        JLabel lFilling = new JLabel(toHtml("\nFilling:"));
-        JComboBox<Filling> cFilling = new JComboBox<>(Filling.values());
-        if (donutTemplate != null) {
             cFilling.setSelectedItem(donutTemplate.filling());
         }
 
@@ -483,7 +480,7 @@ public class MainWin extends JFrame {
         };
 
         while (true) {
-            int choice = JOptionPane.showConfirmDialog(this, newDonutComponents, "New Donut", JOptionPane.OK_CANCEL_OPTION);
+            int choice = JOptionPane.showConfirmDialog(this, newDonutComponents, title, JOptionPane.OK_CANCEL_OPTION);
 
             if (choice == JOptionPane.OK_OPTION) {
                 name = tName.getText();
@@ -512,9 +509,13 @@ public class MainWin extends JFrame {
         }
 
         //Adding donut to store
-        this.store.addProduct(new Donut(name, price, cost, frosting, sprinkles, filling));
+        if (donutTemplate != null) {
+            this.store.editProduct(donutTemplate, new Donut(name, price, cost, frosting, sprinkles, filling));
+        } else {
+            this.store.addProduct(new Donut(name, price, cost, frosting, sprinkles, filling));
+            JOptionPane.showMessageDialog(this, "Donut was added to store menu");
+        }
         updateData(ViewMode.Product);
-        JOptionPane.showMessageDialog(this, "Donut was added to store menu");
         
         this.unsavedChanges = true;
     }
