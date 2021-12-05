@@ -76,6 +76,15 @@ public class Store {
         this.products.add(product);
     }
     
+    public void editProduct(Product oldProduct, Product newProduct) {
+        for (int i = 0; i < this.products.size(); i++) {
+            if (this.products.get(i).equals(oldProduct)) {
+                this.products.set(i, newProduct);
+                break;
+            }
+        }
+    }
+
     public int numberOfProducts() {
         return this.products.size();
     }
