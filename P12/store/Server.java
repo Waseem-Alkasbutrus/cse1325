@@ -6,15 +6,25 @@ import java.io.IOException;
 
 public class Server extends Person {
     String ssn;
+    int filledOrders;
 
     public Server(String name, String phone, String ssn) {
         super(name, phone);
         this.ssn = ssn;
+        this.filledOrders = 0;
     }
 
     public Server(BufferedReader bufferedReader) throws IOException {
         super(bufferedReader);
         this.ssn = bufferedReader.readLine();
+    }
+
+    public void fillOrder() {
+        this.filledOrders++;
+    }
+
+    public int filledOrders() {
+        return this.filledOrders;
     }
 
     public String getSSN() {
