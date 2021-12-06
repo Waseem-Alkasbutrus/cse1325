@@ -3,7 +3,7 @@ package store;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
-
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -77,6 +77,48 @@ public class Order {
         return this.id;
     }
 
+    public ArrayList<Object[]> PnLReport() {
+        ArrayList<Object[]> products = new ArrayList<>();
+        for (Map.Entry<Product, Integer> p : this.products.entrySet()) {
+            Object[] product = new Object[4];
+
+            double income = p.getKey().price() * p.getValue();
+            double costs = p.getKey().cost() * p.getValue();
+
+            product[0] = p.getKey().name();
+            product[1] = String.format("$%.2f", income);
+            product[2] = String.format("$%.2f", costs);;
+            product[3] = String.format("$%.2f", income - costs);
+        
+            products.add(product);
+        }
+        return products;
+    }
+
+    public double cost() {
+        double costs = 0;
+
+        for (Map.Entry<Product, Integer> p : this.products.entrySet()) {
+            costs += p.getKey().cost() * p.getValue();
+        }
+
+        return costs;
+    }
+
+    public double income() {
+        double income = 0;
+
+        for (Map.Entry<Product, Integer> p : this.products.entrySet()) {
+            income += p.getKey().price() * p.getValue();
+        }
+
+        return income;
+    }
+
+    public double profit() {
+        return this.income() - this.cost();
+    }
+
     public void addProduct(Product product, Integer quantity) {
         this.products.put(product, quantity);
     }
@@ -91,7 +133,7 @@ public class Order {
             totalPrice += p.getValue() * p.getKey().price;
         }
 
-        orderString += "Total price: $" + totalPrice + '\n';
+        orderString += String.format("Total price: $%.2f\n", totalPrice);
 
         return orderString;
     }
