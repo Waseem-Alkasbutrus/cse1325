@@ -3,7 +3,10 @@ package store;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+
+import javax.swing.JTable;
 
 public class Store {
     protected String storeName;
@@ -139,6 +142,24 @@ public class Store {
 
     public String orderToString(int orderIndex) {
         return this.orders.get(orderIndex).toString();
+    }
+
+    public ArrayList<Object[]> PnLReport() {
+        ArrayList<Object[]> report = new ArrayList<>(0);
+        double income = 0;//total price
+        double costs = 0;//total costs
+
+        for (Order o : this.orders) {
+            report.addAll(o.PnLReport());
+
+            income += o.income();
+            costs += o.cost();
+        }
+
+        Object[] total = {"Total", String.format("$%.2f", income), String.format("$%.2f", costs), String.format("$%.2f", income - costs)};
+        report.add(total);
+        
+        return report;
     }
 
     public Order[] getOrders() {
