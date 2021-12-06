@@ -20,6 +20,7 @@ import javax.swing.JToolBar;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -27,6 +28,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
 import javax.swing.BoxLayout;
@@ -157,7 +159,6 @@ public class MainWin extends JFrame {
         mSaveAs.addActionListener(event -> onSaveAsClick());
         mQuit.addActionListener(event -> onQuitClick());
 
-        //TODO: implement actionlistener
         mProduct.addActionListener(event -> onEditProductClick());
 
         mDonut.addActionListener(event -> onCreateDonutClick(null));
@@ -410,7 +411,6 @@ public class MainWin extends JFrame {
     }
 
     protected void onEditProductClick() {
-        //TODO: Implement
         JLabel lProduct = new JLabel(toHtml("Select product to edit:"));
         JComboBox<Object> cProduct = new JComboBox<>(this.store.getProducts());
 
@@ -840,11 +840,27 @@ public class MainWin extends JFrame {
     }
 
     protected void onPnLReportClick() {
-        //TODO:
+        DefaultTableModel tModel = new DefaultTableModel();
+        tModel.addColumn("Product");
+        tModel.addColumn("Income");
+        tModel.addColumn("Costs");
+        tModel.addColumn("Profits");
+        
+        ArrayList<Object[]> tData = this.store.PnLReport();
+        for (int i = 0; i < tData.size(); i++) {
+            tModel.insertRow(i, tData.get(i));
+        }
+        
+        JTable tReport = new JTable(tModel);
+        
+        JScrollPane sReport = new JScrollPane(tReport);
+        sReport.setPreferredSize(new Dimension(500, 200));
+
+        JOptionPane.showMessageDialog(this, sReport, "Profits & Losses", JOptionPane.DEFAULT_OPTION);
     }
 
     protected void onServerReportClick() {
-        //TODO:
+
     }
 
     protected void onAboutClick() {
