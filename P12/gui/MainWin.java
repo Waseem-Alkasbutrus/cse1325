@@ -111,7 +111,7 @@ public class MainWin extends JFrame {
         this.filename = new File("./saves/default.jade");
                 
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        setSize(1070,500);
+        setSize(1300,500);
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
