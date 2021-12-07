@@ -3,10 +3,7 @@ package store;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-
-import javax.swing.JTable;
 
 public class Store {
     protected String storeName;
