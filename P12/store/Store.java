@@ -143,6 +143,7 @@ public class Store {
 
     public void addOrder(Order order) {
         this.orders.add(order);
+        order.fill();
     }
 
     public int numberOfOrders() {

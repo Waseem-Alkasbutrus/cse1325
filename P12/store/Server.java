@@ -17,6 +17,7 @@ public class Server extends Person {
     public Server(BufferedReader bufferedReader) throws IOException {
         super(bufferedReader);
         this.ssn = bufferedReader.readLine();
+        this.filledOrders = Integer.parseInt(bufferedReader.readLine());
     }
 
     public void fillOrder() {
@@ -47,6 +48,7 @@ public class Server extends Person {
         bufferedWriter.write("SERVER" + '\n');
         super.save(bufferedWriter);
         bufferedWriter.write(this.ssn + '\n');
+        bufferedWriter.write(Integer.toString(this.filledOrders) + '\n');
     }
 
     @Override

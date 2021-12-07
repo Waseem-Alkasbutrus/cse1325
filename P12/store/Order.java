@@ -17,7 +17,6 @@ public class Order {
     public Order(Customer customer, Server server) {
         this.customer = customer;
         this.server = server;
-        this.server.fillOrder();
 
         if (nextId == null) {
             this.id = 0;
@@ -42,7 +41,6 @@ public class Order {
         
         bufferedReader.readLine(); //Read "SERVER" written by Server.save
         this.server = new Server(bufferedReader);
-        this.server.fillOrder();
         
         int numOfProducts = Integer.parseInt(bufferedReader.readLine());
         this.products = new HashMap<>(numOfProducts);
@@ -76,6 +74,10 @@ public class Order {
         }
     }
     
+    public void fill() {
+        this.server.fillOrder();
+    }
+
     public int getID() {
         return this.id;
     }
