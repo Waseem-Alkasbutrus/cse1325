@@ -27,6 +27,17 @@ public class Server extends Person {
         return this.filledOrders;
     }
 
+    public Object[] serverReport() {
+        Object[] report = new Object[4];
+
+        report[0] = super.name;
+        report[1] = super.phone;
+        report[2] = this.ssn;
+        report[3] = this.filledOrders;
+
+        return report;
+    }
+
     public String getSSN() {
         return this.ssn;
     }
