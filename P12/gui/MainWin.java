@@ -257,6 +257,13 @@ public class MainWin extends JFrame {
         bOrder = newToolbarButton("gui/assets/ORDER.png", "Create a new order", "Create a new order", createButtons);
         bOrder.addActionListener(event -> onCreateOrderClick());
 
+        JPanel editButtons = new JPanel();
+        editButtons.setBorder(BorderFactory.createTitledBorder("Edit"));
+        this.toolbar.add(editButtons);
+
+        JButton bEditProduct = newToolbarButton("gui/assets/EDIT PRODUCTS.png", "Edit a product", "Edit a product", editButtons);
+        bEditProduct.addActionListener(event -> onEditProductClick());
+
         JPanel viewButtons = new JPanel();
         viewButtons.setBorder(BorderFactory.createTitledBorder("View..."));
         this.toolbar.add(viewButtons);
@@ -269,6 +276,16 @@ public class MainWin extends JFrame {
 
         bOrders = newToolbarButton("gui/assets/VIEW ORDERS.png", "View orders", "View orders", viewButtons);
         bOrders.addActionListener(event -> updateData(ViewMode.Order));
+
+        JPanel reportsButtons = new JPanel();
+        reportsButtons.setBorder(BorderFactory.createTitledBorder("Reports"));
+        this.toolbar.add(reportsButtons);
+
+        JButton bPnLReport = newToolbarButton("gui/assets/REPORT ORDER.png", "View profits & losses report", "View profits & losses report", reportsButtons);
+        bPnLReport.addActionListener(event -> onPnLReportClick());
+
+        JButton bServerReport = newToolbarButton("gui/assets/REPORT SERVER.png", "View server report", "View server report", reportsButtons);
+        bServerReport.addActionListener(event -> onServerReportClick());
 
         JPanel helpButtons = new JPanel();
         helpButtons.setBorder(BorderFactory.createTitledBorder("Help"));
