@@ -59,8 +59,8 @@ enum ViewMode {Product, People, Order};
 
 public class MainWin extends JFrame {
     private String NAME = "JAVA AND DONUT EXPRESS";
-    private String VERSION = "0.4";
-    private String FILE_VERSION = "1.3"; 
+    private String VERSION = "0.5";
+    private String FILE_VERSION = "1.4"; 
     private String MAGIC_COOKIE = "WIA®";
 
     private boolean unsavedChanges;
