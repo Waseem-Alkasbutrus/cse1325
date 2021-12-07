@@ -132,6 +132,15 @@ public class Store {
         return servers.toArray();
     }
 
+    public ArrayList<Object[]> serverReport() {
+        ArrayList<Object[]> report = new ArrayList<>();
+        for (Object o : this.getServers()) {
+            Server s = (Server) o;
+            report.add(s.serverReport());
+        }
+        return report;
+    }
+
     public void addOrder(Order order) {
         this.orders.add(order);
     }
