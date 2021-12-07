@@ -860,7 +860,23 @@ public class MainWin extends JFrame {
     }
 
     protected void onServerReportClick() {
+        DefaultTableModel tModel = new DefaultTableModel();
+        tModel.addColumn("Server");
+        tModel.addColumn("Phone");
+        tModel.addColumn("SSN");
+        tModel.addColumn("Filled Orders");
 
+        ArrayList<Object[]> tData = this.store.serverReport();
+        for (int i = 0; i < tData.size(); i++) {
+            tModel.insertRow(i, tData.get(i));
+        }
+
+        JTable tReport = new JTable(tModel);
+
+        JScrollPane sReport = new JScrollPane(tReport);
+        sReport.setPreferredSize(new Dimension(500, 200));
+
+        JOptionPane.showMessageDialog(this, sReport, "Servers", JOptionPane.DEFAULT_OPTION);
     }
 
     protected void onAboutClick() {
