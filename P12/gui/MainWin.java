@@ -301,9 +301,11 @@ public class MainWin extends JFrame {
 
         data = new JLabel(toHtml(this.store.toString()), JLabel.LEFT);
         data.setVerticalAlignment(JLabel.TOP);
+
+        JScrollPane dataScrollPane = new JScrollPane(data);
         
         getContentPane().add(toolbar, BorderLayout.PAGE_START);
-        getContentPane().add(data, BorderLayout.CENTER);
+        getContentPane().add(dataScrollPane, BorderLayout.CENTER);
     }
 
     //CancelDialogException originally written by professor George F. Rice, reused by Waseem Alkasbutrus
