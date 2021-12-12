@@ -860,35 +860,25 @@ public class MainWin extends JFrame {
     }
 
     protected void onPnLReportClick() {
-        DefaultTableModel tModel = new DefaultTableModel();
-        tModel.addColumn("Product");
-        tModel.addColumn("Income");
-        tModel.addColumn("Costs");
-        tModel.addColumn("Profits");
+        String[] columns = {"Product", "Income", "Costs", "Profits"};
         
-        ArrayList<Object[]> tData = this.store.PnLReport();
-        for (int i = 0; i < tData.size(); i++) {
-            tModel.insertRow(i, tData.get(i));
-        }
-        
-        JTable tReport = new JTable(tModel);
-        
-        JScrollPane sReport = new JScrollPane(tReport);
-        sReport.setPreferredSize(new Dimension(500, 200));
-
-        JOptionPane.showMessageDialog(this, sReport, "Profits & Losses", JOptionPane.DEFAULT_OPTION);
+        displayReport(columns, this.store.PnLReport(), "Profits & Losses");
     }
 
     protected void onServerReportClick() {
-        DefaultTableModel tModel = new DefaultTableModel();
-        tModel.addColumn("Server");
-        tModel.addColumn("Phone");
-        tModel.addColumn("SSN");
-        tModel.addColumn("Filled Orders");
+        String[] columns = {"Server", "Phone", "SSN", "Filled Orders"};
 
-        ArrayList<Object[]> tData = this.store.serverReport();
-        for (int i = 0; i < tData.size(); i++) {
-            tModel.insertRow(i, tData.get(i));
+        displayReport(columns, this.store.serverReport(), "Servers");
+    }
+
+    protected void displayReport(String[] columns, ArrayList<Object[]> data, String windowTitle) {
+        DefaultTableModel tModel = new DefaultTableModel();
+        for (String s : columns) {
+            tModel.addColumn(s);
+        }
+
+        for (int i = 0; i < data.size(); i++) {
+            tModel.insertRow(i, data.get(i));
         }
 
         JTable tReport = new JTable(tModel);
@@ -896,7 +886,7 @@ public class MainWin extends JFrame {
         JScrollPane sReport = new JScrollPane(tReport);
         sReport.setPreferredSize(new Dimension(500, 200));
 
-        JOptionPane.showMessageDialog(this, sReport, "Servers", JOptionPane.DEFAULT_OPTION);
+        JOptionPane.showMessageDialog(this, sReport, windowTitle, JOptionPane.DEFAULT_OPTION);
     }
 
     protected void onAboutClick() {
