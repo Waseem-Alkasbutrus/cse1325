@@ -571,7 +571,7 @@ public class MainWin extends JFrame {
         JSpinner sCost = new JSpinner(sCostModel);
 
         JLabel lDarkness = new JLabel("Darkness:");
-        JComboBox<Darkness> cDakness = new JComboBox<>(Darkness.values());
+        JComboBox<Darkness> cDarkness = new JComboBox<>(Darkness.values());
 
         //Shots
         JLabel lShots = new JLabel("Shots:");
@@ -585,7 +585,7 @@ public class MainWin extends JFrame {
             tName.setText(javaTemplate.name());
             sPrice.setValue(javaTemplate.price());
             sCost.setValue(javaTemplate.cost());
-            cDakness.setSelectedItem(javaTemplate.darkness());
+            cDarkness.setSelectedItem(javaTemplate.darkness());
 
             Object[] templateShots = javaTemplate.shots();
             for (int i = 0; i < templateShots.length; i++) {
@@ -609,7 +609,7 @@ public class MainWin extends JFrame {
             lName, tName,
             lPrice, sPrice,
             lCost, sCost,
-            lDarkness, cDakness,
+            lDarkness, cDarkness,
             lShots, sShots, bAddShot
         };
 
@@ -626,7 +626,7 @@ public class MainWin extends JFrame {
                 price = (double) sPriceModel.getValue();
                 cost = (double) sCostModel.getValue();
     
-                darkness = (Darkness) cDakness.getSelectedItem();
+                darkness = (Darkness) cDarkness.getSelectedItem();
 
                 for (Object o : pShots.getComponents()) {
                     if (o instanceof JComboBox) {
@@ -933,7 +933,7 @@ public class MainWin extends JFrame {
     //////////////////////////////////////////////////////////////
     // U T I L S
 
-    //Implmentation for getString followed professor rice's implimentation closely
+    //Implementation for getString followed professor rice's implementation closely
     protected String getString(String message, String title, int messageType) throws CancelDialogException {
         while (true) {
             try {
