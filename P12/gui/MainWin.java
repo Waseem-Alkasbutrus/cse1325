@@ -594,16 +594,17 @@ public class MainWin extends JFrame {
                 pShots.add(cShots);
             }
         } else {
-            for (int i = 0; i < 3; i++) {
-                pShots.add(new JComboBox<Shot>(Shot.values()));
-            }
+            pShots.add(new JComboBox<Shot>(Shot.values()));
         }
         
         JScrollPane sShots = new JScrollPane(pShots);
         sShots.setPreferredSize(new Dimension(200, 80));
 
         JButton bAddShot = new JButton("Add Shot");
-        bAddShot.addActionListener(event -> pShots.add(new JComboBox<Shot>(Shot.values())));
+        bAddShot.addActionListener(event -> {
+            pShots.add(new JComboBox<Shot>(Shot.values()));
+            pShots.updateUI();
+        });
 
         Object newJavaComponents[] = {
             lName, tName,
