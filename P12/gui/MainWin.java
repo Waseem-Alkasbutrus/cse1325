@@ -56,6 +56,7 @@ import store.Customer;
 import store.Server;
 
 enum ViewMode {Product, People, Order};
+enum TextStyle {h1, h2, h3, h4, p};
 
 public class MainWin extends JFrame {
     private String NAME = "JAVA AND DONUT EXPRESS";
@@ -299,7 +300,7 @@ public class MainWin extends JFrame {
 
         this.store = new Store(title);
 
-        data = new JLabel(toHtml(this.store.toString()), JLabel.LEFT);
+        data = new JLabel(toHtml(this.store.toString(), TextStyle.p), JLabel.LEFT);
         data.setVerticalAlignment(JLabel.TOP);
 
         JScrollPane dataScrollPane = new JScrollPane(data);
@@ -330,7 +331,7 @@ public class MainWin extends JFrame {
             }
 
             this.store = newStore;
-            this.data.setText(toHtml(this.store.toString()));
+            this.data.setText(toHtml(this.store.toString(), TextStyle.p));
             this.unsavedChanges = true;
             return;
         } catch (CancelDialogException e) {
@@ -376,7 +377,7 @@ public class MainWin extends JFrame {
             }
 
             this.store = new Store(bufferedReader);
-            this.data.setText(toHtml(this.store.toString()));
+            this.data.setText(toHtml(this.store.toString(), TextStyle.p));
             this.unsavedChanges = false;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Unable to open file: " + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -430,7 +431,7 @@ public class MainWin extends JFrame {
     }
 
     protected void onEditProductClick() {
-        JLabel lProduct = new JLabel(toHtml("Select product to edit:"));
+        JLabel lProduct = new JLabel(toHtml("Select product to edit:", TextStyle.p));
         JComboBox<Object> cProduct = new JComboBox<>(this.store.getProducts());
 
         Object[] editProductComponents = {
@@ -460,27 +461,27 @@ public class MainWin extends JFrame {
         //Dialog Components
         String title = "New Donut";
 
-        JLabel lName = new JLabel(toHtml("Name:"));
+        JLabel lName = new JLabel(toHtml("Name:", TextStyle.p));
         JTextField tName = new JTextField(20);
 
         SpinnerModel sPriceModel = new SpinnerNumberModel(0.01, 0.01, 1000.0, 0.01);
-        JLabel lPrice = new JLabel(toHtml("Price:"));
+        JLabel lPrice = new JLabel(toHtml("Price:", TextStyle.p));
         JSpinner sPrice = new JSpinner(sPriceModel);
         sPrice.setEditor(new JSpinner.NumberEditor(sPrice, "#,###.##"));
         
         SpinnerModel sCostModel = new SpinnerNumberModel(0.01, 0.01, 1000.0, 0.01);
-        JLabel lCost = new JLabel(toHtml("Cost:"));
+        JLabel lCost = new JLabel(toHtml("Cost:", TextStyle.p));
         JSpinner sCost = new JSpinner(sCostModel);
         sCost.setEditor(new JSpinner.NumberEditor(sCost, "#,###.##"));
 
-        JLabel lFrosting = new JLabel(toHtml("Frosting:"));
+        JLabel lFrosting = new JLabel(toHtml("Frosting:", TextStyle.p));
         JComboBox<Frosting> cFrosting = new JComboBox<>(Frosting.values());
 
-        JLabel lSprinkles = new JLabel(toHtml("Sprinkles:"));
+        JLabel lSprinkles = new JLabel(toHtml("Sprinkles:", TextStyle.p));
         String yesNoOpts[] = {"No", "Yes"};
         JComboBox<String> cSprinkles = new JComboBox<>(yesNoOpts);
 
-        JLabel lFilling = new JLabel(toHtml("Filling:"));
+        JLabel lFilling = new JLabel(toHtml("Filling:", TextStyle.p));
         JComboBox<Filling> cFilling = new JComboBox<>(Filling.values());
         
         if (donutTemplate != null) {
@@ -814,7 +815,7 @@ public class MainWin extends JFrame {
 
         newOrder = new Order(customer, server);
         
-        JLabel orderDetails = new JLabel(toHtml(newOrder.toString()));
+        JLabel orderDetails = new JLabel(toHtml(newOrder.toString(), TextStyle.p));
         JScrollPane orderDetailScrollPane = new JScrollPane(orderDetails);
         orderDetailScrollPane.setPreferredSize(new Dimension(200, 100));
         
@@ -826,7 +827,7 @@ public class MainWin extends JFrame {
         JButton bAdd = new JButton("Add");
         bAdd.addActionListener(event -> {
             newOrder.addProduct((Product) cProduct.getSelectedItem(), (Integer) sQuantity.getValue());
-            orderDetails.setText(toHtml(newOrder.toString()));
+            orderDetails.setText(toHtml(newOrder.toString(), TextStyle.p));
         });
 
         JPanel uiPanel = new JPanel();
@@ -851,17 +852,17 @@ public class MainWin extends JFrame {
 
     protected void updateData(ViewMode viewMode) {
         if (ViewMode.People == viewMode) {
-            this.data.setText(toHtml(this.store.peopleToString()));
+            this.data.setText(toHtml(this.store.peopleToString(), TextStyle.p));
         } else if (ViewMode.Product == viewMode) {
-            this.data.setText(toHtml(this.store.toString()));
+            this.data.setText(toHtml(this.store.toString(), TextStyle.p));
         } else if (ViewMode.Order == viewMode) {
-            this.data.setText(toHtml(this.store.ordersToString()));
+            this.data.setText(toHtml(this.store.ordersToString(), TextStyle.p));
         }
     }
 
     protected void onPnLReportClick() {
         String[] columns = {"Product", "Income", "Costs", "Profits"};
-        
+
         displayReport(columns, this.store.PnLReport(), "Profits & Losses");
     }
 
@@ -902,21 +903,28 @@ public class MainWin extends JFrame {
             //ignore the image if the file was not found
         }
 
-        JLabel title = new JLabel("<html>"
-                                + "<p><font size =+4>" + this.NAME + "</font></p>"
-                                + "</html>");
+        JLabel title = new JLabel(toHtml(this.NAME, TextStyle.h1));
         
-        JLabel body = new JLabel("<html>"
-                                + "<p>Version "+ this.VERSION + "</p>"
-                                + "<p>Copyright 2021 by Waseem Alkasbutrus</p>"
-                                + "<p>Licensed under Gnu GPL 3.0</p>"
-                                + "<p></p>"
-                                + "<p>-Logo and all toolbar button icons created by Waseem Alkasbutrus</p>"
-                                + "<p>-CancelDialogException by George F. Rice, licensed under Gnu GPL 3.0</p>"
-                                + "<p>-getString methods by George F. Rice, licensed under Gnu GPL 3.0</p>"
-                                + "</html>");
+        JLabel specs = new JLabel(
+            toHtml("Version " + this.VERSION + "\n" + 
+                "Copyright 2021 by Waseem Alkasbutrus\n" +
+                "Licensed under Gnu GPL 3.0\n", 
+                TextStyle.h3
+            )
+        );
+
+        JLabel credits = new JLabel(
+            toHtml(
+                "\n-Logo and all toolbar button icons created by Waseem Alkasbutrus\n" +
+                "-CancelDialogException by George F. Rice, licensed under Gnu GPL 3.0\n" +
+                "-getString methods by George F. Rice, licensed under Gnu GPL 3.0\n", 
+                TextStyle.p
+            )
+        );
+
         about.add(title);
-        about.add(body);
+        about.add(specs);
+        about.add(credits);
 
         JOptionPane.showMessageDialog(this, about, "JADE", JOptionPane.PLAIN_MESSAGE, null);
     }
@@ -942,8 +950,15 @@ public class MainWin extends JFrame {
         }
     }
 
-    protected String toHtml(String plainText) {
-        return "<html>" + plainText.replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br/>");
+    protected String toHtml(String plainText, TextStyle style) {
+        String styleTag = "<" + style.name() + ">";
+        String styleClosingTag = "</" + style.name() + ">";
+
+        return "<html>" + styleTag + plainText.replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br/>") + styleClosingTag + "</html>";
+    }
+
+    protected String link(String link, String name) {
+        return "<html><a href=\"" + link + "\">" + name + "</a></html>";
     }
 
     protected void unsavedChangesDialog() throws CancelDialogException {
