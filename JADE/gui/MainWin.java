@@ -68,8 +68,10 @@ public class MainWin extends JFrame {
 
     private Store store;
     private File filename;
-    private JLabel data;
     private JToolBar toolbar;
+
+    private JLabel storeName;
+    private JLabel data;
 
     private JMenuItem mJava;
     private JButton bJava;
@@ -300,13 +302,21 @@ public class MainWin extends JFrame {
 
         this.store = new Store(title);
 
+        storeName = new JLabel(toHtml("Welcome to " + this.store.storeName() + "!", TextStyle.h1), JLabel.LEFT);
+        storeName.setVerticalAlignment(JLabel.TOP);
+
         data = new JLabel(toHtml(this.store.toString(), TextStyle.p), JLabel.LEFT);
         data.setVerticalAlignment(JLabel.TOP);
 
         JScrollPane dataScrollPane = new JScrollPane(data);
         
+        JPanel mainDisplay = new JPanel();
+        mainDisplay.setLayout(new BoxLayout(mainDisplay, BoxLayout.PAGE_AXIS));
+        mainDisplay.add(storeName);
+        mainDisplay.add(dataScrollPane);
+        
         getContentPane().add(toolbar, BorderLayout.PAGE_START);
-        getContentPane().add(dataScrollPane, BorderLayout.CENTER);
+        getContentPane().add(mainDisplay, BorderLayout.CENTER);
     }
 
     //CancelDialogException originally written by professor George F. Rice, reused by Waseem Alkasbutrus
@@ -331,6 +341,7 @@ public class MainWin extends JFrame {
             }
 
             this.store = newStore;
+            this.storeName.setText(toHtml("Welcome to " + this.store.storeName() + "!", TextStyle.h1));
             this.data.setText(toHtml(this.store.toString(), TextStyle.p));
             this.unsavedChanges = true;
             return;
