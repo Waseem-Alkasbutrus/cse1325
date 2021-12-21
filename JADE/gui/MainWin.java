@@ -72,6 +72,26 @@ public class MainWin extends JFrame {
 
     private JLabel storeName;
     private JLabel data;
+    
+    //File
+    private JMenu file;
+
+    private JMenuItem mNew;
+    private JButton bNew;
+
+    private JMenuItem mOpen;
+    private JButton bOpen;
+
+    private JMenuItem mSave;
+    private JButton bSave;
+
+    private JMenuItem mSaveAs;
+    private JButton bSaveAs;
+
+    private JMenuItem mQuit;
+
+    //Create
+    private JMenu create;
 
     private JMenuItem mJava;
     private JButton bJava;
@@ -88,17 +108,23 @@ public class MainWin extends JFrame {
     private JMenuItem mOrder;
     private JButton bOrder;
 
-    private JMenuItem mNew;
-    private JButton bNew;
+    //Edit
+    private JMenu edit;
 
-    private JMenuItem mOpen;
-    private JButton bOpen;
+    private JMenuItem mEditProduct;
+    private JButton bEditProduct;
 
-    private JMenuItem mSave;
-    private JButton bSave;
+    //Reports
+    JMenu reports;
 
-    private JMenuItem mSaveAs;
-    private JButton bSaveAs;
+    JMenuItem mPnLReport;
+    JButton bPnLReport;
+
+    JMenuItem mServerReport;
+    JButton bServerReport;
+
+    //View
+    private JMenu view;
 
     private JMenuItem mPeople;
     private JButton bPeople;
@@ -127,31 +153,31 @@ public class MainWin extends JFrame {
 
         JMenuBar menubar = new JMenuBar();
 
-        JMenu file = new JMenu("File");
-        mNew    = new JMenuItem("New");
-        mOpen   = new JMenuItem("Open...");
-        mSave   = new JMenuItem("Save");
+        file = new JMenu("File");
+        mNew = new JMenuItem("New");
+        mOpen = new JMenuItem("Open...");
+        mSave = new JMenuItem("Save");
         mSaveAs = new JMenuItem("Save As...");
-        JMenuItem mQuit = new JMenuItem("Quit");
+        mQuit = new JMenuItem("Quit");
         
-        JMenu edit = new JMenu("Edit");
-        JMenuItem mProduct = new JMenuItem("Product"); 
+        edit = new JMenu("Edit");
+        mEditProduct = new JMenuItem("Product"); 
 
-        JMenu create = new JMenu("Create");
+        create = new JMenu("Create");
         mDonut = new JMenuItem("Donut");
         mJava = new JMenuItem("Java");
         mCustomer = new JMenuItem("Customer");
         mServer = new JMenuItem("Server");
         mOrder = new JMenuItem("Order");
 
-        JMenu view = new JMenu("View");
+        view = new JMenu("View");
         mPeople = new JMenuItem("Customers");
         mProducts = new JMenuItem("Products");
         mOrders = new JMenuItem("Orders");
 
-        JMenu reports = new JMenu("Reports");
-        JMenuItem mPnLReport = new JMenuItem("P&L");
-        JMenuItem mServerReport = new JMenuItem("Server");
+        reports = new JMenu("Reports");
+        mPnLReport = new JMenuItem("P&L");
+        mServerReport = new JMenuItem("Server");
 
         JMenu help = new JMenu("Help");
         JMenuItem mAbout = new JMenuItem("About");
@@ -162,7 +188,7 @@ public class MainWin extends JFrame {
         mSaveAs.addActionListener(event -> onSaveAsClick());
         mQuit.addActionListener(event -> onQuitClick());
 
-        mProduct.addActionListener(event -> onEditProductClick());
+        mEditProduct.addActionListener(event -> onEditProductClick());
 
         mDonut.addActionListener(event -> onCreateDonutClick(null));
         mJava.addActionListener(event -> onCreateJavaClick(null));
@@ -188,7 +214,7 @@ public class MainWin extends JFrame {
         file.addSeparator();
         file.add(mQuit);
 
-        edit.add(mProduct);
+        edit.add(mEditProduct);
 
         create.add(mDonut);
         create.add(mJava);
@@ -264,7 +290,7 @@ public class MainWin extends JFrame {
         editButtons.setBorder(BorderFactory.createTitledBorder("Edit"));
         this.toolbar.add(editButtons);
 
-        JButton bEditProduct = newToolbarButton("gui/assets/EDIT PRODUCTS.png", "Edit a product", "Edit a product", editButtons);
+        bEditProduct = newToolbarButton("gui/assets/EDIT PRODUCTS.png", "Edit a product", "Edit a product", editButtons);
         bEditProduct.addActionListener(event -> onEditProductClick());
 
         JPanel viewButtons = new JPanel();
@@ -284,10 +310,10 @@ public class MainWin extends JFrame {
         reportsButtons.setBorder(BorderFactory.createTitledBorder("Reports"));
         this.toolbar.add(reportsButtons);
 
-        JButton bPnLReport = newToolbarButton("gui/assets/REPORT ORDER.png", "View profits & losses report", "View profits & losses report", reportsButtons);
+        bPnLReport = newToolbarButton("gui/assets/REPORT ORDER.png", "View profits & losses report", "View profits & losses report", reportsButtons);
         bPnLReport.addActionListener(event -> onPnLReportClick());
 
-        JButton bServerReport = newToolbarButton("gui/assets/REPORT SERVER.png", "View server report", "View server report", reportsButtons);
+        bServerReport = newToolbarButton("gui/assets/REPORT SERVER.png", "View server report", "View server report", reportsButtons);
         bServerReport.addActionListener(event -> onServerReportClick());
 
         JPanel helpButtons = new JPanel();
