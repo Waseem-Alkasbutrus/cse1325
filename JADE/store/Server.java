@@ -53,6 +53,6 @@ public class Server extends Person {
 
     @Override
     public String toString() {
-        return "Server " + this.name + " (" + this.phone + ")";
+        return "Server: " + super.name + " (" + super.phone + ")";
     } 
 }

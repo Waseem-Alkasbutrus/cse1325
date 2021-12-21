@@ -21,6 +21,6 @@ public class Customer extends Person {
 
     @Override
     public String toString() {
-        return "Customer " + this.name + " (" + this.phone + ")";
+        return "Customer: " + this.name + " (" + this.phone + ")";
     }
 }
