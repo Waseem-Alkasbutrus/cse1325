@@ -17,6 +17,10 @@ public class Manager extends Person {
         this.pin = bufferedReader.readLine();
     }
 
+    public boolean confirmID(String attemptedName, String attemptedPin) {
+        return (super.name.equals(attemptedName)) && (this.pin.equals(attemptedPin));
+    }
+
     @Override
     public void save(BufferedWriter bufferedWriter) throws IOException {
         super.save(bufferedWriter);
