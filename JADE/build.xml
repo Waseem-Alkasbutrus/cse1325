@@ -17,4 +17,9 @@
       </fileset>
     </delete>
   </target>
+
+    <target name="run">
+      <java fork="true" classname="gui.MainWin">
+      </java>
+  </target>
 </project>
