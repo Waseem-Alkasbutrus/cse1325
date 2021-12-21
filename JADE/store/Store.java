@@ -39,7 +39,7 @@ public class Store {
             } else if (personType.equals("SERVER")) {
                 this.people.add(new Server(bufferedReader));
             } else if (personType.equals("MANAGER")) {
-                //TODO: Add new manager to people
+                this.people.add(new Manager(bufferedReader));
             }
         }
         
@@ -127,6 +127,16 @@ public class Store {
             }
         }
         return servers.toArray();
+    }
+
+    public Object[] getManagers() {
+        ArrayList<Manager> managers = new ArrayList<>();
+        for (Person p : this.people) {
+            if (p instanceof Manager) {
+                managers.add((Manager) p);
+            }
+        }
+        return managers.toArray();
     }
 
     public ArrayList<Object[]> serverReport() {
